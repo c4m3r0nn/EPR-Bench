@@ -1,0 +1,27 @@
+{
+  "source": "Structured assessment forms for EPR-Bench. PLACEHOLDER FOR CLINICAL REVIEW: the criteria wording, points and bands below were written from general clinical knowledge to exercise the engine; they are not copied from, and have not been checked against, any guideline, and must not be taken as validated.",
+  "assessment_forms": [
+    {
+      "name": "wells_dvt",
+      "label": "Wells score for DVT (two-level)",
+      "description": "Placeholder for clinical review: wording, points and bands not yet validated.",
+      "placeholder": true,
+      "fields": [
+        {"name": "active_cancer", "label": "Active cancer (on treatment, treated in the last 6 months, or palliative)", "kind": "tick", "points": 1},
+        {"name": "lower_limb_immobilised", "label": "Paralysis, paresis or recent plaster cast of a leg", "kind": "tick", "points": 1},
+        {"name": "bedridden_or_surgery", "label": "Bedridden for 3 days or more, or major surgery under general or regional anaesthetic in the last 12 weeks", "kind": "tick", "points": 1},
+        {"name": "deep_vein_tenderness", "label": "Tenderness localised along the deep veins", "kind": "tick", "points": 1},
+        {"name": "whole_leg_swollen", "label": "Whole leg swollen", "kind": "tick", "points": 1},
+        {"name": "calf_swelling_3cm", "label": "Calf at least 3 cm larger than the other side (measured 10 cm below the tibial tuberosity)", "kind": "tick", "points": 1},
+        {"name": "pitting_oedema", "label": "Pitting oedema in the symptomatic leg only", "kind": "tick", "points": 1},
+        {"name": "collateral_veins", "label": "Collateral superficial veins (not varicose)", "kind": "tick", "points": 1},
+        {"name": "previous_dvt", "label": "Previous DVT documented", "kind": "tick", "points": 1},
+        {"name": "alternative_diagnosis", "label": "An alternative diagnosis at least as likely as DVT", "kind": "tick", "points": -2}
+      ],
+      "bands": [
+        {"value": "dvt_unlikely", "label": "DVT unlikely", "max": 1},
+        {"value": "dvt_likely", "label": "DVT likely", "min": 2}
+      ]
+    }
+  ]
+}

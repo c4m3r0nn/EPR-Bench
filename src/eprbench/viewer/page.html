@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EPR-Bench episodes</title>
+<style>
+:root {
+  --bg: #f4f6f7; --card: #fff; --ink: #1d2a33; --muted: #5a6b78; --line: #d9e0e4; --accent: #005eb8; --accent-ink: #fff;
+  --write: #0b6e4f; --write-bg: #e6f4ee; --bad: #b42318; --bad-bg: #fdecea; --warn: #8a5a00; --warn-bg: #fff4d6; --chip: #eef2f5;
+  --model-bg: #eef4fb; --code: #f1f3f5;
+  --t-harmful: #b42318; --t-inactive: #6b7280; --t-partial: #b26b00; --t-complete: #0b6e4f;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111518; --card: #1a2025; --ink: #e5eaee; --muted: #9aa8b3; --line: #2c353c; --accent: #5ea2ef; --accent-ink: #0b1116;
+    --write: #5fd3a6; --write-bg: #12302a; --bad: #ff8a80; --bad-bg: #3a1714; --warn: #f2c35b; --warn-bg: #352a10; --chip: #232b31;
+    --model-bg: #172333; --code: #20272d;
+    --t-harmful: #ff8a80; --t-inactive: #9aa8b3; --t-partial: #f2c35b; --t-complete: #5fd3a6;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111518; --card: #1a2025; --ink: #e5eaee; --muted: #9aa8b3; --line: #2c353c; --accent: #5ea2ef; --accent-ink: #0b1116;
+  --write: #5fd3a6; --write-bg: #12302a; --bad: #ff8a80; --bad-bg: #3a1714; --warn: #f2c35b; --warn-bg: #352a10; --chip: #232b31;
+  --model-bg: #172333; --code: #20272d;
+  --t-harmful: #ff8a80; --t-inactive: #9aa8b3; --t-partial: #f2c35b; --t-complete: #5fd3a6;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
+header.top { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; padding: 10px 16px; background: var(--card); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 2; }
+header.top h1 { font-size: 17px; margin: 0; }
+header.top .spacer { flex: 1; }
+main { max-width: 1040px; margin: 0 auto; padding: 16px; }
+button, .button { font: inherit; padding: 5px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--card); color: var(--ink); cursor: pointer; }
+button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+select, input[type=search], textarea { font: inherit; padding: 5px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--card); color: var(--ink); max-width: 100%; }
+textarea { width: 100%; }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 12px 16px; margin-bottom: 14px; }
+h2 { font-size: 19px; margin: 0 0 6px; } h3 { font-size: 15px; margin: 0 0 8px; text-transform: uppercase; letter-spacing: .03em; color: var(--muted); }
+#filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+#filters label { font-size: 12px; color: var(--muted); display: flex; flex-direction: column; gap: 2px; }
+table { border-collapse: collapse; width: 100%; }
+th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 12px; color: var(--muted); text-transform: uppercase; }
+#index tbody tr { cursor: pointer; } #index tbody tr:hover { background: var(--chip); }
+.table-wrap { overflow-x: auto; }
+.tier { display: inline-block; padding: 1px 8px; border-radius: 999px; font-weight: 600; font-size: 13px; color: var(--card); background: var(--muted); }
+.tier.harmful { background: var(--t-harmful); } .tier.inactive { background: var(--t-inactive); } .tier.partial { background: var(--t-partial); } .tier.complete { background: var(--t-complete); }
+.chip { display: inline-block; padding: 0 7px; border-radius: 6px; background: var(--chip); font-size: 12.5px; margin: 1px 2px; white-space: nowrap; }
+.chip.bad { background: var(--bad-bg); color: var(--bad); font-weight: 600; } .chip.warn { background: var(--warn-bg); color: var(--warn); } .chip.ok { background: var(--write-bg); color: var(--write); }
+.banner { display: inline-block; border-left: 4px solid var(--accent); background: var(--chip); padding: 0 8px; border-radius: 4px; font-size: 12.5px; margin: 2px 4px 2px 0; }
+.banner.other { border-left-color: var(--warn); } .banner.wrong { border-left-color: var(--bad); background: var(--bad-bg); }
+.timeline > * { margin: 6px 0; }
+.say { background: var(--model-bg); border-radius: 8px; padding: 8px 12px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.say .who { font-size: 12px; color: var(--muted); display: block; }
+details > summary { cursor: pointer; }
+.step { border: 1px solid var(--line); border-left: 4px solid var(--line); border-radius: 6px; background: var(--card); padding: 4px 10px; }
+.step.write { border-left-color: var(--write); background: var(--write-bg); }
+.step.fail { border-left-color: var(--warn); }
+.step.wrong { border-left-color: var(--bad); background: var(--bad-bg); }
+.step summary { overflow-wrap: anywhere; }
+.step time, .event time { font-variant-numeric: tabular-nums; color: var(--muted); margin-right: 6px; }
+.quiet { border: 1px dashed var(--line); border-radius: 6px; padding: 4px 10px; }
+.quiet > summary { color: var(--muted); }
+.event { border-left: 4px solid var(--accent); padding: 4px 10px; background: var(--card); border-radius: 6px; }
+.note { color: var(--muted); font-size: 13px; padding: 2px 10px; }
+.group { border: 1px dashed var(--warn); border-radius: 6px; padding: 4px 10px; }
+.group > * { margin: 4px 0; }
+.cmd code { display: block; background: var(--code); padding: 4px 8px; border-radius: 4px; white-space: pre-wrap; overflow-wrap: anywhere; font-size: 12.5px; }
+pre { background: var(--code); padding: 6px 8px; border-radius: 4px; white-space: pre-wrap; overflow-wrap: anywhere; font: 12.5px/1.45 ui-monospace, Menlo, Consolas, monospace; margin: 4px 0; max-height: 420px; overflow: auto; }
+img.shot { max-width: 100%; border: 1px solid var(--line); border-radius: 4px; margin: 4px 0; display: block; }
+.answer { border: 2px solid var(--accent); border-radius: 8px; padding: 8px 12px; background: var(--card); }
+.kv { display: grid; grid-template-columns: max-content 1fr; gap: 2px 12px; }
+.kv dt { color: var(--muted); } .kv dd { margin: 0; overflow-wrap: anywhere; }
+ul.plain { list-style: none; padding: 0; margin: 4px 0; } ul.plain li { margin: 3px 0; }
+.pass { color: var(--write); font-weight: 600; } .failx { color: var(--bad); font-weight: 600; }
+.review fieldset { border: 0; padding: 0; margin: 0 0 10px; } .review legend { font-weight: 600; margin-bottom: 4px; }
+.review label.r { display: inline-flex; gap: 4px; align-items: center; margin: 2px 12px 2px 0; }
+.pager { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+.warnbox { background: var(--warn-bg); color: var(--warn); border-radius: 6px; padding: 6px 10px; margin: 6px 0; }
+@media (max-width: 640px) { main { padding: 10px; } .hide-narrow { display: none; } .kv { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header class="top">
+  <h1>EPR-Bench episodes</h1><span id="count" class="muted"></span><span class="spacer"></span>
+  <button id="export" type="button">Export reviews</button>
+  <label class="button" for="import">Import reviews</label><input type="file" id="import" accept="application/json,.json" hidden>
+  <button id="theme" type="button" title="Light, dark or the system's">Theme</button>
+</header>
+<main>
+  <section id="list">
+    <p id="notes" class="muted"></p>
+    <div id="filters" class="card"></div>
+    <div class="card table-wrap"><table id="index"><thead><tr><th>Task</th><th>Interface</th><th>Agent</th><th>Tier</th><th class="hide-narrow">Ended</th><th>Flags</th><th>Review</th></tr></thead><tbody></tbody></table></div>
+  </section>
+  <section id="detail" hidden></section>
+</main>
+<script type="application/json" id="data">/*__DATA__*/{}</script>
+<script>
+"use strict";
+const DATA = JSON.parse(document.getElementById("data").textContent);
+const EPISODES = Object.fromEntries((DATA.episodes || []).map(e => [e.id, e]));
+const ROWS = DATA.rows || [];
+const TIERS = ["harmful", "inactive", "partial", "complete"];
+// This browser's reviews are kept per page build: every page opened from file:// shares one storage, and reviews made
+// on one page (a clinician's own, naming the models) must never appear on another (a blind or public one).
+const STORE = "eprbench-reviews/1/" + (DATA.build_id || "unbuilt");
+// On a public or blind page every review, whether loaded with the page, imported, stored or exported, is kept to the
+// episodes and checks on the page and labelled with its own agent codes. A comment imported into such a page is dropped
+// whole unless the page was built with reviewers' comments: the browser cannot know whose names to replace, so it never
+// tries to clean free text. A comment the reviewer types here is their own and is kept (a public page takes none).
+const SHARED = !!(DATA.blind || DATA.public);
+
+function h(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"}[c])); }
+function json(v) { return typeof v === "string" ? v : JSON.stringify(v, null, 2); }
+function brief(v) { const s = typeof v === "string" ? v : JSON.stringify(v); return s && s.length > 160 ? s.slice(0, 160) + "…" : (s || ""); }
+function hhmm(t) { return t ? String(t).slice(11, 16) : ""; }
+function day(t) { return t ? String(t).slice(0, 10) + " " + String(t).slice(11, 16) : ""; }
+
+// --- reviews: embedded (from --reviews), then this browser's, newest wins --------------------------------
+// Reviews come from files and storage, so they are checked whole before use: no key may reach an object's prototype,
+// every field must have its type, and the store has no prototype at all. A null record is skipped.
+const FORBIDDEN = new Set(["__proto__", "constructor", "prototype"]);
+function parseSafe(text) { return JSON.parse(text, (k, v) => { if (FORBIDDEN.has(k)) throw new Error("forbidden key " + k); return v; }); }
+function store() { return Object.create(null); }
+const isStr = v => v == null || typeof v === "string";
+function cleanReviews(raw) {
+  if (raw == null) return store();
+  if (typeof raw !== "object" || Array.isArray(raw)) throw new Error("reviews must be an object");
+  const out = store();
+  for (const [id, r] of Object.entries(raw)) {
+    if (FORBIDDEN.has(id)) throw new Error("forbidden key " + id);
+    if (r == null) continue;
+    if (typeof r !== "object" || Array.isArray(r)) throw new Error("review " + id + " is not an object");
+    if (![null, undefined, "agree", "disagree"].includes(r.verdict)) throw new Error("review " + id + ": verdict");
+    if (![null, undefined, "", ...TIERS].includes(r.tier) || ![null, undefined, ...TIERS].includes(r.automatic_tier)) throw new Error("review " + id + ": tier");
+    for (const k of ["task_id", "who", "interface", "comment", "updated_at"]) if (!isStr(r[k])) throw new Error("review " + id + ": " + k);
+    if (r.checks != null && (typeof r.checks !== "object" || Array.isArray(r.checks))) throw new Error("review " + id + ": checks");
+    const checks = store();
+    for (const [c, v] of Object.entries(r.checks || {})) {
+      if (FORBIDDEN.has(c)) throw new Error("forbidden key " + c);
+      if (v != null && v !== "disagree") throw new Error("review " + id + ": check " + c);
+      if (v === "disagree") checks[c] = "disagree";
+    }
+    out[id] = {task_id: r.task_id || null, automatic_tier: r.automatic_tier || null, who: r.who || null, interface: r.interface || null,
+               verdict: r.verdict || null, tier: r.tier || null, comment: r.comment || "", checks, updated_at: r.updated_at || ""};
+  }
+  return out;
+}
+function forPage(all, imported = false) {
+  if (!SHARED) return all;
+  const out = store();
+  for (const [id, r] of Object.entries(all)) {
+    const ep = EPISODES[id];
+    if (!ep) continue;  // another page's episode
+    const row = ROWS.find(x => x.id === id) || {}, known = new Set((ep.checks || []).map(c => c.id)), checks = store();
+    for (const [c, v] of Object.entries(r.checks || {})) if (known.has(c) && v === "disagree") checks[c] = "disagree";
+    out[id] = {task_id: ep.task.id, automatic_tier: r.automatic_tier || null, who: row.who || null, interface: row.interface || null, verdict: r.verdict || null,
+               tier: r.tier || null, comment: (imported ? DATA.review_comments : DATA.keep_comments) ? r.comment || "" : "", checks,
+               updated_at: /^\d{4}-\d\d-\d\dT[\d:.]+Z$/.test(r.updated_at || "") ? r.updated_at : ""};
+  }
+  return out;
+}
+function readLocal() { try { return forPage(cleanReviews(parseSafe(localStorage.getItem(STORE) || "{}"))); } catch (e) { return store(); } }
+function writeLocal(all) { try { localStorage.setItem(STORE, JSON.stringify(forPage(all))); return true; } catch (e) { return false; } }
+function merge(into, from) {
+  for (const [id, r] of Object.entries(from)) {
+    if (!into[id] || String(r.updated_at || "") > String(into[id].updated_at || "")) into[id] = r;
+  }
+  return into;
+}
+let REVIEWS = (() => { try { return merge(merge(store(), forPage(cleanReviews(DATA.reviews))), readLocal()); } catch (e) { return readLocal(); } })();
+function review(id) { return REVIEWS[id] || {}; }
+function saveReview(id, change) {
+  const ep = EPISODES[id], row = ROWS.find(r => r.id === id) || {};
+  REVIEWS[id] = Object.assign({task_id: ep.task.id, automatic_tier: (ep.outcome || {}).tier || null, who: row.who, interface: row.interface,
+                               verdict: null, tier: null, comment: "", checks: {}}, REVIEWS[id] || {}, change, {updated_at: new Date().toISOString()});
+  if (SHARED) REVIEWS[id] = forPage({[id]: REVIEWS[id]})[id];
+  const ok = writeLocal(REVIEWS);
+  const s = document.getElementById("saved");
+  if (s) s.textContent = ok ? "Saved in this browser at " + new Date().toLocaleTimeString() + ". Export to keep a copy." : "Not saved: this browser will not store it. Export now.";
+  renderIndex();
+}
+document.getElementById("export").onclick = () => {
+  const blob = new Blob([JSON.stringify({format: "eprbench-reviews/1", exported_at: new Date().toISOString(), blind: !!DATA.blind, reviews: forPage(REVIEWS)}, null, 2)], {type: "application/json"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob); a.download = "eprbench-reviews-" + new Date().toISOString().slice(0, 10) + ".json";
+  document.body.appendChild(a); a.click(); a.remove();
+};
+document.getElementById("import").onchange = ev => {
+  const file = ev.target.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const data = parseSafe(reader.result);
+      if (!data || data.format !== "eprbench-reviews/1") throw new Error("not an EPR-Bench reviews file");
+      const incoming = forPage(cleanReviews(data.reviews), true);  // all of it checked before anything is applied
+      REVIEWS = merge(REVIEWS, incoming); writeLocal(REVIEWS); route();
+      alert("Imported " + Object.keys(incoming).length + " reviews.");
+    } catch (e) { alert("Could not import: " + e.message); }
+  };
+  reader.readAsText(file); ev.target.value = "";
+};
+
+// --- theme ---------------------------------------------------------------------------------------------------------
+const THEMES = ["auto", "light", "dark"];
+function setTheme(t) { if (t === "auto") document.documentElement.removeAttribute("data-theme"); else document.documentElement.setAttribute("data-theme", t);
+  try { localStorage.setItem("eprbench-theme", t); } catch (e) {} document.getElementById("theme").textContent = "Theme: " + t; }
+let theme = "auto"; try { theme = localStorage.getItem("eprbench-theme") || "auto"; } catch (e) {}
+setTheme(theme);
+document.getElementById("theme").onclick = () => { theme = THEMES[(THEMES.indexOf(theme) + 1) % 3]; setTheme(theme); };
+
+// --- index -----------------------------------------------------------------------------------------------------
+const FILTERS = [["task_id", "Task"], ["interface", "Interface"], ["who", "Agent"], ["tier", "Tier"], ["terminal_reason", "Ended"]];
+const FLAGS = {"": "Any", truncated: "Truncated", contaminated: "Contaminated", suspected: "Suspected", unsandboxed: "Unsandboxed",
+               unreviewed: "Not reviewed", reviewed: "Reviewed", disagreed: "Disagreed"};
+const state = {flag: "", text: ""};
+function buildFilters() {
+  const box = document.getElementById("filters");
+  let html = FILTERS.map(([k, label]) => {
+    const values = [...new Set(ROWS.map(r => r[k] == null ? "" : String(r[k])))].sort();
+    return `<label>${label}<select data-k="${k}"><option value="">All</option>${values.map(v => `<option>${h(v)}</option>`).join("")}</select></label>`;
+  }).join("");
+  html += `<label>Flags<select data-k="flag">${Object.entries(FLAGS).map(([v, l]) => `<option value="${v}">${l}</option>`).join("")}</select></label>`;
+  html += `<label>Search<input type="search" data-k="text" placeholder="task or title"></label>`;
+  box.innerHTML = html;
+  box.querySelectorAll("select,input").forEach(el => el.oninput = () => { state[el.dataset.k] = el.value; renderIndex(); });
+}
+function flagsOf(r) {
+  return [r.truncated && '<span class="chip warn">truncated</span>', r.contaminated && '<span class="chip bad">contaminated</span>',
+          r.suspected && '<span class="chip warn">suspected</span>', r.unsandboxed && '<span class="chip warn">unsandboxed</span>'].filter(Boolean).join("");
+}
+function visible() {
+  return ROWS.filter(r => FILTERS.every(([k]) => !state[k] || String(r[k] == null ? "" : r[k]) === state[k])
+    && (!state.text || (r.task_id + " " + (r.title || "")).toLowerCase().includes(state.text.toLowerCase()))
+    && (!state.flag || (["truncated", "contaminated", "suspected", "unsandboxed"].includes(state.flag) ? r[state.flag]
+        : state.flag === "unreviewed" ? !review(r.id).verdict : state.flag === "reviewed" ? !!review(r.id).verdict : review(r.id).verdict === "disagree")));
+}
+function reviewMark(id) { const v = review(id).verdict; return v === "agree" ? '<span class="chip ok">agreed</span>' : v === "disagree" ? '<span class="chip bad">disagreed</span>' : ""; }
+function renderIndex() {
+  const rows = visible();
+  document.getElementById("count").textContent = rows.length + " of " + ROWS.length + " episodes";
+  document.querySelector("#index tbody").innerHTML = rows.map(r => `<tr data-id="${r.id}"><td><a href="#${r.id}">${h(r.task_id)}</a><br><span class="muted">${h(r.title || "")}</span></td>
+    <td>${h(r.interface)}</td><td>${h(r.who)}</td><td>${r.tier ? `<span class="tier ${r.tier}">${r.tier}</span>` : "-"}</td>
+    <td class="hide-narrow">${h(r.terminal_reason)}</td><td>${flagsOf(r)}</td><td>${reviewMark(r.id)}</td></tr>`).join("") || '<tr><td colspan="7" class="muted">No episodes match.</td></tr>';
+  document.querySelectorAll("#index tbody tr[data-id]").forEach(tr => tr.onclick = () => { location.hash = tr.dataset.id; });
+}
+
+// --- one episode ------------------------------------------------------------------------------------------------
+function banner(ep, pid, item) {
+  const p = ep.patients[String(pid)]; if (!p) return `<span class="banner">patient ${h(pid)}</span>`;
+  const mine = !ep.task_patients.length || ep.task_patients.includes(pid);
+  const cls = item && item.wrong_patient && !mine ? "wrong" : mine ? "" : "other";
+  return `<span class="banner ${cls}" title="${mine ? "a patient this task concerns" : "not a patient this task concerns"}"><b>${h(p.name)}</b> · ${h(p.mrn)} · NHS ${h(p.nhs)} · ${h(p.dob)} ${h(p.sex)}</span>`;
+}
+function quiet(item) { return (item.type === "action" && !item.writes && !item.failed && !item.wrong_patient && !item.other_patient) || item.type === "screen" || item.type === "command"; }
+function shots(list) { return (list || []).map(s => `<a href="${h(s)}" target="_blank" rel="noopener"><img class="shot" loading="lazy" src="${h(s)}" alt="screenshot"></a>`).join(""); }
+function renderAction(ep, a) {
+  const cls = ["step", a.writes && "write", a.failed && "fail", a.wrong_patient && "wrong"].filter(Boolean).join(" ");
+  const badges = [a.final_chance && '<span class="chip warn">final chance</span>', a.writes && '<span class="chip ok">WRITE</span>', a.failed && '<span class="chip warn">error</span>',
+                  a.wrong_patient && '<span class="chip bad">WRONG PATIENT</span>', !a.wrong_patient && a.other_patient && '<span class="chip warn">another patient</span>'].filter(Boolean).join("");
+  const ops = (a.ops || []).map(o => `<div><b>${h(o.op)}</b> ${o.ok ? '<span class="pass">ok</span>' : `<span class="failx">${h(o.error)}</span>`} <span class="muted">${h(day(o.at))}</span>
+      ${o.patient != null && (a.patients || []).length > 1 ? banner(ep, o.patient, a) : ""}<details${a.writes ? " open" : ""}><summary class="muted">arguments and result</summary><pre>${h(json(o.args))}</pre><pre>${h(json(o.result))}</pre></details></div>`).join("");
+  const own = a.ops && a.ops.length ? "" : `<pre>${h(json(a.args))}</pre>${a.result != null ? `<pre>${h(json(a.result))}</pre>` : ""}`;
+  return `<details class="${cls}"${a.writes || a.wrong_patient ? " open" : ""}><summary><time>${h(hhmm(a.at))}</time><span class="muted">#${h(a.n)}</span> <b>${h(a.name)}</b>
+    <span class="muted">${h(brief(a.args))}</span>${a.until ? ` <span class="chip">until ${h(hhmm(a.until))}</span>` : ""} ${badges} ${(a.patients || []).map(p => banner(ep, p, a)).join("")}</summary>
+    ${a.error ? `<div class="failx">${h(a.error)}</div>` : ""}${own}${ops}${shots(a.screenshots)}</details>`;
+}
+function renderAnswer(ep, answer) {
+  if (answer == null) return '<p class="muted">No answer.</p>';
+  if (typeof answer === "string") return `<div class="say">${h(answer)}</div>`;
+  const form = ep.task.answer_form || [], fields = answer.fields || {};
+  const names = [...new Set([...form.map(f => f.name), ...Object.keys(fields)])];
+  const show = v => v == null ? '<span class="muted">not answered</span>' : typeof v === "object" ? h([v.value, v.unit].filter(x => x != null).join(" ")) : v === true ? "Yes" : v === false ? "No" : h(v);
+  return `<dl class="kv">${names.map(n => { const f = form.find(x => x.name === n) || {}; return `<dt>${h(f.prompt || n)}</dt><dd>${show(fields[n])}</dd>`; }).join("")}</dl>
+    ${answer.text ? `<div class="say">${h(answer.text)}</div>` : ""}`;
+}
+function renderItem(ep, it) {
+  switch (it.type) {
+    case "model": return `<div class="say"><span class="who">Model</span>${h(it.text.join("\n\n"))}${it.reasoning.length ? `<details><summary class="muted">Reasoning</summary><pre>${h(it.reasoning.join("\n\n"))}</pre></details>` : ""}</div>`;
+    case "command": return `<div class="cmd"><span class="muted">Command</span><code>${h(it.command)}</code></div>`;
+    case "action": return renderAction(ep, it);
+    case "screen": return `<div class="step"><span class="muted">Screen after the actions</span>${shots(it.screenshots)}</div>`;
+    case "event": return `<div class="event"><time>${h(hhmm(it.at))}</time><span class="chip">${h(it.kind)}</span>${it.name ? ` <b>${h(it.name)}</b>` : ""} ${it.patient != null ? banner(ep, it.patient) : ""}
+      <ul class="plain">${it.what.map(w => `<li>${h(w)}</li>`).join("")}</ul></div>`;
+    case "submission": return `<div class="answer"><b>${it.accepted ? "Answer submitted" : "Submission refused"}</b> <span class="muted">via ${h(it.interface)}${it.at ? " at " + h(hhmm(it.at)) : ""}</span>
+      ${it.problems.length ? `<ul>${it.problems.map(p => `<li class="failx">${h(p)}</li>`).join("")}</ul>` : ""}${renderAnswer(ep, it.answer)}</div>`;
+    case "note": return `<div class="note">${h(it.text)}</div>`;
+    case "group": return `<div class="group"><div class="muted">${h(it.label)}: the server's order; which command made each call is not certain</div>${it.items.map(x => renderItem(ep, x)).join("")}</div>`;
+    case "end": return `<div class="answer"><h3>Final answer</h3><p><span class="chip">${h(it.terminal_reason)}</span> <span class="muted">${h(it.detail || "")}</span></p>
+      ${renderAnswer(ep, it.answer)}${it.closing_message ? `<p class="muted">Closing message: ${h(it.closing_message)}</p>` : ""}</div>`;
+  }
+  return "";
+}
+function renderTimeline(ep) {
+  const out = []; let group = [];
+  const close = () => {
+    if (!group.length) return;
+    const steps = group.filter(g => g.type === "action"), names = [...new Set(steps.map(g => g.name))];
+    out.push(steps.length < 2 ? group.map(g => renderItem(ep, g)).join("") : `<details class="quiet"><summary>${steps.length} read-only steps: ${h(names.slice(0, 6).join(", "))}${names.length > 6 ? "…" : ""}</summary>${group.map(g => renderItem(ep, g)).join("")}</details>`);
+    group = [];
+  };
+  for (const it of ep.timeline) { if (quiet(it)) group.push(it); else { close(); out.push(renderItem(ep, it)); } }
+  close();
+  return out.join("");
+}
+function list(title, items, fmt) { return items && items.length ? `<h3>${title}</h3><ul class="plain">${items.map(fmt).join("")}</ul>` : ""; }
+function checkDesc(ep, id) { const c = ep.task.checks.find(x => x.id === id); return c && c.description ? `: ${h(c.description)}` : ""; }
+function renderOutcome(ep) {
+  const o = ep.outcome || {};
+  if (!o.tier) return '<p class="muted">Not graded.</p>';
+  const p = o.pathway, harm = e => `<li class="failx">${h(e.id)}${e.event ? ` (${h(e.event)})` : ""}${checkDesc(ep, e.id)} <span class="chip ${e.projected ? "warn" : "bad"}">${e.projected ? "projected" : "observed"}</span>${e.in_tier === false ? ' <span class="chip">not in the tier</span>' : ""}${e.evidence ? `<pre>${h(json(e.evidence))}</pre>` : ""}</li>`;
+  let html = `<p><span class="tier ${o.tier}">${o.tier}</span> <span class="muted">score ${ep.score == null ? "-" : Number(ep.score).toFixed(2)} · ${h(o.roles)} task${o.track ? " · " + h(o.track) : ""}</span></p>`;
+  if (o.truncated) html += `<div class="warnbox">Truncated (${h(o.terminal_reason)}): this tier is not a clinical outcome, and projected harm is left out of it.</div>`;
+  if (p) html += `<h3>Pathway: ${h(p.name)} (${Math.round(p.completion * 100)}%)</h3><ul class="plain">${p.satisfied.map(i => `<li><span class="pass">✓</span> ${h(i)}${checkDesc(ep, i)}${(p.standing || []).includes(i) ? ' <span class="chip">already met at the start</span>' : ""}</li>`).join("")}${p.missing.map(i => `<li><span class="failx">✗</span> ${h(i)}${checkDesc(ep, i)}</li>`).join("")}</ul>
+    ${p.alternatives && p.alternatives.length > 1 ? `<p class="muted">Alternatives: ${p.alternatives.map(a => `${h(a.name)} ${Math.round(a.completion * 100)}%`).join(", ")}</p>` : ""}`;
+  html += list("Harm", o.harms, harm) + list("Near misses", o.near_misses, harm);
+  html += list("Scope violations", o.scope_violations, s => `<li class="failx">${h(s.id)}${checkDesc(ep, s.id)}${s.evidence ? `<pre>${h(json(s.evidence))}</pre>` : ""}</li>`);
+  if (o.waste && o.waste.count) html += `<h3>Waste</h3><p>${o.waste.count} order(s), £${Number(o.waste.gbp).toFixed(2)}: ${o.waste.orders.map(w => h(w.orderable_code)).join(", ")}</p>`;
+  if (o.bonuses && (o.bonuses.met.length || o.bonuses.missed.length)) html += `<h3>Bonuses</h3><p>Met: ${h(o.bonuses.met.join(", ") || "none")}; missed: ${h(o.bonuses.missed.join(", ") || "none")}</p>`;
+  html += list("Safety findings", o.safety_findings, f => `<li><b>${h(f.code)}</b>: ${h(f.description)} <span class="muted">${h(f.detail)}</span></li>`);
+  if (o.answer_fields) html += `<h3>Answer fields as graded</h3><dl class="kv">${Object.entries(o.answer_fields.fields).map(([k, v]) => `<dt>${h(k)}</dt><dd>${h(v.status)}${v.normalised != null ? ": " + h(brief(v.normalised)) : ""}</dd>`).join("")}</dl>`;
+  if (o.horizon) html += `<p class="muted">Also judged at the horizon, ${h(day(o.horizon.at))}.</p>`;
+  const r = review(ep.id), mark = (r.checks || {});
+  html += `<h3>Checks</h3><div class="table-wrap"><table><thead><tr><th>Check</th><th>Role</th><th>Result</th><th>Disagree</th></tr></thead><tbody>${(ep.checks || []).map(c => {
+    const def = ep.task.checks.find(x => x.id === c.id) || {};
+    return `<tr><td><b>${h(c.id)}</b><br><span class="muted">${h(def.description || "")}</span>${def.predicate ? `<details><summary class="muted">how it is checked</summary><pre>${h(json(def.predicate))}</pre></details>` : ""}</td>
+      <td>${h(c.role || def.role)}</td><td>${c.passed ? '<span class="pass">passed</span>' : '<span class="failx">not passed</span>'}</td>
+      <td><input type="checkbox" class="check-toggle" data-check="${h(c.id)}" aria-label="Disagree with ${h(c.id)}"${mark[c.id] === "disagree" ? " checked" : ""}></td></tr>`; }).join("")}</tbody></table></div>`;
+  return html;
+}
+function renderReview(ep) {
+  const r = review(ep.id), auto = (ep.outcome || {}).tier;
+  const radio = (name, value, label, on) => `<label class="r"><input type="radio" name="${name}" value="${value}"${on ? " checked" : ""}> ${label}</label>`;
+  return `<fieldset><legend>Automatic grade: ${auto ? `<span class="tier ${auto}">${auto}</span>` : "none"}</legend>
+      ${radio("verdict", "agree", "Agree", r.verdict === "agree")}${radio("verdict", "disagree", "Disagree", r.verdict === "disagree")}</fieldset>
+    <fieldset><legend>Your tier</legend>${TIERS.map(t => radio("mytier", t, t, r.tier === t)).join("")}${radio("mytier", "", "none given", !r.tier)}</fieldset>
+    <fieldset><legend>Comment</legend>${SHARED && !DATA.keep_comments ? '<p class="muted">This public page keeps no comments.</p>' : ""}<textarea id="comment" rows="4"${SHARED && !DATA.keep_comments ? " disabled" : ""} placeholder="What the grade missed, or what the agent did well or badly">${h(r.comment || "")}</textarea></fieldset>
+    <p class="muted">Tick "Disagree" against any check above that you think is wrong. <span id="saved"></span></p>`;
+}
+function renderDetail(id) {
+  const ep = EPISODES[id], box = document.getElementById("detail");
+  const order = visible().map(r => r.id), i = order.indexOf(id);
+  const prev = i > 0 ? order[i - 1] : null, next = i >= 0 && i < order.length - 1 ? order[i + 1] : null;
+  const w = ep.who, res = ep.result;
+  const who = w.code ? `<span class="chip">${h(w.code)}</span>` : ["harness", "provider", "model", "agent", "effort"].filter(k => w[k]).map(k => `<span class="chip" title="${k}">${h(w[k])}</span>`).join("");
+  box.innerHTML = `<nav class="pager"><a href="#">← All episodes</a>${prev ? `<a href="#${prev}">‹ Previous</a>` : ""}${next ? `<a href="#${next}">Next ›</a>` : ""}</nav>
+    <div class="card"><h2>${h(ep.task.id)} <span class="muted">${h(ep.task.title || "")}</span></h2>
+      <p>${who} <span class="chip">${h(w.interface)}</span> ${(ep.outcome || {}).tier ? `<span class="tier ${ep.outcome.tier}">${ep.outcome.tier}</span>` : ""} <span class="chip">${h(res.terminal_reason)}</span>
+      ${flagsOf(ROWS.find(r => r.id === id) || {})}</p>
+      <p class="muted">Starts ${h(day(ep.task.start_time))} (simulated) · ${h(res.actions)} actions${res.requests != null ? ` · ${h(res.requests)} model requests` : ""} · ${h(res.wall_seconds)} s wall clock${res.error ? ` · error: ${h(res.error)}` : ""}</p>
+      <h3>Instruction</h3><p>${h(ep.task.instruction)}</p>
+      ${ep.task.answer_form ? `<p class="muted">Answer form: ${ep.task.answer_form.map(f => h(f.prompt || f.name) + " (" + h(f.kind) + ")").join("; ")}</p>` : ""}
+      ${ep.task_patients.length ? `<p>${ep.task_patients.map(p => banner(ep, p)).join("")}</p>` : ""}</div>
+    <div class="card"><h3>Timeline</h3><div class="timeline">${renderTimeline(ep)}</div></div>
+    <div class="card"><h3>Outcome</h3>${renderOutcome(ep)}</div>
+    <div class="card review"><h3>Your review</h3>${renderReview(ep)}</div>`;
+  box.querySelectorAll('input[name="verdict"]').forEach(el => el.onchange = () => saveReview(id, {verdict: el.value}));
+  box.querySelectorAll('input[name="mytier"]').forEach(el => el.onchange = () => saveReview(id, {tier: el.value || null}));
+  box.querySelector("#comment").oninput = ev => saveReview(id, {comment: ev.target.value});
+  box.querySelectorAll(".check-toggle").forEach(el => el.onchange = () => {
+    const checks = Object.assign({}, review(id).checks || {}); if (el.checked) checks[el.dataset.check] = "disagree"; else delete checks[el.dataset.check];
+    saveReview(id, {checks});
+  });
+}
+function route() {
+  const id = decodeURIComponent(location.hash.slice(1));
+  const show = !!EPISODES[id];
+  document.getElementById("list").hidden = show; document.getElementById("detail").hidden = !show;
+  if (show) { renderDetail(id); window.scrollTo(0, 0); } else renderIndex();
+}
+document.getElementById("notes").textContent = (DATA.notes || []).map(n => n.charAt(0).toUpperCase() + n.slice(1) + ".").join(" ");
+buildFilters(); renderIndex(); window.onhashchange = route; route();
+</script>
+</body>
+</html>

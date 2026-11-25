@@ -1,0 +1,28 @@
+EPR-Bench
+Copyright 2026 Dr Cameron Dent
+
+This product includes software and content developed by Dr Cameron Dent
+(https://github.com/c4m3r0nn/EPR-Bench).
+
+The code is licensed under the Apache License, Version 2.0 (see LICENSE).
+The cases, synthetic patients, bundles, task definitions, documentation and
+recorded evidence are licensed under the Creative Commons Attribution 4.0
+International licence (see LICENSE-CONTENT.md for the paths it covers).
+
+All patients, clinicians and records in this repository are fictional.
+
+Third-party data
+----------------
+
+NHS Dictionary of Medicines and Devices (dm+d)
+
+  src/eprbench/data/catalogues/dmd.json is derived from NHS dm+d release
+  10.2.0 (19 October 2026). tests/fixtures/dmd/ holds a small dm+d release
+  (26 August 2021) copied from the test resources of
+  https://github.com/wardle/dmd. Both are used under the Open Government
+  Licence v3.0:
+  https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/
+
+  Contains public sector information licensed under the Open Government
+  Licence v3.0 (NHS Business Services Authority, NHS Dictionary of Medicines
+  and Devices).

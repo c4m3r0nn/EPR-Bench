@@ -1,0 +1,316 @@
+{% extends "base.html" %}
+{% from "_macros.html" import radios %}
+{% macro dt(value) %}{{ (value or '')|replace('T', ' ')|replace(':00Z', '')|replace('Z', '') }}{% endmacro %}
+{% block title %}{{ p.name }} ({{ p.mrn }}) - EPR{% endblock %}
+{% block content %}
+<section class="card banner" id="patient-banner" aria-label="Patient banner">
+  <h1>{{ p.name }}</h1>
+  <dl>
+    <div><dt>Hospital no.</dt><dd>{{ p.mrn }}</dd></div>
+    <div><dt>NHS no.</dt><dd>{{ p.nhs_number }}</dd></div>
+    <div><dt>Born</dt><dd>{{ p.dob }}</dd></div>
+    <div><dt>Sex</dt><dd>{{ p.sex }}</dd></div>
+    <div><dt>Location</dt><dd>{{ p.location or 'Not admitted' }}{% if p.bed %}, bed {{ p.bed }}{% endif %}</dd></div>
+    <div><dt>Allergies</dt><dd class="allergy"{{ tag('get_patient', p, p.patient_id, 'allergies') }}>{% for a in p.allergies %}{{ a.substance }}{% if a.reaction %} ({{ a.reaction }}){% endif %}{% if not loop.last %}; {% endif %}{% else %}None recorded{% endfor %}</dd></div>
+  </dl>
+</section>
+
+<nav class="tabs" aria-label="Patient menu" id="patient-menu">
+  {% for s in menu %}<a href="{% if s.tab %}/patients/{{ p.patient_id }}?tab={{ s.tab }}{% else %}{{ s.href }}{% endif %}"{% if s.tab and s.tab == tab %} aria-current="page"{% endif %}>{{ s.name }}</a>{% endfor %}
+</nav>
+<p class="muted" id="section-description">{{ section.description }}</p>
+
+{% if error %}<div class="error" role="alert">{{ error }}</div>{% endif %}
+
+{% if tab == 'summary' %}
+<section class="card"{{ tag('get_patient', p, p.patient_id, 'encounter') }}><h2>Current admission</h2>
+  {% set e = p.current_encounter %}
+  {% if e %}<p>{{ e.kind|capitalize }} under {{ e.consultant or 'unknown consultant' }} ({{ e.specialty or 'no specialty' }}), admitted {{ dt(e.admitted_at) }}.<br>Presenting complaint: {{ e.presenting_complaint or 'not recorded' }}</p>
+  {% else %}<p class="muted">Not currently admitted.</p>{% endif %}
+</section>
+<section class="card"{{ tag('get_patient', p, p.patient_id, 'problems') }}><h2>Problem list</h2>
+  <table id="problems"><thead><tr><th>Problem</th><th>Onset</th><th>Resolved</th></tr></thead><tbody>
+  {% for x in p.problems %}<tr><td class="wrap">{{ x.display }}</td><td>{{ x.onset_date or '' }}</td><td>{{ x.resolved_date or '' }}</td></tr>
+  {% else %}<tr><td colspan="3" class="muted">None recorded.</td></tr>{% endfor %}
+  </tbody></table>
+</section>
+<section class="card"><h2>Admissions and attendances</h2>
+  <table id="encounters"><thead><tr><th>From</th><th>To</th><th>Type</th><th>Location</th><th>Specialty</th><th>Consultant</th><th>Presenting complaint</th></tr></thead><tbody>
+  {% for e in encounters %}<tr{{ tag('list_encounters', {'encounters': [e]}, p.patient_id) }}><td>{{ dt(e.admitted_at) }}</td><td>{{ dt(e.discharged_at) or 'current' }}</td><td>{{ e.kind }}</td><td>{{ e.location or '' }}</td><td>{{ e.specialty or '' }}</td><td>{{ e.consultant or '' }}</td><td class="wrap">{{ e.presenting_complaint or '' }}</td></tr>{% endfor %}
+  </tbody></table>
+</section>
+<section class="card"><h2>Update record</h2>
+  <form method="post" action="/patients/{{ p.patient_id }}/problems" id="problem-form">
+    <div class="grid">
+      <div><label for="problem-display">Add to problem list</label><input type="text" name="display" id="problem-display" required size="40"></div>
+      <div><label for="problem-onset">Onset (YYYY-MM-DD, blank for today)</label><input type="text" name="onset_date" id="problem-onset" size="12" placeholder="YYYY-MM-DD"></div>
+      <div><label>&nbsp;</label><button type="submit" class="secondary">Add problem</button></div>
+    </div>
+  </form>
+  <form method="post" action="/patients/{{ p.patient_id }}/allergies" id="allergy-form">
+    <div class="grid">
+      <div><label for="allergy-substance">Record allergy to</label><input type="text" name="substance" id="allergy-substance" required></div>
+      <div><label for="allergy-reaction">Reaction</label><input type="text" name="reaction" id="allergy-reaction"></div>
+      <div><label>Severity</label>{{ radios('severity', [('mild', 'Mild'), ('moderate', 'Moderate'), ('severe', 'Severe')], '', 'allergy-severity') }}</div>
+      <div><label>&nbsp;</label><button type="submit" class="secondary">Add allergy</button></div>
+    </div>
+  </form>
+</section>
+<section class="card"{{ tag('get_patient', p, p.patient_id, 'demographics') }}><h2>Demographics</h2><p>{{ p.address or '' }}<br>GP: {{ p.gp_practice or 'not recorded' }}</p></section>
+
+{% elif tab == 'notes' %}
+{% if note %}
+<section class="card" id="note-view"{{ tag('get_note', note, p.patient_id) }}><h2>{% if note.status == 'draft' %}<span class="flag">DRAFT</span> {% endif %}{{ note.title }}</h2>
+  <p class="muted">{{ note.kind }} · {{ note.author }}{% if note.author_role %} ({{ note.author_role }}){% endif %} · {{ dt(note.written_at) }}{% if note.status == 'draft' %} · draft, not finalised{% if note.updated_at %} (last edited {{ dt(note.updated_at) }}){% endif %}{% elif note.finalised_at %} · finalised by {{ note.finalised_by }} {{ dt(note.finalised_at) }}{% endif %}</p>
+  {% if note.status == 'draft' and note.author == actor %}
+  <form method="post" action="/patients/{{ p.patient_id }}/notes/{{ note.note_id }}" id="note-edit-form">
+    <label for="note-edit-title">Title</label><input type="text" name="title" id="note-edit-title" value="{{ note.title }}" required size="60">
+    <label for="note-edit-body">Note</label><textarea name="body" id="note-edit-body" rows="8" required>{{ note.body }}</textarea>
+    <p><button type="submit" name="status" value="draft" class="secondary">Save draft</button> <button type="submit" name="status" value="final">Finalise</button></p>
+  </form>
+  {% else %}<pre>{{ note.body }}</pre>{% endif %}
+</section>
+{% endif %}
+<section class="card"{{ tag('list_notes', {'notes': notes}, p.patient_id) }}><h2>Notes</h2>
+  <table id="notes"><thead><tr><th>Written</th><th>Type</th><th>Title</th><th>Author</th><th>Status</th></tr></thead><tbody>
+  {% for n in notes %}<tr><td>{{ dt(n.written_at) }}</td><td>{{ n.kind }}</td><td class="wrap"><a href="/patients/{{ p.patient_id }}?tab=notes&amp;note_id={{ n.note_id }}">{{ n.title }}</a></td><td>{{ n.author }}{% if n.author_role %} ({{ n.author_role }}){% endif %}</td><td{% if n.status == 'draft' %} class="flag"{% endif %}>{{ 'DRAFT' if n.status == 'draft' else 'final' }}</td></tr>
+  {% else %}<tr><td colspan="5" class="muted">No notes.</td></tr>{% endfor %}
+  </tbody></table>
+</section>
+<section class="card"><h2>Write a note</h2>
+  <form method="post" action="/patients/{{ p.patient_id }}/notes" id="note-form">
+    <label>Type</label>
+    {{ radios('kind', [('progress', 'Progress note'), ('ward_round', 'Ward round'), ('clerking', 'Clerking'), ('discharge_summary', 'Discharge summary'), ('other', 'Other')], 'progress', 'note-kind') }}
+    <label for="note-kind-other">Other type (if Other)</label><input type="text" name="kind_other" id="note-kind-other" size="20" placeholder="e.g. handover">
+    <label for="note-title">Title</label><input type="text" name="title" id="note-title" required size="60">
+    <label for="note-body">Note</label><textarea name="body" id="note-body" rows="8" required></textarea>
+    <label>Save as</label>{{ radios('status', [('final', 'Final'), ('draft', 'Draft (finalise it later)')], 'final', 'note-status') }}
+    <p><button type="submit">Save note</button></p>
+  </form>
+</section>
+
+{% elif tab == 'observations' %}
+{% set kinds = ['RR', 'SPO2', 'ON_O2', 'SBP', 'DBP', 'HR', 'ACVPU', 'TEMP', 'WEIGHT', 'HEIGHT', 'GLUCOSE'] %}
+<section class="card"><h2>Observations</h2>
+  <table id="observations"><thead><tr><th>Taken</th>{% for k in kinds %}<th>{{ k|replace('_', ' ') }}</th>{% endfor %}<th>BMI</th><th>NEWS2</th><th>By</th></tr></thead><tbody>
+  {% for s in obs_sets %}<tr{% if s.entered_in_error %} class="in-error"{% endif %}{{ tag('list_observations', {'observation_sets': [s]}, p.patient_id) }}><td>{{ dt(s.taken_at) }}</td>{% for k in kinds %}<td>{% set v = s['values'].get(k) %}{% if v is none %}{% elif k == 'ON_O2' %}{{ 'O2' if v else 'Air' }}{% elif v is number %}{{ v|num }}{% else %}{{ v }}{% endif %}</td>{% endfor %}<td>{{ '' if s.bmi is none else s.bmi|num }}</td><td{% if s.news2 is not none and s.news2 >= 5 %} class="flag"{% endif %}>{{ '' if s.news2 is none else s.news2 }}</td><td>{{ s.recorded_by or '' }}</td></tr>
+  <tr class="actions"><td colspan="{{ kinds|length + 4 }}">{% if s.entered_in_error %}<span class="muted">Entered in error: marked by {{ s.entered_in_error.by }} at {{ dt(s.entered_in_error.at) }} ({{ s.entered_in_error.reason }})</span>
+    {% else %}<form method="post" action="/patients/{{ p.patient_id }}/observations/{{ s.observation_set_id }}/error"><input type="text" name="reason" placeholder="Reason" aria-label="Reason observations taken {{ dt(s.taken_at) }} were entered in error" size="28"> <button type="submit" class="secondary" aria-label="Mark observations taken {{ dt(s.taken_at) }} as entered in error">Entered in error</button></form>{% endif %}</td></tr>
+  {% else %}<tr><td colspan="{{ kinds|length + 4 }}" class="muted">No observations charted.</td></tr>{% endfor %}
+  </tbody></table>
+</section>
+<section class="card"><h2>Chart observations</h2>
+  <form method="post" action="/patients/{{ p.patient_id }}/observations" id="obs-form">
+    <div class="grid">
+    {% for k in kinds %}<div><label{% if k not in ('ACVPU', 'ON_O2') %} for="obs-{{ k }}"{% endif %}>{{ k|replace('_', ' ') }}</label>
+      {% if k == 'ACVPU' %}{{ radios('ACVPU', [('A', 'A'), ('C', 'C'), ('V', 'V'), ('P', 'P'), ('U', 'U')], '', 'obs-ACVPU') }}
+      {% elif k == 'ON_O2' %}{{ radios('ON_O2', [('0', 'Air'), ('1', 'Oxygen')], '', 'obs-ON_O2') }}
+      {% else %}<input type="number" step="any" name="{{ k }}" id="obs-{{ k }}" style="width:6em">{% endif %}</div>{% endfor %}
+    </div>
+    <p><button type="submit">Save observations</button></p>
+  </form>
+</section>
+
+
+{% elif tab == 'medications' %}
+<section class="card"><h2>Drug chart</h2>
+  <table id="medications"><thead><tr><th>Type</th><th>Drug</th><th>Dose</th><th>Route</th><th>Frequency</th><th>Duration</th><th>Indication</th><th>Prescriber</th><th>Started</th><th>Stopped</th><th>Doses recorded</th></tr></thead><tbody>
+  {% for m in medications %}<tr{{ tag('list_medications', {'medications': [m]}, p.patient_id) }}><td>{{ m.kind|upper }}</td><td>{{ m.drug }}</td><td>{{ m.dose }}</td><td>{{ m.route }}</td><td>{{ m.frequency }}</td><td>{{ m.duration or '' }}</td><td class="wrap">{{ m.indication or '' }}</td><td>{{ m.prescriber }}</td><td>{{ dt(m.started_at) }}</td>
+    <td class="wrap">{{ dt(m.stopped_at) }}{% if m.stop_reason %} ({{ m.stop_reason }}){% endif %}</td>
+    <td>{% for a in m.administrations %}{{ dt(a.at) }} {{ a.status }}{% if a.dose and a.status == 'given' %} {{ a.dose }}{% endif %}{% if a.note %} ({{ a.note }}){% endif %}<br>{% endfor %}</td></tr>
+    {% if not m.stopped_at %}<tr class="actions"><td></td><td colspan="10">
+      {% if m.kind != 'tto' %}<form method="post" action="/patients/{{ p.patient_id }}/medications/{{ m.medication_id }}/administrations">Record {{ m.drug }} dose: <input type="text" name="dose" placeholder="{{ m.dose }}" aria-label="Amount of {{ m.drug }} given, if not {{ m.dose }}" size="9"> <input type="text" name="note" placeholder="Reason or note" aria-label="Reason or note for {{ m.drug }} dose" size="18"> {% for s in ['given', 'omitted', 'refused'] %}<button type="submit" name="status" value="{{ s }}" class="secondary" aria-label="Record {{ m.drug }} dose as {{ s }}">{{ s|capitalize }}</button> {% endfor %}</form>{% endif %}
+      <form method="post" action="/patients/{{ p.patient_id }}/medications/{{ m.medication_id }}/stop"><input type="text" name="reason" required placeholder="Reason" aria-label="Reason for stopping {{ m.drug }}" size="14"> <button type="submit" class="secondary" aria-label="Stop {{ m.drug }}">Stop {{ m.drug }}</button></form>
+    </td></tr>{% endif %}
+  {% else %}<tr><td colspan="11" class="muted">No medications.</td></tr>{% endfor %}
+  </tbody></table>
+</section>
+<section class="card" id="prescribe"><h2>Prescribe</h2>
+  {% set rxbase = '/patients/' ~ p.patient_id ~ '?tab=medications' %}
+  <form method="get" action="/patients/{{ p.patient_id }}" id="formulary-search">
+    <input type="hidden" name="tab" value="medications">
+    <label for="rx-search">Search the formulary</label>
+    <input type="search" name="rx_q" id="rx-search" value="{{ rx_q or rx_drug }}" size="30"> <button type="submit" class="secondary">Search</button>
+  </form>
+  {% if rx_step == 'drug' %}
+    <h3>Drugs matching "{{ rx_q }}"</h3>
+    <ul class="menu" id="rx-drugs">{% for d in drugs %}<li><a href="{{ rxbase }}&amp;rx_drug={{ d|urlencode }}">{{ d }}</a></li>{% else %}<li class="muted">Nothing in the formulary matches.</li>{% endfor %}</ul>
+  {% elif rx_step == 'product' %}
+    <h3>{{ rx_drug }}: choose a product</h3>
+    <ul class="menu" id="rx-products">{% for pr in products %}<li><a href="{{ rxbase }}&amp;rx_drug={{ rx_drug|urlencode }}&amp;rx_product={{ pr.name|urlencode }}">{{ pr.name }}</a> <span class="muted">({{ pr.routes|join(', ') }})</span></li>{% endfor %}</ul>
+  {% elif rx_step == 'form' %}
+    <h3>{{ chosen.name if chosen else rx_drug }}</h3>
+    {% if chosen %}<p class="muted">{{ chosen.form }}{% if chosen.controlled_drug %} · <strong>{{ chosen.controlled_drug }}</strong>{% endif %}</p>{% endif %}
+    <form method="post" action="/patients/{{ p.patient_id }}/medications" id="prescribe-form">
+      <input type="hidden" name="drug" value="{{ rx_drug }}">
+      <input type="hidden" name="product" value="{{ chosen.name if chosen else '' }}">
+      {% set route_opts = [] %}{% for r in (chosen.routes if chosen else []) %}{% set _ = route_opts.append((r, r)) %}{% endfor %}
+      <label>Route</label>{{ radios('route', route_opts, draft.route or (route_opts[0][0] if route_opts|length == 1 else ''), 'med-route') if route_opts else '' }}
+      {% if not route_opts %}<input type="text" name="route" id="med-route" value="{{ draft.route }}" size="8">{% endif %}
+      <div class="grid">
+        <div><label for="med-dose">Dose</label><input type="text" name="dose_value" id="med-dose" value="{{ draft.dose_value }}" size="8" required></div>
+      </div>
+      {% set unit_opts = [] %}{% for u in units %}{% set _ = unit_opts.append((u, u)) %}{% endfor %}
+      <label>Dose unit</label>{{ radios('dose_unit', unit_opts, draft.dose_unit, 'med-unit') }}
+      {% set freq_opts = [] %}{% for fq in frequencies %}{% set _ = freq_opts.append((fq, fq)) %}{% endfor %}
+      <label>Frequency</label>{{ radios('frequency', freq_opts, draft.frequency, 'med-frequency') }}
+      <div class="grid">
+        <div><label for="med-frequency-other">Other frequency</label><input type="text" name="frequency_other" id="med-frequency-other" value="{{ draft.frequency_other }}" size="16" placeholder="e.g. every 2 hours"></div>
+        <div><label for="med-frequency-detail">Day(s), for a weekly medicine</label><input type="text" name="frequency_detail" id="med-frequency-detail" value="{{ draft.frequency_detail }}" size="16" placeholder="e.g. Mondays"></div>
+      </div>
+      <label>Type</label>{{ radios('kind', [('regular', 'Regular'), ('prn', 'As required (PRN)'), ('stat', 'Once only (STAT)'), ('tto', 'Discharge (TTO)')], draft.kind or 'regular', 'med-kind') }}
+      <div class="grid">
+        <div><label for="med-duration">Duration</label><input type="text" name="duration" id="med-duration" size="10" value="{{ draft.duration }}"></div>
+        <div><label for="med-indication">Indication</label><input type="text" name="indication" id="med-indication" value="{{ draft.indication }}"></div>
+        <div><label for="med-override">Reason for overriding an alert</label><input type="text" name="override_reason" id="med-override" size="30"></div>
+      </div>
+      <p><button type="submit">Prescribe</button></p>
+    </form>
+  {% endif %}
+</section>
+
+{% elif tab == 'fluids' %}
+<section class="card"{{ tag('get_fluid_balance', fluids, p.patient_id) }}><h2>Fluid balance, last {{ fluids.hours }} hours</h2>
+  <form method="get" action="/patients/{{ p.patient_id }}" id="fluid-period">
+    <input type="hidden" name="tab" value="fluids">
+    <label for="fluid-hours">Hours to show (1 to 72)</label><input type="number" name="fluid_hours" id="fluid-hours" min="1" max="72" value="{{ fluids.hours }}" style="width:5em"> <button type="submit" class="secondary">Show</button>
+  </form>
+  <p id="fluid-totals">In {{ fluids.total_in_ml }} mL · Out {{ fluids.total_out_ml }} mL · Balance <strong>{{ '%+d'|format(fluids.balance_ml) }} mL</strong></p>
+  <table id="fluids"><thead><tr><th>Time</th><th>In / out</th><th>Type</th><th>Volume (mL)</th><th>By</th></tr></thead><tbody>
+  {% for f in fluids.entries %}<tr><td>{{ dt(f.at) }}</td><td>{{ f.direction }}</td><td>{{ f.kind }}</td><td>{{ f.volume_ml }}</td><td>{{ f.recorded_by or '' }}</td></tr>
+  {% else %}<tr><td colspan="5" class="muted">Nothing charted.</td></tr>{% endfor %}
+  </tbody></table>
+  <form method="post" action="/patients/{{ p.patient_id }}/fluids" id="fluid-form">
+    <div class="grid">
+      <div><label>Direction</label>{{ radios('direction', [('in', 'In'), ('out', 'Out')], '', 'fluid-direction') }}</div>
+      <div><label for="fluid-kind">Type</label><input type="text" name="kind" id="fluid-kind" required size="14"></div>
+      <div><label for="fluid-volume">Volume (mL)</label><input type="number" name="volume_ml" id="fluid-volume" min="1" required style="width:7em"></div>
+      <div><label>&nbsp;</label><button type="submit" class="secondary">Chart fluid</button></div>
+    </div>
+  </form>
+</section>
+
+{% elif tab == 'referrals' %}
+<section class="card"><h2>Referrals</h2>
+  <table id="referrals"><thead><tr><th>Sent</th><th>To</th><th>Urgency</th><th>Reason</th><th>By</th><th>Status</th></tr></thead><tbody>
+  {% for r in referrals %}{% set seen = tag('list_referrals', {'referrals': [r]}, p.patient_id) %}<tr{{ seen }}><td>{{ dt(r.referred_at) }}</td><td>{{ r.specialty }}{% if r.pathway %} <span class="muted">(pathway)</span>{% endif %}</td><td>{{ r.urgency }}</td><td class="wrap">{{ r.reason }}</td><td>{{ r.referred_by }}</td><td>{{ r.status }}</td></tr>
+  {% if r.pathway_details %}<tr class="actions"{{ seen }}><td colspan="6" class="wrap" id="referral-details-{{ r.referral_id }}">{% for k, v in r.pathway_details.items() %}{{ k|replace('_', ' ') }}: {{ v }}{% if not loop.last %} · {% endif %}{% endfor %}</td></tr>{% endif %}
+  {% if r.response %}<tr class="actions"{{ seen }}><td colspan="6" class="wrap" id="referral-response-{{ r.referral_id }}"><strong>Response from {{ r.response.by }}{% if r.response.role %} ({{ r.response.role }}){% endif %}, {{ dt(r.response.at) }}:</strong> {{ r.response.text }}</td></tr>{% endif %}
+  {% else %}<tr><td colspan="6" class="muted">No referrals.</td></tr>{% endfor %}
+  </tbody></table>
+  {% if pathways %}<p id="referral-pathways">Refer through a pathway: {% for w in pathways %}<a href="/patients/{{ p.patient_id }}?tab=referrals&amp;referral_pathway={{ w.name|urlencode }}#referral-pathway-form"{% if pathway and pathway.name == w.name %} aria-current="page"{% endif %}>{{ w.label }}</a>{% if not loop.last %} · {% endif %}{% endfor %}</p>{% endif %}
+  {% if pathway %}
+  <form method="post" action="/patients/{{ p.patient_id }}/referrals" id="referral-pathway-form">
+    <h3>{{ pathway.label }}{% if pathway.urgency %} <span class="muted">({{ pathway.urgency }})</span>{% endif %}</h3>
+    {% if pathway.description %}<p class="muted">{{ pathway.description }}</p>{% endif %}
+    <input type="hidden" name="pathway" value="{{ pathway.name }}">
+    {% if not pathway.urgency %}<label>Urgency</label>{{ radios('urgency', [('routine', 'Routine'), ('urgent', 'Urgent')], 'routine', 'pathway-urgency') }}{% endif %}
+    {% for f in pathway.fields %}
+      {% if f.options %}{% set opts = [] %}{% for o in f.options %}{% set _ = opts.append((o.value, o.label)) %}{% endfor %}
+      <label>{{ f.label }}{% if f.required %} *{% endif %}</label>{{ radios('rp_' ~ f.name, opts, '', 'pathway-' ~ f.name) }}
+      {% else %}<label for="pathway-{{ f.name }}">{{ f.label }}{% if f.required %} *{% endif %}</label><input type="text" name="rp_{{ f.name }}" id="pathway-{{ f.name }}" size="20"{% if f.kind == 'datetime' %} placeholder="YYYY-MM-DD HH:MM"{% elif f.kind == 'date' %} placeholder="YYYY-MM-DD"{% endif %}>
+      {% endif %}
+    {% endfor %}
+    <label for="pathway-reason">Reason for referral</label><textarea name="reason" id="pathway-reason" rows="3" required></textarea>
+    <p><button type="submit">Send {{ pathway.label }}</button></p>
+  </form>
+  {% endif %}
+  <form method="post" action="/patients/{{ p.patient_id }}/referrals" id="referral-form">
+    <h3>General referral</h3>
+    <div class="grid">
+      <div><label for="referral-specialty">Refer to</label><input type="text" name="specialty" id="referral-specialty" required></div>
+      <div><label>Urgency</label>{{ radios('urgency', [('routine', 'Routine'), ('urgent', 'Urgent')], 'routine', 'referral-urgency') }}</div>
+    </div>
+    <label for="referral-reason">Reason for referral</label><textarea name="reason" id="referral-reason" rows="3" required></textarea>
+    <p><button type="submit">Send referral</button></p>
+  </form>
+</section>
+
+{% elif tab == 'assessments' %}
+<section class="card"><h2>Assessments</h2>
+  <table id="assessments"><thead><tr><th>Assessed</th><th>Type</th><th>Outcome</th><th>Score</th><th>Details</th><th>By</th></tr></thead><tbody>
+  {% for a in assessments %}{% set seen = tag('list_assessments', {'assessments': [a]}, p.patient_id) %}<tr{{ seen }}><td>{{ dt(a.assessed_at) }}</td><td>{{ a.kind|replace('_', ' ') }}</td><td class="wrap">{{ a.outcome }}</td><td>{{ '' if a.score is none else a.score }}</td><td class="wrap">{{ a.details or '' }}</td><td>{{ a.assessed_by }}</td></tr>
+  {% if a.answers %}<tr class="actions"{{ seen }}><td colspan="6" class="wrap muted" id="assessment-answers-{{ a.assessment_id }}">{% for x in a.answers %}{{ x.label }}: {% if x.value is none %}not answered{% elif x.value in ('yes', 'no') %}{{ x.value|capitalize }}{% else %}{{ x.value }}{% endif %}{% if x.points %} ({{ '%+g'|format(x.points) }}){% endif %}{% if not loop.last %} · {% endif %}{% endfor %}</td></tr>{% endif %}
+  {% else %}<tr><td colspan="6" class="muted">No assessments recorded.</td></tr>{% endfor %}
+  </tbody></table>
+  {% if forms %}<h3>Assessment forms</h3>
+  <p id="assessment-forms">{% for af in forms %}<a href="/patients/{{ p.patient_id }}?tab=assessments&amp;assessment_form={{ af.name|urlencode }}#assessment-form-{{ af.name }}"{% if form and form.name == af.name %} aria-current="page"{% endif %}>{{ af.label }}</a>{% if not loop.last %} · {% endif %}{% endfor %}</p>{% endif %}
+  {% if form %}
+  <form method="post" action="/patients/{{ p.patient_id }}/assessments" id="assessment-form-{{ form.name }}">
+    <h3>{{ form.label }}</h3>
+    {% if form.description %}<p class="muted">{{ form.description }}</p>{% endif %}
+    <input type="hidden" name="kind" value="{{ form.name }}">
+    {% for f in form.fields %}
+      {% if f.kind == 'tick' %}<label class="radio" style="display:block"><input type="checkbox" name="af_{{ f.name }}" value="yes"> {{ f.label }} <span class="muted">({{ '%+g'|format(f.points) }})</span></label>
+      {% elif f.options %}{% set opts = [] %}{% for o in f.options %}{% set _ = opts.append((o.value, o.label ~ (' (%+g)'|format(o.points) if o.points else ''))) %}{% endfor %}
+      <label>{{ f.label }}{% if f.required %} *{% endif %}</label>{{ radios('af_' ~ f.name, opts, '', 'form-' ~ f.name) }}
+      {% else %}<label for="form-{{ f.name }}">{{ f.label }}{% if f.required %} *{% endif %}</label><input type="text" name="af_{{ f.name }}" id="form-{{ f.name }}" size="20">
+      {% endif %}
+    {% endfor %}
+    {% if form.bands %}<p class="muted">{% for b in form.bands %}{{ b.label }}: {% if b.min is defined and b.max is defined %}{{ b.min }} to {{ b.max }}{% elif b.min is defined %}{{ b.min }} or more{% else %}{{ b.max }} or less{% endif %}{% if not loop.last %} · {% endif %}{% endfor %}</p>{% endif %}
+    <label for="form-details">Comment</label><input type="text" name="details" id="form-details" size="60">
+    <p><button type="submit">Save {{ form.label }}</button></p>
+  </form>
+  {% endif %}
+  <form method="post" action="/patients/{{ p.patient_id }}/assessments" id="assessment-form">
+    <h3>Assessment in words</h3>
+    {{ radios('kind', [('vte', 'VTE risk'), ('bleeding_risk', 'Bleeding risk'), ('capacity', 'Capacity'), ('falls', 'Falls'), ('frailty', 'Frailty')], 'vte', 'assessment-kind') }}
+    <div class="grid">
+      <div><label for="assessment-outcome">Outcome</label><input type="text" name="outcome" id="assessment-outcome" required size="40"></div>
+      <div><label for="assessment-details">Details</label><input type="text" name="details" id="assessment-details" size="50"></div>
+    </div>
+    <p><button type="submit">Save assessment</button></p>
+  </form>
+</section>
+
+{% elif tab == 'jobs' %}
+<section class="card"><h2>Jobs for {{ p.name }}</h2>
+  <table id="patient-jobs"><thead><tr><th>Priority</th><th>Job</th><th>Added</th><th>Status</th></tr></thead><tbody>
+  {% for j in jobs %}<tr{{ tag('list_jobs', {'jobs': [j]}, p.patient_id) }}><td{% if j.priority == 'urgent' %} class="flag"{% endif %}>{{ j.priority }}</td>
+    <td class="wrap">{{ j.description }}{% if j.task_type or j.order_name %}<br><span class="muted">{{ job_types.get(j.task_type, '') }}{% if j.task_type and j.order_name %} · {% endif %}{% if j.order_name %}request: {{ j.order_name }}{% endif %}</span>{% endif %}</td><td>{{ dt(j.created_at) }}<br><span class="muted">{{ j.created_by }}</span></td>
+    <td class="wrap">{% if j.status == 'done' %}Done by {{ j.done_by }}{% if j.outcome %}: {{ j.outcome }}{% endif %}
+      {% elif j.status == 'cancelled' %}Cancelled by {{ j.cancelled_by }}: {{ j.cancel_reason }}
+      {% else %}<form method="post" action="/patients/{{ p.patient_id }}/jobs/{{ j.job_id }}/complete"><input type="hidden" name="next" value="patient"><input type="text" name="outcome" placeholder="Outcome" aria-label="Outcome of job {{ j.job_id }}" size="24"> <button type="submit" class="secondary" aria-label="Mark job {{ j.job_id }} done">Done</button></form>
+      <form method="post" action="/patients/{{ p.patient_id }}/jobs/{{ j.job_id }}/cancel"><input type="hidden" name="next" value="patient"><input type="text" name="reason" placeholder="Reason" aria-label="Why job {{ j.job_id }} is cancelled" size="24" required> <button type="submit" class="secondary" aria-label="Cancel job {{ j.job_id }}">Cancel job</button></form>{% endif %}</td></tr>
+  {% else %}<tr><td colspan="4" class="muted">No jobs for this patient.</td></tr>{% endfor %}
+  </tbody></table>
+  <p><a href="/jobs">The ward's jobs list</a></p>
+</section>
+<section class="card"><h2>Add to jobs list</h2>
+  <form method="post" action="/patients/{{ p.patient_id }}/jobs" id="job-form">
+    <label for="job-description">Job for {{ p.name }}</label>
+    <input type="text" name="description" id="job-description" required size="60">
+    {{ radios('priority', [('routine', 'Routine'), ('urgent', 'Urgent')], 'routine', 'job-priority') }}
+    <label>Type of job</label>{{ radios('task_type', job_types.items()|list, '', 'job-type') }}
+    {% if requests %}{% set req_opts = [] %}{% for o in requests %}{% set _ = req_opts.append((o.order_id|string, o.name ~ ' (' ~ o.status|replace('_', ' ') ~ ', ' ~ dt(o.collect_at) ~ ')')) %}{% endfor %}{% set _ = req_opts.append(('', 'None')) %}
+    <label>Request it concerns</label>{{ radios('order_id', req_opts, none, 'job-request') }}{% endif %}
+    <p><button type="submit" class="secondary">Add job</button></p>
+  </form>
+</section>
+
+{% elif tab == 'discharge' %}
+{% if p.current_encounter and p.current_encounter.kind != 'outpatient' %}
+<section class="card"><h2>Discharge</h2>
+  <form method="post" action="/patients/{{ p.patient_id }}/discharge" id="discharge-form">
+    <label for="discharge-destination">Destination</label>
+    <input type="text" name="destination" id="discharge-destination" placeholder="Usual residence" aria-label="Destination (usual residence if left empty)"> <button type="submit">Discharge patient</button>
+  </form>
+</section>
+{% else %}
+<section class="card"><h2>Discharge</h2><p class="muted">Not currently admitted.</p></section>
+{% endif %}
+
+{% elif tab == 'monitor' %}
+<section class="card" id="monitor"{{ tag('get_live_vitals', monitor, p.patient_id) }}><h2>Bedside monitor</h2>
+  {% if monitor %}
+  <p class="muted">Live at {{ dt(monitor.at) }}</p>
+  <div class="grid">{% for k, v in monitor.current.items() %}<div><div class="muted">{{ k }}</div><div class="vital" id="live-{{ k }}">{{ v|num }}</div></div>{% endfor %}</div>
+  <h2 style="margin-top:16px">Last {{ monitor_minutes }} minutes</h2>
+  <p id="monitor-period">Show: {% for n in monitor_choices %}<a href="/patients/{{ p.patient_id }}?tab=monitor&amp;monitor_minutes={{ n }}"{% if n == monitor_minutes %} aria-current="page"{% endif %}>{{ n }} minutes</a>{% if not loop.last %} · {% endif %}{% endfor %}</p>
+  <table><thead><tr><th>Time</th>{% for k in monitor.current %}<th>{{ k }}</th>{% endfor %}</tr></thead><tbody>
+  {% for row in monitor.trend|reverse %}<tr><td>{{ dt(row.at) }}</td>{% for k in monitor.current %}<td>{{ row[k]|num }}</td>{% endfor %}</tr>{% endfor %}
+  </tbody></table>
+  {% else %}<p class="muted">{{ monitor_message }}</p>{% endif %}
+</section>
+{% endif %}
+{% endblock %}

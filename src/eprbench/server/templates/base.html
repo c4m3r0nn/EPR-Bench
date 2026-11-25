@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}EPR{% endblock %}</title>
+<style>
+  :root { --ink: #212b32; --muted: #4c6272; --line: #d8dde0; --bg: #f0f4f5; --brand: #005eb8; --warn: #d5281b; --card: #fff; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 15px/1.45 Arial, Helvetica, sans-serif; color: var(--ink); background: var(--bg); }
+  a { color: var(--brand); }
+  /* The header stays on one line at 1280 px on every page (a test measures it): screenshot agents see one layout. */
+  header.app { background: var(--brand); color: #fff; padding: 8px 16px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  #patient-search { width: 9em; }
+  body.ice header.app a.applink { font-size: 13px; }
+  body.ice header.app > a:first-child { font-size: 15px; }
+  body.ice #clock, body.ice #current-user { font-size: 12px; }
+  header.app a { color: #fff; font-weight: bold; text-decoration: none; font-size: 17px; }
+  header.app .spacer { flex: 1; }
+  header.app a.applink { font-weight: normal; font-size: 15px; text-decoration: underline; }
+  body.ice { --brand: #00664f; --bg: #eef3ee; font-family: Verdana, Geneva, sans-serif; font-size: 14px; }
+  header.app form { display: flex; gap: 6px; align-items: center; }
+  header.app #wait-form { gap: 3px; }
+  header.app button.wait { padding: 3px 5px; min-width: 1.9em; }
+  #current-user { font-size: 13px; }
+  main { padding: 16px; max-width: 1200px; margin: 0 auto; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 4px; padding: 12px 16px; margin-bottom: 16px; overflow-x: auto; }
+  .banner { border-left: 6px solid var(--brand); }
+  .banner h1 { margin: 0 0 4px; font-size: 20px; }
+  .banner dl { display: flex; flex-wrap: wrap; gap: 4px 24px; margin: 0; }
+  .banner dt { color: var(--muted); font-size: 12px; text-transform: uppercase; }
+  .banner dd { margin: 0; font-weight: bold; }
+  .allergy { color: var(--warn); font-weight: bold; }
+  nav.tabs { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 6px; }
+  #section-description { margin: 0 0 12px; font-size: 13px; }
+  nav.tabs a { padding: 5px 9px; background: var(--card); border: 1px solid var(--line); border-radius: 4px; text-decoration: none; }
+  nav.tabs a[aria-current] { background: var(--brand); color: #fff; border-color: var(--brand); }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { text-align: left; padding: 5px 10px; border-bottom: 1px solid var(--line); vertical-align: top; white-space: nowrap; }
+  td.wrap { white-space: normal; }
+  tr.actions td { padding-top: 0; }
+  tr.actions form { display: inline-block; margin-right: 24px; }
+  tr:has(+ tr.actions) td { border-bottom: 0; }
+  tr.in-error td { text-decoration: line-through; color: var(--muted); }
+  th { color: var(--muted); font-size: 12px; text-transform: uppercase; }
+  h2 { font-size: 16px; margin: 0 0 8px; }
+  pre { white-space: pre-wrap; font: 14px/1.5 ui-monospace, Menlo, Consolas, monospace; margin: 0; }
+  label { display: block; font-weight: bold; margin: 8px 0 2px; }
+  input, select, textarea, button { font: inherit; padding: 5px 8px; border: 1px solid var(--muted); border-radius: 4px; max-width: 100%; }
+  textarea { width: 100%; }
+  button { background: var(--brand); color: #fff; border-color: var(--brand); cursor: pointer; }
+  button.secondary { background: #fff; color: var(--brand); }
+  .error { background: #fbeae8; border: 1px solid var(--warn); color: var(--warn); padding: 8px 12px; border-radius: 4px; margin-bottom: 16px; font-weight: bold; }
+  .flag { color: var(--warn); font-weight: bold; }
+  .muted { color: var(--muted); }
+  ul.menu { list-style: none; padding: 0; margin: 0; columns: 2; }
+  ul.menu li { padding: 6px 0; }
+  ul.menu a { font-size: 16px; }
+  h3 { font-size: 15px; margin: 14px 0 6px; }
+  label.radio { display: inline-block; font-weight: normal; margin: 0 14px 0 0; }
+  select[size] { min-width: 22em; }
+  .grid { display: flex; flex-wrap: wrap; gap: 8px 16px; }
+  .vital { font-size: 28px; font-weight: bold; }
+  fieldset .radios { display: block; margin-top: 4px; }
+</style>
+</head>
+<body class="{% block system %}epr{% endblock %}" data-render="{{ render_id }}">
+<header class="app">
+  <a href="{% block home %}/{% endblock %}">{% block brand %}St Elsewhere EPR{% endblock %}</a>
+  <form method="get" action="{{ self.home() }}" role="search">
+    <input type="search" name="q" id="patient-search" aria-label="Find patient by name, hospital number or NHS number" placeholder="Find patient" value="{{ q|default('') }}">
+    <button type="submit" class="secondary">Search</button>
+  </form>
+  {% block applinks %}<a class="applink" href="/jobs">Jobs list</a> <a class="applink" href="/ice">Requests and results (ICE)</a>{% endblock %}
+  {% if reply %}<a class="applink" href="/reply" id="reply-link">Handover / reply</a>{% endif %}
+  <span class="spacer"></span>
+  {% set clock_text = now|replace('T', ' ')|replace('Z', '') %}<span id="clock" title="Current date and time">{{ clock_text[:16] if clock_text.endswith(':00') else clock_text }}</span>
+  <form method="post" action="/clock/wait" id="wait-form" aria-label="Let time pass">
+    <input type="hidden" name="next" value="{{ request.url.path }}{% if request.url.query %}?{{ request.url.query }}{% endif %}">
+    <span>Wait (min)</span>
+    {% for m in wait_minutes %}<button type="submit" class="secondary wait" name="minutes" value="{{ m }}" aria-label="Wait {{ m }} minutes">{{ m }}</button>{% endfor %}
+  </form>
+  <span id="current-user">{{ actor }}</span>
+</header>
+<main>
+{% block content %}{% endblock %}
+</main>
+</body>
+</html>

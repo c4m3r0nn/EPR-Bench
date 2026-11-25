@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% from "_macros.html" import radios %}
+{% block title %}Handover / reply - EPR{% endblock %}
+{% macro shown(f, v) -%}
+  {%- if v is none %}<span class="flag">not answered</span>
+  {%- elif f.kind == 'number' and v is mapping %}{{ v.value }} {{ v.unit or '' }}
+  {%- elif f.kind == 'boolean' %}{{ 'Yes' if v == true else 'No' if v == false else v }}
+  {%- else %}{{ v }}{% endif %}
+{%- endmacro %}
+{% block content %}
+<section class="card"><h2>Handover / reply</h2>
+  <p class="muted">Your colleague asked:</p>
+  <p id="instruction" class="wrap">{{ task.instruction }}</p>
+</section>
+{% if submission %}
+<section class="card" id="reply-submitted"><h2>Submitted</h2>
+  <p role="status">Your reply was submitted at {{ submission.at|replace('T', ' ')|replace('Z', '') }}. The task is over.</p>
+  {% set given = submission.answer.fields if submission.answer is mapping else {} %}
+  {% if form %}<table><tbody>
+  {% for f in form %}<tr><th>{{ f.prompt or f.name }}</th><td class="wrap">{{ shown(f, given.get(f.name)) }}</td></tr>
+  {% endfor %}</tbody></table>{% endif %}
+  <h3>Reply</h3><pre id="reply-text">{{ submission.answer.text if submission.answer is mapping else submission.answer }}</pre>
+</section>
+{% elif stage == 'review' %}
+{# Step 2 of 2: nothing is submitted until this is confirmed, so Enter in a box on the form never ends the task. #}
+<section class="card" id="reply-review"><h2>Check your reply before you submit it</h2>
+  {% if problems %}<div class="error" role="alert">This is your last attempt and it is not complete: {{ problems|join('; ') }}. If you confirm, it is submitted as it stands.</div>{% endif %}
+  {% set given = answer.fields if answer is mapping else {} %}
+  {% if form %}<table><tbody>
+  {% for f in form %}<tr><th>{{ f.prompt or f.name }}</th><td class="wrap">{{ shown(f, given.get(f.name)) }}</td></tr>
+  {% endfor %}</tbody></table>{% endif %}
+  <h3>Reply</h3><pre>{{ answer.text if answer is mapping else answer }}</pre>
+  <form method="post" action="/reply/confirm" id="reply-confirm" style="display:inline-block">
+    {% for k, v in draft.items() %}<input type="hidden" name="{{ k }}" value="{{ v }}">{% endfor %}
+    <button type="submit">Confirm and submit</button>
+  </form>
+  <form method="post" action="/reply/edit" id="reply-change" style="display:inline-block">
+    {% for k, v in draft.items() %}<input type="hidden" name="{{ k }}" value="{{ v }}">{% endfor %}
+    <button type="submit" class="secondary">Change it</button>
+  </form>
+  <p class="muted">Submitting ends the task.</p>
+</section>
+{% else %}
+{% if problems %}<div class="error" role="alert">The reply was not accepted: {{ problems|join('; ') }}. Correct it and try again.{% if left is not none %} You have {{ left }} attempt{{ '' if left == 1 else 's' }} left; the last is submitted as it stands.{% endif %}</div>{% endif %}
+<form method="post" action="/reply" id="reply-form" class="card">
+  {% for f in form %}<fieldset id="answer-{{ f.name }}" style="border:0;padding:0;margin:0 0 8px">
+    <legend><strong>{{ f.prompt or f.name|replace('_', ' ') }}</strong>{% if f.kind == 'text' %} <span class="muted">(optional)</span>{% endif %}</legend>
+    {% set name = 'field_' ~ f.name %}
+    {% if f.kind == 'choice' %}{{ radios(name, f.options|pairs, draft.get(name, '')) }}
+    {% elif f.kind == 'boolean' %}{{ radios(name, [('yes', 'Yes'), ('no', 'No')], draft.get(name, '')) }}
+    {% elif f.kind == 'number' %}<input type="text" inputmode="decimal" name="{{ name }}" id="answer-{{ f.name }}-value" aria-label="{{ f.prompt or f.name }}: value" value="{{ draft.get(name, '') }}" size="10">
+      {% if f.units %}{{ radios('unit_' ~ f.name, f.units|pairs, draft.get('unit_' ~ f.name, ''), 'answer-' ~ f.name ~ '-unit') }}{% endif %}
+    {% else %}<textarea name="{{ name }}" id="answer-{{ f.name }}-text" rows="2" aria-label="{{ f.prompt or f.name }}">{{ draft.get(name, '') }}</textarea>{% endif %}
+  </fieldset>{% endfor %}
+  <label for="reply-text">Reply to your colleague</label><textarea name="text" id="reply-text" rows="4">{{ draft.get('text', '') }}</textarea>
+  <p><button type="submit">Check reply</button> <span class="muted">Next you check it, then confirm to submit. Submitting ends the task.</span></p>
+</form>
+{% endif %}
+{% endblock %}

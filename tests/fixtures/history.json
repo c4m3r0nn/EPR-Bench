@@ -1,0 +1,65 @@
+{
+  "source": "Test fixture for runtime v2: synthetic longitudinal series, not clinical content. Every value here is made up to exercise the engine.",
+  "orderables": [
+    {"code": "FBC", "name": "Full blood count", "category": "lab", "cost_pence": 300, "tat_seconds": 3600, "normal": {"reported_by": "Haematology", "items": [{"analyte": "Haemoglobin", "value": 138, "unit": "g/L", "ref_low": 115, "ref_high": 165}, {"analyte": "Platelets", "value": 256, "unit": "x10^9/L", "ref_low": 150, "ref_high": 400}]}},
+    {"code": "UE", "name": "Urea and electrolytes", "category": "lab", "cost_pence": 400, "tat_seconds": 3600, "normal": {"reported_by": "Biochemistry", "items": [{"analyte": "Sodium", "value": 140, "unit": "mmol/L", "ref_low": 133, "ref_high": 146}, {"analyte": "Creatinine", "value": 74, "unit": "umol/L", "ref_low": 45, "ref_high": 104}]}},
+    {"code": "CRP", "name": "C-reactive protein", "category": "lab", "cost_pence": 500, "tat_seconds": 3600, "fallback": "normal", "normal": {"reported_by": "Biochemistry", "items": [{"analyte": "CRP", "value": 3, "unit": "mg/L", "ref_high": 5}]}},
+    {"code": "GS", "name": "Group and save", "category": "lab", "cost_pence": 900, "tat_seconds": 3600, "normal": {"reported_by": "Blood transfusion laboratory", "report_text": "Group O RhD positive. Antibody screen negative."}}
+  ],
+  "locations": [{"code": "W1", "name": "Ward 1", "kind": "WARD"}],
+  "formulary": [{"name": "Furosemide"}, {"name": "Enoxaparin", "classes": ["Anticoagulant"]}],
+  "services": [
+    {"name": "Medical registrar", "aliases": ["Med reg", "Medical SpR"]},
+    {"name": "Cardiology", "aliases": ["PPCI"]}
+  ],
+  "regimens": [
+    {"name": "test-regimen", "drug": "Enoxaparin", "min_per_kg": 1.0, "frequencies": ["OD"]}
+  ],
+  "patients": [
+    {
+      "mrn": "T9000001",
+      "nhs_number": "999 000 0050",
+      "family_name": "Fixture",
+      "given_name": "Harriet",
+      "dob": "1950-01-01",
+      "sex": "F",
+      "encounters": [
+        {"ref": "adm-2024", "kind": "inpatient", "specialty": "General Medicine", "admitted_at": "2024-02-01T10:00:00Z", "discharged_at": "2024-02-06T12:00:00Z"},
+        {"ref": "opd-2025", "kind": "outpatient", "specialty": "Renal", "admitted_at": "2025-06-10T09:00:00Z", "discharged_at": "2025-06-10T09:30:00Z"},
+        {"ref": "adm-2026", "kind": "inpatient", "location": "W1", "bed": "3", "specialty": "General Medicine", "admitted_at": "2026-05-01T08:00:00Z"}
+      ],
+      "observations": [
+        {"encounter": "adm-2026", "taken_at": "2026-05-01T08:30:00Z", "recorded_by": "SN Test", "values": {"WEIGHT": 60}},
+        {"encounter": "adm-2026", "taken_at": "2026-05-01T09:00:00Z", "recorded_by": "SN Test", "values": {"RR": 18, "SPO2": 96, "ON_O2": 0, "SBP": 128, "DBP": 74, "HR": 88, "ACVPU": "A", "TEMP": 37.0}},
+        {"encounter": "adm-2026", "taken_at": "2026-05-01T21:00:00Z", "recorded_by": "SN Test", "values": {"RR": 21, "SPO2": 95, "ON_O2": 0, "SBP": 112, "DBP": 70, "HR": 96, "ACVPU": "A", "TEMP": 37.6}},
+        {"encounter": "adm-2026", "taken_at": "2026-05-02T08:00:00Z", "recorded_by": "SN Test", "values": {"RR": 24, "SPO2": 93, "ON_O2": 0, "SBP": 104, "DBP": 66, "HR": 108, "ACVPU": "A", "TEMP": 38.1}},
+        {"encounter": "adm-2026", "taken_at": "2026-05-02T08:10:00Z", "recorded_by": "SN Test", "values": {"HR": 180}, "entered_in_error": {"at": "2026-05-02T08:20:00Z", "by": "SN Test", "reason": "probe on the wrong patient"}}
+      ],
+      "results": [
+        {"orderable_code": "UE", "source": "gp", "performed_at": "2023-09-12T09:00:00Z", "reported_at": "2023-09-12T15:00:00Z", "reported_by": "Biochemistry", "items": [{"analyte": "Sodium", "value": 139, "unit": "mmol/L", "ref_low": 133, "ref_high": 146}, {"analyte": "Creatinine", "value": 98, "unit": "umol/L", "ref_low": 45, "ref_high": 104}]},
+        {"encounter": "adm-2024", "orderable_code": "UE", "performed_at": "2024-02-01T11:00:00Z", "reported_at": "2024-02-01T12:30:00Z", "reported_by": "Biochemistry", "items": [{"analyte": "Sodium", "value": 136, "unit": "mmol/L", "ref_low": 133, "ref_high": 146}, {"analyte": "Creatinine", "value": 140, "unit": "umol/L", "ref_low": 45, "ref_high": 104}]},
+        {"encounter": "opd-2025", "orderable_code": "UE", "performed_at": "2025-06-10T09:10:00Z", "reported_at": "2025-06-10T11:00:00Z", "reported_by": "Biochemistry", "items": [{"analyte": "Creatinine", "value": 121, "unit": "umol/L", "ref_low": 45, "ref_high": 104}]},
+        {"encounter": "adm-2026", "orderable_code": "UE", "performed_at": "2026-05-01T08:30:00Z", "reported_at": "2026-05-01T09:40:00Z", "reported_by": "Biochemistry", "items": [{"analyte": "Sodium", "value": 134, "unit": "mmol/L", "ref_low": 133, "ref_high": 146}, {"analyte": "Creatinine", "value": 160, "unit": "umol/L", "ref_low": 45, "ref_high": 104}]},
+        {"encounter": "adm-2026", "orderable_code": "UE", "performed_at": "2026-05-02T08:30:00Z", "reported_at": "2026-05-02T09:40:00Z", "reported_by": "Biochemistry", "items": [{"analyte": "Creatinine", "value": 171, "unit": "umol/L", "ref_low": 45, "ref_high": 104}]},
+        {"orderable_code": "FBC", "source": "gp", "performed_at": "2025-11-03T09:00:00Z", "reported_at": "2025-11-03T14:00:00Z", "reported_by": "Haematology", "items": [{"analyte": "Haemoglobin", "value": 125, "unit": "g/L", "ref_low": 115, "ref_high": 165}]},
+        {"encounter": "adm-2026", "orderable_code": "FBC", "performed_at": "2026-05-01T08:30:00Z", "reported_at": "2026-05-01T09:30:00Z", "reported_by": "Haematology", "items": [{"analyte": "Haemoglobin", "value": 98, "unit": "g/L", "ref_low": 115, "ref_high": 165}, {"analyte": "Platelets", "value": 210, "unit": "x10^9/L", "ref_low": 150, "ref_high": 400}]},
+        {"encounter": "adm-2026", "orderable_code": "FBC", "performed_at": "2026-05-02T06:00:00Z", "reported_at": "2026-05-02T07:00:00Z", "reported_by": "Haematology", "items": [{"analyte": "Haemoglobin", "value": 92, "unit": "g/L", "ref_low": 115, "ref_high": 165}]},
+        {"encounter": "adm-2026", "orderable_code": "CRP", "performed_at": "2026-05-01T08:30:00Z", "reported_at": "2026-05-01T09:40:00Z", "reported_by": "Biochemistry", "items": [{"analyte": "CRP", "value": 80, "unit": "mg/L", "ref_high": 5}]},
+        {"encounter": "adm-2026", "orderable_code": "GS", "performed_at": "2026-05-02T06:00:00Z", "reported_at": "2026-05-02T07:00:00Z", "reported_by": "Blood transfusion laboratory", "report_text": "Group O RhD positive. Antibody screen negative."}
+      ],
+      "result_windows": [
+        {"orderable_code": "FBC", "valid_from": "2026-05-02T12:00:00Z", "valid_to": "2026-05-03T00:00:00Z", "reported_by": "Haematology", "items": [{"analyte": "Haemoglobin", "value": 90, "unit": "g/L", "ref_low": 115, "ref_high": 165}, {"analyte": "Platelets", "value": 205, "unit": "x10^9/L", "ref_low": 150, "ref_high": 400}]},
+        {"orderable_code": "FBC", "valid_from": "2026-05-03T00:00:00Z", "reported_by": "Haematology", "items": [{"analyte": "Haemoglobin", "value": 88, "unit": "g/L", "ref_low": 115, "ref_high": 165}, {"analyte": "Platelets", "value": 201, "unit": "x10^9/L", "ref_low": 150, "ref_high": 400}]},
+        {"orderable_code": "UE", "reported_by": "Biochemistry", "items": [{"analyte": "Sodium", "value": 133, "unit": "mmol/L", "ref_low": 133, "ref_high": 146}, {"analyte": "Creatinine", "value": 175, "unit": "umol/L", "ref_low": 45, "ref_high": 104}]}
+      ],
+      "rules": [
+        {"name": "med-reg-review", "on_op": "make_referral", "when": {"service": "Medical registrar"}, "delay_s": 1200, "effects": {
+          "referral_update": {"status": "advice", "by": "Dr Q. Test", "role": "Medical registrar", "text": "Reviewed. Furosemide given; repeat U&E in the morning."},
+          "notes": [{"kind": "specialty_review", "title": "Medical registrar review", "author": "Dr Q. Test", "author_role": "Medical registrar", "body": "Test fixture review note."}],
+          "medications": [{"drug": "Furosemide", "dose": "40 mg", "route": "IV", "frequency": "once", "kind": "stat", "prescriber": "Dr Q. Test"}]}},
+        {"name": "transfused", "on_op": "request_blood_product", "when": {"product": "red cells"}, "delay_s": 7200, "effects": {
+          "result_windows": [{"orderable_code": "FBC", "reported_by": "Haematology", "items": [{"analyte": "Haemoglobin", "value": 104, "unit": "g/L", "ref_low": 115, "ref_high": 165}, {"analyte": "Platelets", "value": 199, "unit": "x10^9/L", "ref_low": 150, "ref_high": 400}]}]}}
+      ]
+    }
+  ]
+}

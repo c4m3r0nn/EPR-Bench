@@ -1,0 +1,145 @@
+{% extends "ice_base.html" %}
+{% from "_macros.html" import radios %}
+{% macro dt(value) %}{{ (value or '')|replace('T', ' ')|replace(':00Z', '')|replace('Z', '') }}{% endmacro %}
+{% block title %}{{ p.name }} ({{ p.mrn }}) - ICE{% endblock %}
+{% block content %}
+<section class="card banner" id="patient-banner" aria-label="Patient banner">
+  <h1>{{ p.name }}</h1>
+  <dl>
+    <div><dt>Hospital no.</dt><dd>{{ p.mrn }}</dd></div>
+    <div><dt>NHS no.</dt><dd>{{ p.nhs_number }}</dd></div>
+    <div><dt>Born</dt><dd>{{ p.dob }}</dd></div>
+    <div><dt>Sex</dt><dd>{{ p.sex }}</dd></div>
+    <div><dt>Location</dt><dd>{{ p.location or 'Not admitted' }}{% if p.bed %}, bed {{ p.bed }}{% endif %}</dd></div>
+  </dl>
+</section>
+
+<nav class="tabs" aria-label="ICE sections">
+  <a href="/ice/patients/{{ p.patient_id }}?tab=request" {% if tab == 'request' %}aria-current="page"{% endif %}>New request</a>
+  <a href="/ice/patients/{{ p.patient_id }}?tab=requests" {% if tab == 'requests' %}aria-current="page"{% endif %}>Requests</a>
+  <a href="/ice/patients/{{ p.patient_id }}?tab=results" {% if tab == 'results' %}aria-current="page"{% endif %}>Results</a>
+  <a href="/ice/patients/{{ p.patient_id }}?tab=cumulative" {% if tab == 'cumulative' %}aria-current="page"{% endif %}>Cumulative</a>
+  <a href="/ice/patients/{{ p.patient_id }}?tab=blood" {% if tab == 'blood' %}aria-current="page"{% endif %}>Blood products</a>
+</nav>
+
+{% if error %}<div class="error" role="alert">{{ error }}</div>{% endif %}
+
+{% if tab == 'request' %}
+{% set base = '/ice/patients/' ~ p.patient_id ~ '?tab=request' %}
+<nav class="card" aria-label="Request menu" id="request-breadcrumb">
+  <a href="{{ base }}">New request</a>
+  {% if menu.category %} &rsaquo; <a href="{{ base }}&amp;category={{ menu.category }}">{{ {'lab': 'Laboratory', 'imaging': 'Imaging', 'cardiology': 'Cardiology'}.get(menu.category, menu.category) }}</a>{% endif %}
+  {% if menu.modality %} &rsaquo; <a href="{{ base }}&amp;category=imaging&amp;modality={{ menu.modality|urlencode }}">{{ menu.modality }}</a>{% endif %}
+  {% if menu.region %} &rsaquo; <a href="{{ base }}&amp;category=imaging&amp;modality={{ menu.modality|urlencode }}&amp;region={{ menu.region|urlencode }}">{{ menu.region }}</a>{% endif %}
+  {% if step == 'form' and item %} &rsaquo; {{ item.name }}{% endif %}
+</nav>
+
+{% if step == 'category' %}
+<section class="card"><h2>What would you like to request for {{ p.name }}?</h2>
+  <ul class="menu" id="request-categories">
+    <li><a href="{{ base }}&amp;category=lab">Laboratory tests</a></li>
+    <li><a href="{{ base }}&amp;category=imaging">Imaging (radiology)</a></li>
+    <li><a href="{{ base }}&amp;category=cardiology">Cardiology</a></li>
+  </ul>
+</section>
+{% elif step == 'modality' %}
+<section class="card"><h2>Imaging: choose a modality</h2>
+  <ul class="menu" id="request-modalities">{% for c in choices %}<li><a href="{{ base }}&amp;category=imaging&amp;modality={{ c.modality|urlencode }}">{{ c.modality }}</a></li>{% endfor %}</ul>
+</section>
+{% elif step == 'region' %}
+<section class="card"><h2>{{ menu.modality }}: choose a body region</h2>
+  <ul class="menu" id="request-regions">{% for c in choices %}<li><a href="{{ base }}&amp;category=imaging&amp;modality={{ menu.modality|urlencode }}&amp;region={{ c.region|urlencode }}">{{ c.region }}</a></li>{% endfor %}</ul>
+</section>
+{% elif step == 'exam' %}
+<section class="card"><h2>Choose an investigation</h2>
+  <ul class="menu" id="request-exams">{% for c in choices %}<li><a href="{{ base }}&amp;category={{ menu.category }}{% if menu.modality %}&amp;modality={{ menu.modality|urlencode }}&amp;region={{ menu.region|urlencode }}{% endif %}&amp;code={{ c.code|urlencode }}">{{ c.name }}</a>{% if c.contrast %} <span class="muted">(contrast)</span>{% endif %}</li>{% endfor %}</ul>
+</section>
+{% else %}
+<section class="card"><h2>{{ form.name }} for {{ p.name }}</h2>
+  <form method="post" action="/ice/patients/{{ p.patient_id }}/requests" id="order-form">
+    <input type="hidden" name="orderable_code" value="{{ form.orderable_code }}">
+    <label>Priority</label>
+    {{ radios('priority', [('routine', 'Routine'), ('urgent', 'Urgent')], draft.priority or 'routine', 'order-priority') }}
+    {% set when = [] %}{% for c in form.collection %}{% set _ = when.append((c.value, c.label ~ (' (' ~ dt(c.at) ~ ')' if c.at else ''))) %}{% endfor %}
+    <label>When to collect</label>{{ radios('collection', when, draft.collection or 'now', 'order-collection') }}
+    <label for="order-collect-at">Date and time, if at a set time (YYYY-MM-DD HH:MM)</label><input type="text" name="collect_at" id="order-collect-at" value="{{ draft.get('collect_at', '') }}" size="18" placeholder="YYYY-MM-DD HH:MM">
+    {% for f in form.fields %}
+      {% set fname = 'clinical_details' if f.name == 'clinical_details' else 'rf_' ~ f.name %}
+      {% if f.kind == 'choice' %}{% set opts = [] %}{% for o in f.options %}{% set _ = opts.append((o.value, o.label)) %}{% endfor %}
+      <label>{{ f.label }}{% if f.required %} *{% endif %}</label>{{ radios(fname, opts, draft.get(fname, ''), 'order-' ~ f.name) }}
+      {% elif f.kind == 'text' %}<label for="order-{{ f.name }}">{{ f.label }}{% if f.required %} *{% endif %}</label><textarea name="{{ fname }}" id="order-{{ f.name }}" rows="3">{{ draft.get(fname, '') }}</textarea>
+      {% else %}<label for="order-{{ f.name }}">{{ f.label }}{% if f.required %} *{% endif %}</label><input type="text" name="{{ fname }}" id="order-{{ f.name }}" value="{{ draft.get(fname, '') }}" size="14"{% if f.kind == 'date' %} placeholder="YYYY-MM-DD"{% endif %}>
+      {% endif %}
+    {% endfor %}
+    <label for="order-override">Reason for overriding an alert</label><input type="text" name="override_reason" id="order-override" size="50">
+    <p><button type="submit">Send request</button></p>
+  </form>
+</section>
+{% endif %}
+
+{% elif tab == 'requests' %}
+<section class="card"><h2>Requests</h2>
+  <table id="orders"><thead><tr><th>Requested</th><th>Investigation</th><th>Priority</th><th>Collection</th><th>Status</th><th>Clinical details</th><th>By</th><th></th></tr></thead><tbody>
+  {% for o in orders %}<tr{{ tag('list_orders', {'orders': [o]}, p.patient_id) }}><td>{{ dt(o.ordered_at) }}</td><td>{{ o.name }}</td><td>{{ o.priority }}</td>
+    <td>{{ dt(o.collected_at or o.collect_at) }}{% if o.collection == 'phlebotomy_round' %} <span class="muted">(phlebotomy round)</span>{% endif %}</td>
+    <td class="wrap">{% if o.result_id %}<a href="/ice/patients/{{ p.patient_id }}?tab=results&amp;result_id={{ o.result_id }}">resulted</a>{% else %}{{ o.status|replace('_', ' ') }}{% if o.cancel_reason %}: {{ o.cancel_reason }}{% endif %}{% endif %}</td>
+    <td class="wrap">{{ o.clinical_details or '' }}</td><td>{{ o.ordered_by }}</td>
+    <td>{% if o.status in ('in_progress', 'scheduled') %}<form method="post" action="/ice/patients/{{ p.patient_id }}/requests/{{ o.order_id }}/cancel"><button type="submit" class="secondary" aria-label="Cancel {{ o.name }} request">Cancel</button></form>{% endif %}</td></tr>
+  {% else %}<tr><td colspan="8" class="muted">No requests.</td></tr>{% endfor %}
+  </tbody></table>
+</section>
+
+{% elif tab == 'blood' %}
+<section class="card"><h2>Request blood products for {{ p.name }}</h2>
+  <form method="post" action="/ice/patients/{{ p.patient_id }}/blood" id="blood-form">
+    <label>Product</label>{{ radios('product', [('red cells', 'Red cells'), ('platelets', 'Platelets'), ('fresh frozen plasma', 'Fresh frozen plasma')], 'red cells', 'blood-product') }}
+    <div class="grid">
+      <div><label for="blood-units">Units</label><input type="number" name="units" id="blood-units" min="1" max="6" placeholder="1" aria-label="Units (1 if left empty)" style="width:5em"></div>
+      <div><label>Urgency</label>{{ radios('urgency', [('routine', 'Routine'), ('urgent', 'Urgent')], 'routine', 'blood-urgency') }}</div>
+    </div>
+    <label for="blood-indication">Indication</label><input type="text" name="indication" id="blood-indication" required size="60">
+    <p><button type="submit">Request blood</button></p>
+  </form>
+</section>
+<section class="card"><h2>Blood product requests</h2>
+  <table id="blood-requests"><thead><tr><th>Requested</th><th>Product</th><th>Units</th><th>Urgency</th><th>Indication</th><th>By</th></tr></thead><tbody>
+  {% for b in blood_requests %}<tr{{ tag('list_blood_requests', {'blood_requests': [b]}, p.patient_id) }}><td>{{ dt(b.requested_at) }}</td><td>{{ b.product }}</td><td>{{ b.units }}</td><td>{{ b.urgency }}</td><td class="wrap">{{ b.indication }}</td><td>{{ b.requested_by }}</td></tr>
+  {% else %}<tr><td colspan="6" class="muted">No blood product requests.</td></tr>{% endfor %}
+  </tbody></table>
+</section>
+
+{% elif tab == 'cumulative' %}
+<section class="card"{{ tag('get_analyte_history', {'analytes': analytes}, p.patient_id) }}><h2>Cumulative results: choose a test</h2>
+  <ul class="menu" id="analytes">{% for a in analytes %}<li><a href="/ice/patients/{{ p.patient_id }}?tab=cumulative&amp;analyte={{ a.analyte|urlencode }}">{{ a.analyte }}</a> <span class="muted">({{ a.results }})</span></li>
+  {% else %}<li class="muted">No results.</li>{% endfor %}</ul>
+</section>
+{% if history %}
+<section class="card" id="analyte-history"><h2>{{ history.analyte }}, oldest first</h2>
+  <table><thead><tr><th>Sampled</th><th>Value</th><th>Units</th><th>Reference range</th><th>Flag</th><th>Where</th><th>Reported</th></tr></thead><tbody>
+  {% for i in history.series %}<tr{{ tag_values(i.result_id, history.analyte, p.patient_id) }}><td><a href="/ice/patients/{{ p.patient_id }}?tab=results&amp;result_id={{ i.result_id }}">{{ dt(i.sampled_at) }}</a></td><td{% if i.flag %} class="flag"{% endif %}>{{ i.value_text if i.value is none else i.value|num }}</td><td>{{ i.unit or '' }}</td><td>{% if i.ref_low is not none or i.ref_high is not none %}{{ '' if i.ref_low is none else i.ref_low|num }} - {{ '' if i.ref_high is none else i.ref_high|num }}{% endif %}</td><td class="flag">{{ i.flag or '' }}</td><td>{{ i.setting }}</td><td>{{ dt(i.reported_at) }}</td></tr>{% endfor %}
+  </tbody></table>
+</section>
+{% endif %}
+
+{% else %}
+{% if result %}
+<section class="card" id="result-view"{{ tag('get_result', result, p.patient_id, 'result') }}><h2>{{ result.name }}</h2>
+  <p class="muted">Sampled {{ dt(result.performed_at) }} · reported {{ dt(result.reported_at) }}{% if result.reported_by %} by {{ result.reported_by }}{% endif %} · {{ {'hospital_lab': 'hospital laboratory', 'point_of_care': 'point of care', 'gp': 'GP', 'other_hospital': 'other hospital'}.get(result.source, result.source) }}</p>
+  {% if result['items'] %}
+  <table><thead><tr><th>Test</th><th>Value</th><th>Units</th><th>Reference range</th><th>Flag</th></tr></thead><tbody>
+  {% for i in result['items'] %}<tr{{ tag_values(result.result_id, i.analyte, p.patient_id) }}><td>{{ i.analyte }}</td><td{% if i.flag %} class="flag"{% endif %}>{{ i.value_text if i.value is none else i.value|num }}</td><td>{{ i.unit or '' }}</td><td>{% if i.ref_low is not none or i.ref_high is not none %}{{ '' if i.ref_low is none else i.ref_low|num }} - {{ '' if i.ref_high is none else i.ref_high|num }}{% endif %}</td><td class="flag">{{ i.flag or '' }}</td></tr>{% endfor %}
+  </tbody></table>
+  {% endif %}
+  {% if result.report_text %}<pre>{{ result.report_text }}</pre>{% endif %}
+  {% if result.acknowledged_at %}<p class="muted" id="result-acknowledged">Acknowledged by {{ result.acknowledged_by }} at {{ dt(result.acknowledged_at) }}</p>
+  {% else %}<form method="post" action="/ice/patients/{{ p.patient_id }}/results/{{ result.result_id }}/acknowledge" style="margin-top:12px"><button type="submit">Acknowledge result</button></form>{% endif %}
+</section>
+{% endif %}
+<section class="card"{{ tag('list_results', {'results': results}, p.patient_id) }}><h2>Results</h2>
+  <table id="results"><thead><tr><th>Reported</th><th>Investigation</th><th>Type</th><th>Source</th><th>Abnormal values</th><th>Acknowledged</th></tr></thead><tbody>
+  {% for r in results %}<tr><td>{{ dt(r.reported_at) }}</td><td><a href="/ice/patients/{{ p.patient_id }}?tab=results&amp;result_id={{ r.result_id }}">{{ r.name }}</a></td><td>{{ r.category }}</td><td>{{ {'hospital_lab': 'Hospital', 'point_of_care': 'Point of care', 'gp': 'GP', 'other_hospital': 'Other hospital'}.get(r.source, r.source) }}</td><td{% if r.abnormal_values %} class="flag"{% endif %}>{{ r.abnormal_values or '' }}</td><td>{{ 'Yes' if r.acknowledged else 'No' }}</td></tr>
+  {% else %}<tr><td colspan="6" class="muted">No results.</td></tr>{% endfor %}
+  </tbody></table>
+</section>
+{% endif %}
+{% endblock %}

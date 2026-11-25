@@ -1,0 +1,1272 @@
+{
+ "orderables": [
+  {
+   "code": "CXR",
+   "name": "XR Chest PA",
+   "category": "imaging",
+   "modality": "XR",
+   "region": "Chest",
+   "cost_pence": 3500,
+   "tat_seconds": 3600,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "XR Chest PA: no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "XR-CHEST-AP",
+   "name": "XR Chest AP (portable)",
+   "category": "imaging",
+   "modality": "XR",
+   "region": "Chest",
+   "cost_pence": 3500,
+   "tat_seconds": 3600,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "XR Chest AP (portable): no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "XR-ABDO",
+   "name": "XR Abdomen",
+   "category": "imaging",
+   "modality": "XR",
+   "region": "Abdomen and pelvis",
+   "cost_pence": 3500,
+   "tat_seconds": 3600,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "XR Abdomen: no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "XR-PELVIS",
+   "name": "XR Pelvis",
+   "category": "imaging",
+   "modality": "XR",
+   "region": "Abdomen and pelvis",
+   "cost_pence": 3500,
+   "tat_seconds": 3600,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "XR Pelvis: no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "XR-CSPINE",
+   "name": "XR Cervical spine",
+   "category": "imaging",
+   "modality": "XR",
+   "region": "Spine",
+   "cost_pence": 3500,
+   "tat_seconds": 3600,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "XR Cervical spine: no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "XR-TSPINE",
+   "name": "XR Thoracic spine",
+   "category": "imaging",
+   "modality": "XR",
+   "region": "Spine",
+   "cost_pence": 3500,
+   "tat_seconds": 3600,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "XR Thoracic spine: no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "XR-LSPINE",
+   "name": "XR Lumbar spine",
+   "category": "imaging",
+   "modality": "XR",
+   "region": "Spine",
+   "cost_pence": 3500,
+   "tat_seconds": 3600,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "XR Lumbar spine: no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "XR-FACIAL",
+   "name": "XR Facial bones",
+   "category": "imaging",
+   "modality": "XR",
+   "region": "Head and neck",
+   "cost_pence": 3500,
+   "tat_seconds": 3600,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "XR Facial bones: no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "XR-SHOULDER",
+   "name": "XR Shoulder",
+   "category": "imaging",
+   "modality": "XR",
+   "region": "Upper limb",
+   "cost_pence": 3500,
+   "tat_seconds": 3600,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "XR Shoulder: no acute abnormality demonstrated."
+   },
+   "lateral": true
+  },
+  {
+   "code": "XR-HUMERUS",
+   "name": "XR Humerus",
+   "category": "imaging",
+   "modality": "XR",
+   "region": "Upper limb",
+   "cost_pence": 3500,
+   "tat_seconds": 3600,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "XR Humerus: no acute abnormality demonstrated."
+   },
+   "lateral": true
+  },
+  {
+   "code": "XR-ELBOW",
+   "name": "XR Elbow",
+   "category": "imaging",
+   "modality": "XR",
+   "region": "Upper limb",
+   "cost_pence": 3500,
+   "tat_seconds": 3600,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "XR Elbow: no acute abnormality demonstrated."
+   },
+   "lateral": true
+  },
+  {
+   "code": "XR-FOREARM",
+   "name": "XR Forearm",
+   "category": "imaging",
+   "modality": "XR",
+   "region": "Upper limb",
+   "cost_pence": 3500,
+   "tat_seconds": 3600,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "XR Forearm: no acute abnormality demonstrated."
+   },
+   "lateral": true
+  },
+  {
+   "code": "XR-WRIST",
+   "name": "XR Wrist",
+   "category": "imaging",
+   "modality": "XR",
+   "region": "Upper limb",
+   "cost_pence": 3500,
+   "tat_seconds": 3600,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "XR Wrist: no acute abnormality demonstrated."
+   },
+   "lateral": true
+  },
+  {
+   "code": "XR-SCAPHOID",
+   "name": "XR Scaphoid series",
+   "category": "imaging",
+   "modality": "XR",
+   "region": "Upper limb",
+   "cost_pence": 3500,
+   "tat_seconds": 3600,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "XR Scaphoid series: no acute abnormality demonstrated."
+   },
+   "lateral": true
+  },
+  {
+   "code": "XR-HAND",
+   "name": "XR Hand",
+   "category": "imaging",
+   "modality": "XR",
+   "region": "Upper limb",
+   "cost_pence": 3500,
+   "tat_seconds": 3600,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "XR Hand: no acute abnormality demonstrated."
+   },
+   "lateral": true
+  },
+  {
+   "code": "XR-HIP",
+   "name": "XR Hip",
+   "category": "imaging",
+   "modality": "XR",
+   "region": "Lower limb",
+   "cost_pence": 3500,
+   "tat_seconds": 3600,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "XR Hip: no acute abnormality demonstrated."
+   },
+   "lateral": true
+  },
+  {
+   "code": "XR-FEMUR",
+   "name": "XR Femur",
+   "category": "imaging",
+   "modality": "XR",
+   "region": "Lower limb",
+   "cost_pence": 3500,
+   "tat_seconds": 3600,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "XR Femur: no acute abnormality demonstrated."
+   },
+   "lateral": true
+  },
+  {
+   "code": "XR-KNEE",
+   "name": "XR Knee",
+   "category": "imaging",
+   "modality": "XR",
+   "region": "Lower limb",
+   "cost_pence": 3500,
+   "tat_seconds": 3600,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "XR Knee: no acute abnormality demonstrated."
+   },
+   "lateral": true
+  },
+  {
+   "code": "XR-TIBFIB",
+   "name": "XR Tibia and fibula",
+   "category": "imaging",
+   "modality": "XR",
+   "region": "Lower limb",
+   "cost_pence": 3500,
+   "tat_seconds": 3600,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "XR Tibia and fibula: no acute abnormality demonstrated."
+   },
+   "lateral": true
+  },
+  {
+   "code": "XR-ANKLE",
+   "name": "XR Ankle",
+   "category": "imaging",
+   "modality": "XR",
+   "region": "Lower limb",
+   "cost_pence": 3500,
+   "tat_seconds": 3600,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "XR Ankle: no acute abnormality demonstrated."
+   },
+   "lateral": true
+  },
+  {
+   "code": "XR-FOOT",
+   "name": "XR Foot",
+   "category": "imaging",
+   "modality": "XR",
+   "region": "Lower limb",
+   "cost_pence": 3500,
+   "tat_seconds": 3600,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "XR Foot: no acute abnormality demonstrated."
+   },
+   "lateral": true
+  },
+  {
+   "code": "US-ABDO",
+   "name": "US Abdomen",
+   "category": "imaging",
+   "modality": "US",
+   "region": "Abdomen and pelvis",
+   "cost_pence": 6000,
+   "tat_seconds": 14400,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "US Abdomen: no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "US-HBS",
+   "name": "US Liver and biliary tree",
+   "category": "imaging",
+   "modality": "US",
+   "region": "Abdomen and pelvis",
+   "cost_pence": 6000,
+   "tat_seconds": 14400,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "US Liver and biliary tree: no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "US-RENAL",
+   "name": "US Renal tract",
+   "category": "imaging",
+   "modality": "US",
+   "region": "Abdomen and pelvis",
+   "cost_pence": 6000,
+   "tat_seconds": 14400,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "US Renal tract: no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "US-PELVIS-TA",
+   "name": "US Pelvis (transabdominal)",
+   "category": "imaging",
+   "modality": "US",
+   "region": "Abdomen and pelvis",
+   "cost_pence": 6000,
+   "tat_seconds": 14400,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "US Pelvis (transabdominal): no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "US-PELVIS-TV",
+   "name": "US Pelvis (transvaginal)",
+   "category": "imaging",
+   "modality": "US",
+   "region": "Abdomen and pelvis",
+   "cost_pence": 6000,
+   "tat_seconds": 14400,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "US Pelvis (transvaginal): no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "US-AORTA",
+   "name": "US Abdominal aorta",
+   "category": "imaging",
+   "modality": "US",
+   "region": "Vascular",
+   "cost_pence": 6000,
+   "tat_seconds": 14400,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "US Abdominal aorta: no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "US-DOPPLER-LL",
+   "name": "US Doppler lower limb veins (DVT)",
+   "category": "imaging",
+   "modality": "US",
+   "region": "Vascular",
+   "cost_pence": 6000,
+   "tat_seconds": 14400,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "US Doppler lower limb veins (DVT): no acute abnormality demonstrated."
+   },
+   "lateral": true
+  },
+  {
+   "code": "US-DOPPLER-UL",
+   "name": "US Doppler upper limb veins (DVT)",
+   "category": "imaging",
+   "modality": "US",
+   "region": "Vascular",
+   "cost_pence": 6000,
+   "tat_seconds": 14400,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "US Doppler upper limb veins (DVT): no acute abnormality demonstrated."
+   },
+   "lateral": true
+  },
+  {
+   "code": "US-CAROTID",
+   "name": "US Doppler carotid arteries",
+   "category": "imaging",
+   "modality": "US",
+   "region": "Vascular",
+   "cost_pence": 6000,
+   "tat_seconds": 14400,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "US Doppler carotid arteries: no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "US-THYROID",
+   "name": "US Thyroid",
+   "category": "imaging",
+   "modality": "US",
+   "region": "Head and neck",
+   "cost_pence": 6000,
+   "tat_seconds": 14400,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "US Thyroid: no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "US-NECK",
+   "name": "US Neck (lymph nodes)",
+   "category": "imaging",
+   "modality": "US",
+   "region": "Head and neck",
+   "cost_pence": 6000,
+   "tat_seconds": 14400,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "US Neck (lymph nodes): no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "US-SCROTUM",
+   "name": "US Scrotum",
+   "category": "imaging",
+   "modality": "US",
+   "region": "Abdomen and pelvis",
+   "cost_pence": 6000,
+   "tat_seconds": 14400,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "US Scrotum: no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "US-SOFT-TISSUE",
+   "name": "US Soft tissue lump",
+   "category": "imaging",
+   "modality": "US",
+   "region": "Soft tissue",
+   "cost_pence": 6000,
+   "tat_seconds": 14400,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "US Soft tissue lump: no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "US-CHEST",
+   "name": "US Chest (pleural effusion)",
+   "category": "imaging",
+   "modality": "US",
+   "region": "Chest",
+   "cost_pence": 6000,
+   "tat_seconds": 14400,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "US Chest (pleural effusion): no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "CTHEAD",
+   "name": "CT Head (non-contrast)",
+   "category": "imaging",
+   "modality": "CT",
+   "region": "Head and neck",
+   "cost_pence": 11000,
+   "tat_seconds": 10800,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "CT Head (non-contrast): no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "CT-HEAD-C",
+   "name": "CT Head with contrast",
+   "category": "imaging",
+   "modality": "CT",
+   "region": "Head and neck",
+   "cost_pence": 11000,
+   "tat_seconds": 10800,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "CT Head with contrast: no acute abnormality demonstrated."
+   },
+   "contrast": true
+  },
+  {
+   "code": "CT-CTA-HEADNECK",
+   "name": "CT Angiogram head and neck",
+   "category": "imaging",
+   "modality": "CT",
+   "region": "Head and neck",
+   "cost_pence": 11000,
+   "tat_seconds": 10800,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "CT Angiogram head and neck: no acute abnormality demonstrated."
+   },
+   "contrast": true
+  },
+  {
+   "code": "CT-VENOGRAM",
+   "name": "CT Venogram head",
+   "category": "imaging",
+   "modality": "CT",
+   "region": "Head and neck",
+   "cost_pence": 11000,
+   "tat_seconds": 10800,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "CT Venogram head: no acute abnormality demonstrated."
+   },
+   "contrast": true
+  },
+  {
+   "code": "CT-SINUS",
+   "name": "CT Paranasal sinuses",
+   "category": "imaging",
+   "modality": "CT",
+   "region": "Head and neck",
+   "cost_pence": 11000,
+   "tat_seconds": 10800,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "CT Paranasal sinuses: no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "CT-FACIAL",
+   "name": "CT Facial bones",
+   "category": "imaging",
+   "modality": "CT",
+   "region": "Head and neck",
+   "cost_pence": 11000,
+   "tat_seconds": 10800,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "CT Facial bones: no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "CT-NECK-C",
+   "name": "CT Neck with contrast",
+   "category": "imaging",
+   "modality": "CT",
+   "region": "Head and neck",
+   "cost_pence": 11000,
+   "tat_seconds": 10800,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "CT Neck with contrast: no acute abnormality demonstrated."
+   },
+   "contrast": true
+  },
+  {
+   "code": "CTPA",
+   "name": "CT Pulmonary angiogram",
+   "category": "imaging",
+   "modality": "CT",
+   "region": "Chest",
+   "cost_pence": 11000,
+   "tat_seconds": 10800,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "CT Pulmonary angiogram: no acute abnormality demonstrated."
+   },
+   "contrast": true
+  },
+  {
+   "code": "CT-CHEST-C",
+   "name": "CT Chest with contrast",
+   "category": "imaging",
+   "modality": "CT",
+   "region": "Chest",
+   "cost_pence": 11000,
+   "tat_seconds": 10800,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "CT Chest with contrast: no acute abnormality demonstrated."
+   },
+   "contrast": true
+  },
+  {
+   "code": "CT-HRCT",
+   "name": "CT Chest high resolution (HRCT)",
+   "category": "imaging",
+   "modality": "CT",
+   "region": "Chest",
+   "cost_pence": 11000,
+   "tat_seconds": 10800,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "CT Chest high resolution (HRCT): no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "CT-AP-C",
+   "name": "CT Abdomen and pelvis with contrast",
+   "category": "imaging",
+   "modality": "CT",
+   "region": "Abdomen and pelvis",
+   "cost_pence": 11000,
+   "tat_seconds": 10800,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "CT Abdomen and pelvis with contrast: no acute abnormality demonstrated."
+   },
+   "contrast": true
+  },
+  {
+   "code": "CT-AP-NC",
+   "name": "CT Abdomen and pelvis (non-contrast)",
+   "category": "imaging",
+   "modality": "CT",
+   "region": "Abdomen and pelvis",
+   "cost_pence": 11000,
+   "tat_seconds": 10800,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "CT Abdomen and pelvis (non-contrast): no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "CT-KUB",
+   "name": "CT Kidneys, ureters and bladder (KUB)",
+   "category": "imaging",
+   "modality": "CT",
+   "region": "Abdomen and pelvis",
+   "cost_pence": 11000,
+   "tat_seconds": 10800,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "CT Kidneys, ureters and bladder (KUB): no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "CT-CAP-C",
+   "name": "CT Chest, abdomen and pelvis with contrast",
+   "category": "imaging",
+   "modality": "CT",
+   "region": "Chest, abdomen and pelvis",
+   "cost_pence": 11000,
+   "tat_seconds": 10800,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "CT Chest, abdomen and pelvis with contrast: no acute abnormality demonstrated."
+   },
+   "contrast": true
+  },
+  {
+   "code": "CT-TRAUMA",
+   "name": "CT Whole body trauma",
+   "category": "imaging",
+   "modality": "CT",
+   "region": "Chest, abdomen and pelvis",
+   "cost_pence": 11000,
+   "tat_seconds": 10800,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "CT Whole body trauma: no acute abnormality demonstrated."
+   },
+   "contrast": true
+  },
+  {
+   "code": "CT-CSPINE",
+   "name": "CT Cervical spine",
+   "category": "imaging",
+   "modality": "CT",
+   "region": "Spine",
+   "cost_pence": 11000,
+   "tat_seconds": 10800,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "CT Cervical spine: no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "CT-TSPINE",
+   "name": "CT Thoracic spine",
+   "category": "imaging",
+   "modality": "CT",
+   "region": "Spine",
+   "cost_pence": 11000,
+   "tat_seconds": 10800,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "CT Thoracic spine: no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "CT-LSPINE",
+   "name": "CT Lumbar spine",
+   "category": "imaging",
+   "modality": "CT",
+   "region": "Spine",
+   "cost_pence": 11000,
+   "tat_seconds": 10800,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "CT Lumbar spine: no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "CT-AORTA",
+   "name": "CT Aortogram",
+   "category": "imaging",
+   "modality": "CT",
+   "region": "Vascular",
+   "cost_pence": 11000,
+   "tat_seconds": 10800,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "CT Aortogram: no acute abnormality demonstrated."
+   },
+   "contrast": true
+  },
+  {
+   "code": "CT-MESENTERIC",
+   "name": "CT Mesenteric angiogram",
+   "category": "imaging",
+   "modality": "CT",
+   "region": "Vascular",
+   "cost_pence": 11000,
+   "tat_seconds": 10800,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "CT Mesenteric angiogram: no acute abnormality demonstrated."
+   },
+   "contrast": true
+  },
+  {
+   "code": "CT-ANGIO-LL",
+   "name": "CT Angiogram lower limbs (run-off)",
+   "category": "imaging",
+   "modality": "CT",
+   "region": "Vascular",
+   "cost_pence": 11000,
+   "tat_seconds": 10800,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "CT Angiogram lower limbs (run-off): no acute abnormality demonstrated."
+   },
+   "contrast": true
+  },
+  {
+   "code": "CT-CORONARY",
+   "name": "CT Coronary angiogram",
+   "category": "imaging",
+   "modality": "CT",
+   "region": "Cardiac",
+   "cost_pence": 11000,
+   "tat_seconds": 10800,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "CT Coronary angiogram: no acute abnormality demonstrated."
+   },
+   "contrast": true
+  },
+  {
+   "code": "CT-HIP",
+   "name": "CT Hip",
+   "category": "imaging",
+   "modality": "CT",
+   "region": "Lower limb",
+   "cost_pence": 11000,
+   "tat_seconds": 10800,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "CT Hip: no acute abnormality demonstrated."
+   },
+   "lateral": true
+  },
+  {
+   "code": "CT-KNEE",
+   "name": "CT Knee",
+   "category": "imaging",
+   "modality": "CT",
+   "region": "Lower limb",
+   "cost_pence": 11000,
+   "tat_seconds": 10800,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "CT Knee: no acute abnormality demonstrated."
+   },
+   "lateral": true
+  },
+  {
+   "code": "CT-WRIST",
+   "name": "CT Wrist",
+   "category": "imaging",
+   "modality": "CT",
+   "region": "Upper limb",
+   "cost_pence": 11000,
+   "tat_seconds": 10800,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "CT Wrist: no acute abnormality demonstrated."
+   },
+   "lateral": true
+  },
+  {
+   "code": "MR-HEAD",
+   "name": "MRI Head",
+   "category": "imaging",
+   "modality": "MRI",
+   "region": "Head and neck",
+   "cost_pence": 18000,
+   "tat_seconds": 86400,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "MRI Head: no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "MR-HEAD-C",
+   "name": "MRI Head with gadolinium",
+   "category": "imaging",
+   "modality": "MRI",
+   "region": "Head and neck",
+   "cost_pence": 18000,
+   "tat_seconds": 86400,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "MRI Head with gadolinium: no acute abnormality demonstrated."
+   },
+   "contrast": true
+  },
+  {
+   "code": "MR-IAM",
+   "name": "MRI Internal auditory meati",
+   "category": "imaging",
+   "modality": "MRI",
+   "region": "Head and neck",
+   "cost_pence": 18000,
+   "tat_seconds": 86400,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "MRI Internal auditory meati: no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "MR-MRA-HEAD",
+   "name": "MR Angiogram head",
+   "category": "imaging",
+   "modality": "MRI",
+   "region": "Head and neck",
+   "cost_pence": 18000,
+   "tat_seconds": 86400,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "MR Angiogram head: no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "MR-WSPINE",
+   "name": "MRI Whole spine",
+   "category": "imaging",
+   "modality": "MRI",
+   "region": "Spine",
+   "cost_pence": 18000,
+   "tat_seconds": 86400,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "MRI Whole spine: no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "MR-MSCC",
+   "name": "MRI Whole spine (?metastatic cord compression)",
+   "category": "imaging",
+   "modality": "MRI",
+   "region": "Spine",
+   "cost_pence": 18000,
+   "tat_seconds": 86400,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "MRI Whole spine (?metastatic cord compression): no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "MR-CSPINE",
+   "name": "MRI Cervical spine",
+   "category": "imaging",
+   "modality": "MRI",
+   "region": "Spine",
+   "cost_pence": 18000,
+   "tat_seconds": 86400,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "MRI Cervical spine: no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "MR-TSPINE",
+   "name": "MRI Thoracic spine",
+   "category": "imaging",
+   "modality": "MRI",
+   "region": "Spine",
+   "cost_pence": 18000,
+   "tat_seconds": 86400,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "MRI Thoracic spine: no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "MR-LSPINE",
+   "name": "MRI Lumbar spine",
+   "category": "imaging",
+   "modality": "MRI",
+   "region": "Spine",
+   "cost_pence": 18000,
+   "tat_seconds": 86400,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "MRI Lumbar spine: no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "MR-LIVER-C",
+   "name": "MRI Liver with contrast",
+   "category": "imaging",
+   "modality": "MRI",
+   "region": "Abdomen and pelvis",
+   "cost_pence": 18000,
+   "tat_seconds": 86400,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "MRI Liver with contrast: no acute abnormality demonstrated."
+   },
+   "contrast": true
+  },
+  {
+   "code": "MR-MRCP",
+   "name": "MRCP",
+   "category": "imaging",
+   "modality": "MRI",
+   "region": "Abdomen and pelvis",
+   "cost_pence": 18000,
+   "tat_seconds": 86400,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "MRCP: no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "MR-PROSTATE",
+   "name": "MRI Prostate (multiparametric)",
+   "category": "imaging",
+   "modality": "MRI",
+   "region": "Abdomen and pelvis",
+   "cost_pence": 18000,
+   "tat_seconds": 86400,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "MRI Prostate (multiparametric): no acute abnormality demonstrated."
+   },
+   "contrast": true
+  },
+  {
+   "code": "MR-PELVIS-F",
+   "name": "MRI Pelvis (gynaecological)",
+   "category": "imaging",
+   "modality": "MRI",
+   "region": "Abdomen and pelvis",
+   "cost_pence": 18000,
+   "tat_seconds": 86400,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "MRI Pelvis (gynaecological): no acute abnormality demonstrated."
+   },
+   "contrast": true
+  },
+  {
+   "code": "MR-CARDIAC",
+   "name": "Cardiac MRI",
+   "category": "imaging",
+   "modality": "MRI",
+   "region": "Cardiac",
+   "cost_pence": 18000,
+   "tat_seconds": 86400,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "Cardiac MRI: no acute abnormality demonstrated."
+   },
+   "contrast": true
+  },
+  {
+   "code": "MR-SHOULDER",
+   "name": "MRI Shoulder",
+   "category": "imaging",
+   "modality": "MRI",
+   "region": "Upper limb",
+   "cost_pence": 18000,
+   "tat_seconds": 86400,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "MRI Shoulder: no acute abnormality demonstrated."
+   },
+   "lateral": true
+  },
+  {
+   "code": "MR-WRIST",
+   "name": "MRI Wrist",
+   "category": "imaging",
+   "modality": "MRI",
+   "region": "Upper limb",
+   "cost_pence": 18000,
+   "tat_seconds": 86400,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "MRI Wrist: no acute abnormality demonstrated."
+   },
+   "lateral": true
+  },
+  {
+   "code": "MR-HIP",
+   "name": "MRI Hip",
+   "category": "imaging",
+   "modality": "MRI",
+   "region": "Lower limb",
+   "cost_pence": 18000,
+   "tat_seconds": 86400,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "MRI Hip: no acute abnormality demonstrated."
+   },
+   "lateral": true
+  },
+  {
+   "code": "MR-KNEE",
+   "name": "MRI Knee",
+   "category": "imaging",
+   "modality": "MRI",
+   "region": "Lower limb",
+   "cost_pence": 18000,
+   "tat_seconds": 86400,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "MRI Knee: no acute abnormality demonstrated."
+   },
+   "lateral": true
+  },
+  {
+   "code": "MR-ANKLE",
+   "name": "MRI Ankle",
+   "category": "imaging",
+   "modality": "MRI",
+   "region": "Lower limb",
+   "cost_pence": 18000,
+   "tat_seconds": 86400,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "MRI Ankle: no acute abnormality demonstrated."
+   },
+   "lateral": true
+  },
+  {
+   "code": "NM-VQ",
+   "name": "NM Lung ventilation-perfusion (V/Q) scan",
+   "category": "imaging",
+   "modality": "Nuclear medicine",
+   "region": "Chest",
+   "cost_pence": 25000,
+   "tat_seconds": 172800,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "NM Lung ventilation-perfusion (V/Q) scan: no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "NM-Q",
+   "name": "NM Lung perfusion (Q) scan",
+   "category": "imaging",
+   "modality": "Nuclear medicine",
+   "region": "Chest",
+   "cost_pence": 25000,
+   "tat_seconds": 172800,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "NM Lung perfusion (Q) scan: no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "NM-BONE",
+   "name": "NM Bone scan (whole body)",
+   "category": "imaging",
+   "modality": "Nuclear medicine",
+   "region": "Whole body",
+   "cost_pence": 25000,
+   "tat_seconds": 172800,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "NM Bone scan (whole body): no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "NM-MPS",
+   "name": "NM Myocardial perfusion scan",
+   "category": "imaging",
+   "modality": "Nuclear medicine",
+   "region": "Cardiac",
+   "cost_pence": 25000,
+   "tat_seconds": 172800,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "NM Myocardial perfusion scan: no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "NM-MAG3",
+   "name": "NM Renogram (MAG3)",
+   "category": "imaging",
+   "modality": "Nuclear medicine",
+   "region": "Abdomen and pelvis",
+   "cost_pence": 25000,
+   "tat_seconds": 172800,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "NM Renogram (MAG3): no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "NM-PETCT",
+   "name": "PET-CT Whole body (FDG)",
+   "category": "imaging",
+   "modality": "Nuclear medicine",
+   "region": "Whole body",
+   "cost_pence": 25000,
+   "tat_seconds": 172800,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "PET-CT Whole body (FDG): no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "FL-SWALLOW",
+   "name": "Fluoroscopy Water-soluble contrast swallow",
+   "category": "imaging",
+   "modality": "Fluoroscopy",
+   "region": "Chest",
+   "cost_pence": 9000,
+   "tat_seconds": 86400,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "Fluoroscopy Water-soluble contrast swallow: no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "FL-BARIUM",
+   "name": "Fluoroscopy Barium swallow",
+   "category": "imaging",
+   "modality": "Fluoroscopy",
+   "region": "Chest",
+   "cost_pence": 9000,
+   "tat_seconds": 86400,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "Fluoroscopy Barium swallow: no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "FL-VFS",
+   "name": "Fluoroscopy Videofluoroscopy (swallow assessment)",
+   "category": "imaging",
+   "modality": "Fluoroscopy",
+   "region": "Head and neck",
+   "cost_pence": 9000,
+   "tat_seconds": 86400,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "Fluoroscopy Videofluoroscopy (swallow assessment): no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "IR-DRAIN-US",
+   "name": "IR Ultrasound-guided drain insertion (abdominal collection)",
+   "category": "imaging",
+   "modality": "Interventional",
+   "region": "Abdomen and pelvis",
+   "cost_pence": 60000,
+   "tat_seconds": 86400,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "IR Ultrasound-guided drain insertion (abdominal collection): no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "IR-ASCITIC",
+   "name": "IR Ultrasound-guided ascitic drain",
+   "category": "imaging",
+   "modality": "Interventional",
+   "region": "Abdomen and pelvis",
+   "cost_pence": 60000,
+   "tat_seconds": 86400,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "IR Ultrasound-guided ascitic drain: no acute abnormality demonstrated."
+   }
+  },
+  {
+   "code": "IR-PLEURAL",
+   "name": "IR Ultrasound-guided pleural drain",
+   "category": "imaging",
+   "modality": "Interventional",
+   "region": "Chest",
+   "cost_pence": 60000,
+   "tat_seconds": 86400,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "IR Ultrasound-guided pleural drain: no acute abnormality demonstrated."
+   },
+   "lateral": true
+  },
+  {
+   "code": "IR-NEPHROSTOMY",
+   "name": "IR Nephrostomy",
+   "category": "imaging",
+   "modality": "Interventional",
+   "region": "Abdomen and pelvis",
+   "cost_pence": 60000,
+   "tat_seconds": 86400,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "IR Nephrostomy: no acute abnormality demonstrated."
+   },
+   "contrast": true,
+   "lateral": true
+  },
+  {
+   "code": "IR-BIOPSY-LUNG",
+   "name": "IR CT-guided lung biopsy",
+   "category": "imaging",
+   "modality": "Interventional",
+   "region": "Chest",
+   "cost_pence": 60000,
+   "tat_seconds": 86400,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "IR CT-guided lung biopsy: no acute abnormality demonstrated."
+   },
+   "lateral": true
+  },
+  {
+   "code": "IR-PICC",
+   "name": "IR PICC line insertion",
+   "category": "imaging",
+   "modality": "Interventional",
+   "region": "Vascular",
+   "cost_pence": 60000,
+   "tat_seconds": 86400,
+   "normal": {
+    "reported_by": "Radiology",
+    "report_text": "IR PICC line insertion: no acute abnormality demonstrated."
+   },
+   "lateral": true
+  }
+ ]
+}

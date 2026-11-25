@@ -1,0 +1,38 @@
+cff-version: 1.2.0
+message: "If you use EPR-Bench, please cite it as below."
+title: "EPR-Bench: a deterministic synthetic UK electronic patient record for benchmarking LLM agents"
+abstract: >-
+  A self-contained, deterministic, UK-style electronic patient record with fictional patients, reachable through tool
+  calls, a JSON API and a web UI, with tasks graded by deterministic checks over the final record. Preview release:
+  the clinical content is a draft and has not been clinically validated.
+type: software
+authors:
+  - given-names: Cameron
+    family-names: Dent
+    alias: c4m3r0nn
+repository-code: "https://github.com/c4m3r0nn/EPR-Bench"
+url: "https://github.com/c4m3r0nn/EPR-Bench"
+license:
+  - Apache-2.0
+  - CC-BY-4.0
+version: 0.1.0
+keywords:
+  - benchmark
+  - electronic patient record
+  - electronic health record
+  - LLM agents
+  - clinical safety
+  - synthetic data
+preferred-citation:
+  type: software
+  title: "EPR-Bench: a deterministic synthetic UK electronic patient record for benchmarking LLM agents"
+  authors:
+    - given-names: Cameron
+      family-names: Dent
+  year: 2026
+  url: "https://github.com/c4m3r0nn/EPR-Bench"
+  repository-code: "https://github.com/c4m3r0nn/EPR-Bench"
+  license:
+    - Apache-2.0
+    - CC-BY-4.0
+  notes: "Placeholder until a paper or archived release with a DOI exists. Code is Apache-2.0; cases, patients, tasks, documentation and evidence are CC-BY-4.0 (LICENSE-CONTENT.md); the dm+d-derived data is under the Open Government Licence v3.0 (NOTICE)."

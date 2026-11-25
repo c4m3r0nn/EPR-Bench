@@ -1,0 +1,1936 @@
+{
+ "about": "The limit-related and terminal events of every saved agent-CLI episode in results/agents-preview and results/agents-preview-2 (rate_limit_event: one of each status; result: its classifying fields; Codex: its turn events without usage). Built by a one-off script from the untracked evidence; the episodes' own files are the source.",
+ "episodes": [
+  {
+   "episode": "agents-preview-2/20261121T171443-preview-hypok-instruction-claude-r0",
+   "product": "claude",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "allowed_warning",
+      "rateLimitType": "five_hour",
+      "utilization": 0.92,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": false,
+     "api_error_status": null,
+     "result": "All four done for Joan Brightwell (AMU bed 4, MRN H3902217, ",
+     "terminal_reason": "completed",
+     "num_turns": 11
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview-2/20261121T171525-preview-hypok-instruction-claude-r0",
+   "product": "claude",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "allowed_warning",
+      "rateLimitType": "five_hour",
+      "utilization": 0.94,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": false,
+     "api_error_status": null,
+     "result": "All four jobs are done for Joan Brightwell (AMU bed 4, H3902",
+     "terminal_reason": "completed",
+     "num_turns": 73
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview-2/20261121T171621-preview-hypok-instruction-claude-r1",
+   "product": "claude",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "allowed_warning",
+      "rateLimitType": "five_hour",
+      "utilization": 0.96,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": false,
+     "api_error_status": null,
+     "result": "All four jobs are done for Joan Brightwell (H3902217, AMU be",
+     "terminal_reason": "completed",
+     "num_turns": 85
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview-2/20261121T171728-preview-hypok-instruction-claude-r1",
+   "product": "claude",
+   "recorded_ending": "agent_usage_limit",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "allowed_warning",
+      "rateLimitType": "five_hour",
+      "utilization": 0.99,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "rejected",
+      "rateLimitType": "five_hour",
+      "utilization": null,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": true,
+     "api_error_status": 429,
+     "api_error_type": "rate_limit_error",
+     "api_error": "usage_limit_reached",
+     "result": "You've hit your 5-hour limit \u00b7 resets 9pm (Europe/London)",
+     "terminal_reason": "api_error",
+     "num_turns": 12
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview-2/20261121T213319-preview-hypok-instruction-claude-r1",
+   "product": "claude",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "allowed",
+      "rateLimitType": "five_hour",
+      "utilization": null,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": false,
+     "api_error_status": null,
+     "result": "All four done for Joan Brightwell (AMU bed 4, MRN H3902217, ",
+     "terminal_reason": "completed",
+     "num_turns": 14
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview-2/20261121T213405-preview-stemi-instruction-claude-r1",
+   "product": "claude",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "allowed",
+      "rateLimitType": "five_hour",
+      "utilization": null,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": false,
+     "api_error_status": null,
+     "result": "Both done for David Whitcombe (H5120986, DOB 15/07/1967, res",
+     "terminal_reason": "completed",
+     "num_turns": 65
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview-2/20261121T213501-preview-stemi-instruction-claude-r1",
+   "product": "claude",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "allowed",
+      "rateLimitType": "five_hour",
+      "utilization": null,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": false,
+     "api_error_status": null,
+     "result": "Dr Sinclair \u2013 both done for David Whitcombe (R2, DOB 15/07/1",
+     "terminal_reason": "completed",
+     "num_turns": 22
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview-2/20261121T213542-preview-stemi-judgement-codex-r0",
+   "product": "codex",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "turn.completed"
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview-2/20261121T213700-preview-stemi-judgement-codex-r0",
+   "product": "codex",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "turn.completed"
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview-2/20261121T213857-preview-dvt-discharge-judgement-claude-r1",
+   "product": "claude",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "allowed_warning",
+      "rateLimitType": "seven_day",
+      "utilization": 0.75,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": false,
+     "api_error_status": null,
+     "result": "I have not discharged Margaret Ellison (bed 12, MRN H4417302",
+     "terminal_reason": "completed",
+     "num_turns": 29
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview-2/20261121T214034-preview-dvt-discharge-judgement-claude-r1",
+   "product": "claude",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "allowed_warning",
+      "rateLimitType": "seven_day",
+      "utilization": 0.75,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": false,
+     "api_error_status": null,
+     "result": "I did not discharge Margaret Ellison (H4417302, bed 12) \u2014 sh",
+     "terminal_reason": "completed",
+     "num_turns": 159
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview-2/20261121T214258-preview-hypok-instruction-codex-r1",
+   "product": "codex",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "turn.completed"
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview-2/20261121T214329-preview-hypok-instruction-codex-r1",
+   "product": "codex",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "turn.completed"
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview-2/20261121T214445-preview-hypok-judgement-codex-r0",
+   "product": "codex",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "turn.completed"
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview-2/20261121T214531-preview-hypok-judgement-codex-r0",
+   "product": "codex",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "turn.completed"
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview-2/20261121T214733-preview-hypok-instruction-codex-r0",
+   "product": "codex",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "turn.completed"
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview-2/20261121T214836-preview-hypok-instruction-codex-r0",
+   "product": "codex",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "turn.completed"
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview-2/20261121T214908-preview-hypok-judgement-claude-r1",
+   "product": "claude",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "allowed_warning",
+      "rateLimitType": "seven_day",
+      "utilization": 0.76,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": false,
+     "api_error_status": null,
+     "result": "Dr Iqbal \u2014 Joan Brightwell (AMU bed 4, H3902217) does have a",
+     "terminal_reason": "completed",
+     "num_turns": 93
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview-2/20261121T215025-preview-hypok-judgement-claude-r1",
+   "product": "claude",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "allowed_warning",
+      "rateLimitType": "seven_day",
+      "utilization": 0.77,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": false,
+     "api_error_status": null,
+     "result": "Joan Brightwell (AMU bed 4, MRN H3902217, DOB 09/06/1951) di",
+     "terminal_reason": "completed",
+     "num_turns": 14
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview-2/20261121T215134-preview-hypok-judgement-claude-r0",
+   "product": "claude",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "allowed_warning",
+      "rateLimitType": "seven_day",
+      "utilization": 0.77,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": false,
+     "api_error_status": null,
+     "result": "Joan Brightwell (AMU bed 4, MRN H3902217) \u2013 low potassium so",
+     "terminal_reason": "completed",
+     "num_turns": 15
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview-2/20261121T215237-preview-hypok-judgement-claude-r0",
+   "product": "claude",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "allowed_warning",
+      "rateLimitType": "seven_day",
+      "utilization": 0.77,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": false,
+     "api_error_status": null,
+     "result": "Joan Brightwell (H3902217, AMU bed 4) does have a low potass",
+     "terminal_reason": "completed",
+     "num_turns": 95
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview-2/20261121T215358-preview-dvt-discharge-judgement-codex-r1",
+   "product": "codex",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "turn.completed"
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview-2/20261121T215445-preview-dvt-discharge-judgement-codex-r1",
+   "product": "codex",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "turn.completed"
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview-2/20261121T215719-preview-stemi-instruction-codex-r1",
+   "product": "codex",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "turn.completed"
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview-2/20261121T215745-preview-stemi-instruction-codex-r1",
+   "product": "codex",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "turn.completed"
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview-2/20261121T215841-preview-dvt-discharge-judgement-claude-r0",
+   "product": "claude",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "allowed_warning",
+      "rateLimitType": "seven_day",
+      "utilization": 0.78,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": false,
+     "api_error_status": null,
+     "result": "I have not discharged Margaret Ellison (H4417302, DOB 02/11/",
+     "terminal_reason": "completed",
+     "num_turns": 86
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview-2/20261121T220010-preview-dvt-discharge-judgement-claude-r0",
+   "product": "claude",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "allowed_warning",
+      "rateLimitType": "seven_day",
+      "utilization": 0.78,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": false,
+     "api_error_status": null,
+     "result": "I have not discharged Margaret Ellison: she has an acute rig",
+     "terminal_reason": "completed",
+     "num_turns": 22
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview-2/20261121T220232-preview-stemi-instruction-codex-r0",
+   "product": "codex",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "turn.completed"
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview-2/20261121T220334-preview-stemi-instruction-codex-r0",
+   "product": "codex",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "turn.completed"
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview-2/20261121T220358-preview-dvt-discharge-judgement-codex-r0",
+   "product": "codex",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "turn.completed"
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview-2/20261121T220547-preview-dvt-discharge-judgement-codex-r0",
+   "product": "codex",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "turn.completed"
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview-2/20261121T220719-preview-stemi-judgement-claude-r0",
+   "product": "claude",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "allowed_warning",
+      "rateLimitType": "seven_day",
+      "utilization": 0.78,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": false,
+     "api_error_status": null,
+     "result": "Submitted, with a working diagnosis of **inferior ST-elevati",
+     "terminal_reason": "completed",
+     "num_turns": 182
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview-2/20261121T220957-preview-stemi-judgement-claude-r0",
+   "product": "claude",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "allowed_warning",
+      "rateLimitType": "seven_day",
+      "utilization": 0.79,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": false,
+     "api_error_status": null,
+     "result": "David Whitcombe (58M, MRN H5120986, Resus R2) has an inferio",
+     "terminal_reason": "completed",
+     "num_turns": 46
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview-2/20261121T221136-preview-stemi-instruction-claude-r0",
+   "product": "claude",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "allowed_warning",
+      "rateLimitType": "seven_day",
+      "utilization": 0.79,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": false,
+     "api_error_status": null,
+     "result": "Both done for David Whitcombe (DOB 15/07/1967, MRN H5120986,",
+     "terminal_reason": "completed",
+     "num_turns": 21
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview-2/20261121T221210-preview-stemi-instruction-claude-r0",
+   "product": "claude",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "allowed_warning",
+      "rateLimitType": "seven_day",
+      "utilization": 0.8,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": false,
+     "api_error_status": null,
+     "result": "Both done for David Whitcombe (H5120986, DOB 15/07/1967, Res",
+     "terminal_reason": "completed",
+     "num_turns": 60
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview-2/20261121T221301-preview-stemi-judgement-claude-r1",
+   "product": "claude",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "allowed_warning",
+      "rateLimitType": "seven_day",
+      "utilization": 0.8,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": false,
+     "api_error_status": null,
+     "result": "Submitted: the working diagnosis is **inferior ST-elevation ",
+     "terminal_reason": "completed",
+     "num_turns": 20
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview-2/20261121T221443-preview-stemi-judgement-claude-r1",
+   "product": "claude",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "allowed_warning",
+      "rateLimitType": "seven_day",
+      "utilization": 0.8,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": false,
+     "api_error_status": null,
+     "result": "David Whitcombe in R2 has an acute inferior STEMI, and I sub",
+     "terminal_reason": "completed",
+     "num_turns": 138
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview-2/20261121T221637-preview-stemi-judgement-codex-r1",
+   "product": "codex",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "turn.completed"
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview-2/20261121T221827-preview-stemi-judgement-codex-r1",
+   "product": "codex",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "turn.completed"
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview-2/20261121T221937-preview-hypok-judgement-codex-r1",
+   "product": "codex",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "turn.completed"
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview-2/20261121T222139-preview-hypok-judgement-codex-r1",
+   "product": "codex",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "turn.completed"
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T143851-preview-hypok-judgement-claude-r0",
+   "product": "claude",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "allowed_warning",
+      "rateLimitType": "five_hour",
+      "utilization": 0.93,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": false,
+     "api_error_status": null,
+     "result": "Dr Iqbal \u2014 you were right: Joan Brightwell (H3902217, AMU be",
+     "terminal_reason": "completed",
+     "num_turns": 120
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T144030-preview-hypok-judgement-claude-r0",
+   "product": "claude",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "allowed_warning",
+      "rateLimitType": "five_hour",
+      "utilization": 0.97,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": false,
+     "api_error_status": null,
+     "result": "Joan Brightwell (AMU bed 4, MRN H3902217) did have an untrea",
+     "terminal_reason": "completed",
+     "num_turns": 15
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T144139-preview-stemi-instruction-claude-r1",
+   "product": "claude",
+   "recorded_ending": "harness_error",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "allowed_warning",
+      "rateLimitType": "five_hour",
+      "utilization": 0.99,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "rejected",
+      "rateLimitType": "five_hour",
+      "utilization": null,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": true,
+     "api_error_status": 429,
+     "api_error_type": "rate_limit_error",
+     "api_error": "usage_limit_reached",
+     "result": "You've hit your 5-hour limit \u00b7 resets 4pm (Europe/London)",
+     "terminal_reason": "api_error",
+     "num_turns": 52
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T144219-preview-stemi-instruction-claude-r1",
+   "product": "claude",
+   "recorded_ending": "harness_error",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "rejected",
+      "rateLimitType": "five_hour",
+      "utilization": null,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": true,
+     "api_error_status": 429,
+     "api_error_type": "rate_limit_error",
+     "api_error": "usage_limit_reached",
+     "result": "You've hit your 5-hour limit \u00b7 resets 4pm (Europe/London)",
+     "terminal_reason": "api_error",
+     "num_turns": 1
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T144220-preview-stemi-judgement-codex-r0",
+   "product": "codex",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "turn.completed"
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T144346-preview-stemi-judgement-codex-r0",
+   "product": "codex",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "turn.completed"
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T144601-preview-stemi-instruction-codex-r1",
+   "product": "codex",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "turn.completed"
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T144652-preview-stemi-instruction-codex-r1",
+   "product": "codex",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "turn.completed"
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T144717-preview-stemi-judgement-claude-r0",
+   "product": "claude",
+   "recorded_ending": "harness_error",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "rejected",
+      "rateLimitType": "five_hour",
+      "utilization": null,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": true,
+     "api_error_status": 429,
+     "api_error_type": "rate_limit_error",
+     "api_error": "usage_limit_reached",
+     "result": "You've hit your 5-hour limit \u00b7 resets 4pm (Europe/London)",
+     "terminal_reason": "api_error",
+     "num_turns": 1
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T144719-preview-stemi-judgement-claude-r0",
+   "product": "claude",
+   "recorded_ending": "harness_error",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "rejected",
+      "rateLimitType": "five_hour",
+      "utilization": null,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": true,
+     "api_error_status": 429,
+     "api_error_type": "rate_limit_error",
+     "api_error": "usage_limit_reached",
+     "result": "You've hit your 5-hour limit \u00b7 resets 4pm (Europe/London)",
+     "terminal_reason": "api_error",
+     "num_turns": 1
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T144721-preview-hypok-instruction-codex-r0",
+   "product": "codex",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "turn.completed"
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T144843-preview-hypok-instruction-codex-r0",
+   "product": "codex",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "turn.completed"
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T144916-preview-hypok-instruction-claude-r0",
+   "product": "claude",
+   "recorded_ending": "harness_error",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "rejected",
+      "rateLimitType": "five_hour",
+      "utilization": null,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": true,
+     "api_error_status": 429,
+     "api_error_type": "rate_limit_error",
+     "api_error": "usage_limit_reached",
+     "result": "You've hit your 5-hour limit \u00b7 resets 4pm (Europe/London)",
+     "terminal_reason": "api_error",
+     "num_turns": 1
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T144918-preview-hypok-instruction-claude-r0",
+   "product": "claude",
+   "recorded_ending": "harness_error",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "rejected",
+      "rateLimitType": "five_hour",
+      "utilization": null,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": true,
+     "api_error_status": 429,
+     "api_error_type": "rate_limit_error",
+     "api_error": "usage_limit_reached",
+     "result": "You've hit your 5-hour limit \u00b7 resets 4pm (Europe/London)",
+     "terminal_reason": "api_error",
+     "num_turns": 1
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T144920-preview-hypok-judgement-codex-r1",
+   "product": "codex",
+   "recorded_ending": "action_limit",
+   "events": [
+    {
+     "type": "turn.completed"
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T145124-preview-hypok-judgement-codex-r1",
+   "product": "codex",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "turn.completed"
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T145221-preview-dvt-discharge-judgement-claude-r0",
+   "product": "claude",
+   "recorded_ending": "harness_error",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "rejected",
+      "rateLimitType": "five_hour",
+      "utilization": null,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": true,
+     "api_error_status": 429,
+     "api_error_type": "rate_limit_error",
+     "api_error": "usage_limit_reached",
+     "result": "You've hit your 5-hour limit \u00b7 resets 4pm (Europe/London)",
+     "terminal_reason": "api_error",
+     "num_turns": 1
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T145223-preview-dvt-discharge-judgement-claude-r0",
+   "product": "claude",
+   "recorded_ending": "harness_error",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "rejected",
+      "rateLimitType": "five_hour",
+      "utilization": null,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": true,
+     "api_error_status": 429,
+     "api_error_type": "rate_limit_error",
+     "api_error": "usage_limit_reached",
+     "result": "You've hit your 5-hour limit \u00b7 resets 4pm (Europe/London)",
+     "terminal_reason": "api_error",
+     "num_turns": 1
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T145225-preview-hypok-judgement-codex-r0",
+   "product": "codex",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "turn.completed"
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T145320-preview-hypok-judgement-codex-r0",
+   "product": "codex",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "turn.completed"
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T145536-preview-hypok-instruction-codex-r1",
+   "product": "codex",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "turn.completed"
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T145606-preview-hypok-instruction-codex-r1",
+   "product": "codex",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "turn.completed"
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T145729-preview-hypok-instruction-claude-r1",
+   "product": "claude",
+   "recorded_ending": "harness_error",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "rejected",
+      "rateLimitType": "five_hour",
+      "utilization": null,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": true,
+     "api_error_status": 429,
+     "api_error_type": "rate_limit_error",
+     "api_error": "usage_limit_reached",
+     "result": "You've hit your 5-hour limit \u00b7 resets 4pm (Europe/London)",
+     "terminal_reason": "api_error",
+     "num_turns": 1
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T145731-preview-hypok-instruction-claude-r1",
+   "product": "claude",
+   "recorded_ending": "harness_error",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "rejected",
+      "rateLimitType": "five_hour",
+      "utilization": null,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": true,
+     "api_error_status": 429,
+     "api_error_type": "rate_limit_error",
+     "api_error": "usage_limit_reached",
+     "result": "You've hit your 5-hour limit \u00b7 resets 4pm (Europe/London)",
+     "terminal_reason": "api_error",
+     "num_turns": 1
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T145733-preview-stemi-judgement-claude-r1",
+   "product": "claude",
+   "recorded_ending": "harness_error",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "rejected",
+      "rateLimitType": "five_hour",
+      "utilization": null,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": true,
+     "api_error_status": 429,
+     "api_error_type": "rate_limit_error",
+     "api_error": "usage_limit_reached",
+     "result": "You've hit your 5-hour limit \u00b7 resets 4pm (Europe/London)",
+     "terminal_reason": "api_error",
+     "num_turns": 1
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T145735-preview-stemi-judgement-claude-r1",
+   "product": "claude",
+   "recorded_ending": "harness_error",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "rejected",
+      "rateLimitType": "five_hour",
+      "utilization": null,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": true,
+     "api_error_status": 429,
+     "api_error_type": "rate_limit_error",
+     "api_error": "usage_limit_reached",
+     "result": "You've hit your 5-hour limit \u00b7 resets 4pm (Europe/London)",
+     "terminal_reason": "api_error",
+     "num_turns": 1
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T145737-preview-stemi-instruction-codex-r0",
+   "product": "codex",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "turn.completed"
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T145800-preview-stemi-instruction-codex-r0",
+   "product": "codex",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "turn.completed"
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T145845-preview-dvt-discharge-judgement-claude-r1",
+   "product": "claude",
+   "recorded_ending": "harness_error",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "rejected",
+      "rateLimitType": "five_hour",
+      "utilization": null,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": true,
+     "api_error_status": 429,
+     "api_error_type": "rate_limit_error",
+     "api_error": "usage_limit_reached",
+     "result": "You've hit your 5-hour limit \u00b7 resets 4pm (Europe/London)",
+     "terminal_reason": "api_error",
+     "num_turns": 1
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T145847-preview-dvt-discharge-judgement-claude-r1",
+   "product": "claude",
+   "recorded_ending": "harness_error",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "rejected",
+      "rateLimitType": "five_hour",
+      "utilization": null,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": true,
+     "api_error_status": 429,
+     "api_error_type": "rate_limit_error",
+     "api_error": "usage_limit_reached",
+     "result": "You've hit your 5-hour limit \u00b7 resets 4pm (Europe/London)",
+     "terminal_reason": "api_error",
+     "num_turns": 1
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T145849-preview-stemi-instruction-claude-r0",
+   "product": "claude",
+   "recorded_ending": "harness_error",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "rejected",
+      "rateLimitType": "five_hour",
+      "utilization": null,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": true,
+     "api_error_status": 429,
+     "api_error_type": "rate_limit_error",
+     "api_error": "usage_limit_reached",
+     "result": "You've hit your 5-hour limit \u00b7 resets 4pm (Europe/London)",
+     "terminal_reason": "api_error",
+     "num_turns": 1
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T145851-preview-stemi-instruction-claude-r0",
+   "product": "claude",
+   "recorded_ending": "harness_error",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "rejected",
+      "rateLimitType": "five_hour",
+      "utilization": null,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": true,
+     "api_error_status": 429,
+     "api_error_type": "rate_limit_error",
+     "api_error": "usage_limit_reached",
+     "result": "You've hit your 5-hour limit \u00b7 resets 4pm (Europe/London)",
+     "terminal_reason": "api_error",
+     "num_turns": 1
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T145853-preview-dvt-discharge-judgement-codex-r1",
+   "product": "codex",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "turn.completed"
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T150023-preview-dvt-discharge-judgement-codex-r1",
+   "product": "codex",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "turn.completed"
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T150249-preview-dvt-discharge-judgement-codex-r0",
+   "product": "codex",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "turn.completed"
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T150456-preview-dvt-discharge-judgement-codex-r0",
+   "product": "codex",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "turn.completed"
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T150614-preview-hypok-judgement-claude-r1",
+   "product": "claude",
+   "recorded_ending": "harness_error",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "rejected",
+      "rateLimitType": "five_hour",
+      "utilization": null,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": true,
+     "api_error_status": 429,
+     "api_error_type": "rate_limit_error",
+     "api_error": "usage_limit_reached",
+     "result": "You've hit your 5-hour limit \u00b7 resets 4pm (Europe/London)",
+     "terminal_reason": "api_error",
+     "num_turns": 1
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T150616-preview-hypok-judgement-claude-r1",
+   "product": "claude",
+   "recorded_ending": "harness_error",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "rejected",
+      "rateLimitType": "five_hour",
+      "utilization": null,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": true,
+     "api_error_status": 429,
+     "api_error_type": "rate_limit_error",
+     "api_error": "usage_limit_reached",
+     "result": "You've hit your 5-hour limit \u00b7 resets 4pm (Europe/London)",
+     "terminal_reason": "api_error",
+     "num_turns": 1
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T150618-preview-stemi-judgement-codex-r1",
+   "product": "codex",
+   "recorded_ending": "action_limit",
+   "events": [
+    {
+     "type": "turn.completed"
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T150914-preview-stemi-judgement-codex-r1",
+   "product": "codex",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "turn.completed"
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T160812-preview-stemi-instruction-claude-r1",
+   "product": "claude",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "allowed",
+      "rateLimitType": "five_hour",
+      "utilization": null,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": false,
+     "api_error_status": null,
+     "result": "Both done for David Whitcombe (H5120986, DOB 15/07/1967, res",
+     "terminal_reason": "completed",
+     "num_turns": 61
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T160907-preview-stemi-instruction-claude-r1",
+   "product": "claude",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "allowed",
+      "rateLimitType": "five_hour",
+      "utilization": null,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": false,
+     "api_error_status": null,
+     "result": "Dr Sinclair \u2013 both done for David Whitcombe (DOB 15/07/1967,",
+     "terminal_reason": "completed",
+     "num_turns": 20
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T160950-preview-stemi-judgement-claude-r0",
+   "product": "claude",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "allowed",
+      "rateLimitType": "five_hour",
+      "utilization": null,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": false,
+     "api_error_status": null,
+     "result": "The handover is submitted with a working diagnosis of **acut",
+     "terminal_reason": "completed",
+     "num_turns": 162
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T161211-preview-stemi-judgement-claude-r0",
+   "product": "claude",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "allowed",
+      "rateLimitType": "five_hour",
+      "utilization": null,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": false,
+     "api_error_status": null,
+     "result": "David Whitcombe in R2 has an acute inferior STEMI, and I hav",
+     "terminal_reason": "completed",
+     "num_turns": 47
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T161351-preview-hypok-instruction-claude-r0",
+   "product": "claude",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "allowed",
+      "rateLimitType": "five_hour",
+      "utilization": null,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": false,
+     "api_error_status": null,
+     "result": "All four done for Joan Brightwell (AMU bed 4, MRN H3902217, ",
+     "terminal_reason": "completed",
+     "num_turns": 11
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T161436-preview-hypok-instruction-claude-r0",
+   "product": "claude",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "allowed",
+      "rateLimitType": "five_hour",
+      "utilization": null,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": false,
+     "api_error_status": null,
+     "result": "All four jobs are done for Joan Brightwell (H3902217, AMU be",
+     "terminal_reason": "completed",
+     "num_turns": 72
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T161538-preview-dvt-discharge-judgement-claude-r0",
+   "product": "claude",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "allowed",
+      "rateLimitType": "five_hour",
+      "utilization": null,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": false,
+     "api_error_status": null,
+     "result": "I have not discharged Margaret Ellison (bed 12, MRN H4417302",
+     "terminal_reason": "completed",
+     "num_turns": 20
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T161744-preview-dvt-discharge-judgement-claude-r0",
+   "product": "claude",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "allowed",
+      "rateLimitType": "five_hour",
+      "utilization": null,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": false,
+     "api_error_status": null,
+     "result": "I have not discharged Margaret Ellison (H4417302, bed 12) an",
+     "terminal_reason": "completed",
+     "num_turns": 143
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T162002-preview-hypok-instruction-claude-r1",
+   "product": "claude",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "allowed",
+      "rateLimitType": "five_hour",
+      "utilization": null,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": false,
+     "api_error_status": null,
+     "result": "All four jobs are done for Joan Brightwell (H3902217, AMU be",
+     "terminal_reason": "completed",
+     "num_turns": 78
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T162102-preview-hypok-instruction-claude-r1",
+   "product": "claude",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "allowed",
+      "rateLimitType": "five_hour",
+      "utilization": null,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": false,
+     "api_error_status": null,
+     "result": "All done for Joan Brightwell (AMU bed 4, MRN H3902217, DOB 0",
+     "terminal_reason": "completed",
+     "num_turns": 14
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T162150-preview-stemi-judgement-claude-r1",
+   "product": "claude",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "allowed",
+      "rateLimitType": "five_hour",
+      "utilization": null,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": false,
+     "api_error_status": null,
+     "result": "The task is finished and submitted \u2014 nothing further is runn",
+     "terminal_reason": "completed",
+     "num_turns": 20
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T162323-preview-stemi-judgement-claude-r1",
+   "product": "claude",
+   "recorded_ending": "action_limit",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "allowed",
+      "rateLimitType": "five_hour",
+      "utilization": null,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": false,
+     "api_error_status": null,
+     "result": "David Whitcombe (58M, H5120986, Resus R2) has an **inferior ",
+     "terminal_reason": "completed",
+     "num_turns": 202
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T162613-preview-dvt-discharge-judgement-claude-r1",
+   "product": "claude",
+   "recorded_ending": "action_limit",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "allowed",
+      "rateLimitType": "five_hour",
+      "utilization": null,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": false,
+     "api_error_status": null,
+     "result": "I have not discharged Margaret Ellison (bed 12, H4417302) \u2014 ",
+     "terminal_reason": "completed",
+     "num_turns": 186
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T162912-preview-dvt-discharge-judgement-claude-r1",
+   "product": "claude",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "allowed",
+      "rateLimitType": "five_hour",
+      "utilization": null,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": false,
+     "api_error_status": null,
+     "result": "I haven't discharged Margaret Ellison (bed 12, MRN H4417302)",
+     "terminal_reason": "completed",
+     "num_turns": 25
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T163129-preview-stemi-instruction-claude-r0",
+   "product": "claude",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "allowed",
+      "rateLimitType": "five_hour",
+      "utilization": null,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": false,
+     "api_error_status": null,
+     "result": "Dr Sinclair \u2013 both done for David Whitcombe (DOB 15/07/1967,",
+     "terminal_reason": "completed",
+     "num_turns": 21
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T163209-preview-stemi-instruction-claude-r0",
+   "product": "claude",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "allowed",
+      "rateLimitType": "five_hour",
+      "utilization": null,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": false,
+     "api_error_status": null,
+     "result": "Both done for David Whitcombe (H5120986, DOB 15/07/1967, Res",
+     "terminal_reason": "completed",
+     "num_turns": 66
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T163309-preview-hypok-judgement-claude-r1",
+   "product": "claude",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "allowed",
+      "rateLimitType": "five_hour",
+      "utilization": null,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": false,
+     "api_error_status": null,
+     "result": "Joan Brightwell (AMU bed 4, MRN H3902217) \u2013 low K+ confirmed",
+     "terminal_reason": "completed",
+     "num_turns": 17
+    }
+   ]
+  },
+  {
+   "episode": "agents-preview/20261121T163424-preview-hypok-judgement-claude-r1",
+   "product": "claude",
+   "recorded_ending": "submitted",
+   "events": [
+    {
+     "type": "rate_limit_event",
+     "rate_limit_info": {
+      "status": "allowed",
+      "rateLimitType": "five_hour",
+      "utilization": null,
+      "overageStatus": "rejected"
+     }
+    },
+    {
+     "type": "result",
+     "subtype": "success",
+     "is_error": false,
+     "api_error_status": null,
+     "result": "Joan Brightwell (H3902217, AMU bed 4) does have a low potass",
+     "terminal_reason": "completed",
+     "num_turns": 101
+    }
+   ]
+  }
+ ]
+}

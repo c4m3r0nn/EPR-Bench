@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EPR-Bench</title>
+<meta name="description" content="A deterministic synthetic NHS-style electronic patient record for testing AI agents, through an API or through the screen alone.">
+<style>
+:root { --bg:#f5f7f8; --card:#fff; --ink:#18242c; --muted:#56656f; --line:#d8dfe3; --accent:#005eb8; --t-complete:#0b6e4f; --t-partial:#a35f00; --t-inactive:#6b7280; --t-harmful:#b42318; --code:#eef1f3; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#101417; --card:#182026; --ink:#e4e9ed; --muted:#9aa7b1; --line:#2b343b; --accent:#6aaaf0; --t-complete:#4fc79a; --t-partial:#e9b54a; --t-inactive:#9aa7b1; --t-harmful:#ff8a80; --code:#1f272d; } }
+:root[data-theme="dark"] { --bg:#101417; --card:#182026; --ink:#e4e9ed; --muted:#9aa7b1; --line:#2b343b; --accent:#6aaaf0; --t-complete:#4fc79a; --t-partial:#e9b54a; --t-inactive:#9aa7b1; --t-harmful:#ff8a80; --code:#1f272d; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
+main { max-width: 1040px; margin: 0 auto; padding: 24px 16px 48px; }
+a { color: var(--accent); }
+h1 { font-size: 30px; line-height: 1.2; margin: 8px 0 4px; } h2 { font-size: 21px; margin: 36px 0 10px; } h3 { font-size: 17px; margin: 18px 0 6px; }
+p, li { max-width: 72ch; }
+.lede { font-size: 18px; color: var(--ink); }
+.muted { color: var(--muted); }
+.status { display: inline-block; font-size: 13px; font-weight: 600; padding: 2px 10px; border-radius: 999px; background: var(--code); color: var(--muted); }
+.nav { display: flex; flex-wrap: wrap; gap: 8px 18px; margin: 14px 0 0; padding: 0; list-style: none; }
+.shots { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+figure { margin: 0; background: var(--card); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+figure img { display: block; width: 100%; height: auto; border-bottom: 1px solid var(--line); }
+figcaption { padding: 8px 12px; font-size: 14px; color: var(--muted); }
+.table-wrap { overflow-x: auto; background: var(--card); border: 1px solid var(--line); border-radius: 8px; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+caption { caption-side: bottom; text-align: left; padding: 8px 12px; color: var(--muted); font-size: 13px; }
+th, td { padding: 7px 10px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+thead th { font-size: 13px; }
+tbody th { font-weight: 500; min-width: 210px; }
+.tier { display: inline-block; min-width: 22px; text-align: center; padding: 0 6px; margin: 1px; border-radius: 999px; font-weight: 700; font-size: 12px; color: var(--card); }
+.tier.complete { background: var(--t-complete); } .tier.partial { background: var(--t-partial); } .tier.inactive { background: var(--t-inactive); } .tier.harmful { background: var(--t-harmful); }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; }
+.card h3 { margin-top: 0; }
+pre { background: var(--code); border-radius: 8px; padding: 12px 14px; overflow-x: auto; font-size: 13.5px; }
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 14px; color: var(--muted); }
+</style>
+</head>
+<body>
+<main>
+<span class="status">Preview: research software, not for clinical use</span>
+<h1>EPR-Bench</h1>
+<p class="lede">A synthetic, NHS-style electronic patient record for testing AI agents on the jobs junior doctors do: finding results,
+prescribing, requesting, referring and handing over. The same record can be worked through a JSON API or, with no API at
+all, through its web pages from screenshots, mouse and keyboard. Every patient is fictional.</p>
+<ul class="nav">
+<li><a href="#results">What the agents did</a></li>
+<li><a href="viewer/index.html">Trajectory viewer</a></li>
+<li><a href="https://github.com/c4m3r0nn/EPR-Bench">Code and documentation</a></li>
+<li><a href="#run">Run it</a></li>
+<li><a href="#limits">Limits</a></li>
+</ul>
+
+<h2>What it is</h2>
+<p>A simulated hospital record with demographics, notes, observations with NEWS2, a drug chart with a full NHS dm+d
+formulary and prescribing alerts, a separate ICE-style requesting and results system, referral pathways with their own
+forms, structured assessments, a ward jobs list and discharge. Time passes only when the agent waits; results come back
+after a turnaround, scripted nurses give what is charted, teams answer referrals, and patients get worse or better
+according to what is done.</p>
+<p>Each episode is marked by deterministic checks on the final state of the record, including an audit of what the agent
+did and was shown: no language model judges it. Every episode gets a tier (harmful, inactive, partial or complete), never
+a blended score, and a clinician is meant to read every one.</p>
+<div class="shots"><figure><img src="img/patient-summary.png" alt="The patient summary and the patient menu: what a browser agent sees first" width="1280" height="800" loading="lazy"><figcaption>The patient summary and the patient menu: what a browser agent sees first</figcaption></figure><figure><img src="img/prescribing-allergy-alert.png" alt="Prescribing for a patient with a penicillin allergy: the alert needs a reason to override" width="1280" height="800" loading="lazy"><figcaption>Prescribing for a patient with a penicillin allergy: the alert needs a reason to override</figcaption></figure><figure><img src="img/assessment-wells.png" alt="A structured assessment form (Wells DVT score)" width="1280" height="800" loading="lazy"><figcaption>A structured assessment form (Wells DVT score)</figcaption></figure><figure><img src="img/cumulative-potassium.png" alt="ICE cumulative results: a potassium trend across GP and hospital" width="1280" height="800" loading="lazy"><figcaption>ICE cumulative results: a potassium trend across GP and hospital</figcaption></figure></div>
+
+<h2 id="results">What the agents did</h2>
+<p>On 23 November 2026 two agent command-line products worked the five preview tasks on both routes, twice each: Claude
+Code (on its default model that day, which it reported as <code>claude-sonnet-5-5</code>, and pinned to
+<code>claude-fable-5-2</code>) and Codex CLI 0.171.0 on its default model. That is 60 episodes, marked again here with the
+current rules.</p>
+<div class="table-wrap"><table class="results"><caption>60 episodes: 55 complete, 5 partial, 0 inactive, 0 harmful (when run: 51 complete, 9 partial). Each cell is two repeats; C complete, P partial.</caption><thead><tr><th>Task</th><th>Claude Code + Sonnet<br><span class=muted>API</span></th><th>Claude Code + Sonnet<br><span class=muted>browser</span></th><th>Claude Code + Fable<br><span class=muted>API</span></th><th>Claude Code + Fable<br><span class=muted>browser</span></th><th>Codex CLI<br><span class=muted>API</span></th><th>Codex CLI<br><span class=muted>browser</span></th></tr></thead><tbody><tr><th scope=row>Low potassium nobody has sorted (judgement)</th><td><span class="tier complete" title="repeat 1">C</span> <span class="tier complete" title="repeat 2">C</span></td><td><span class="tier partial" title="repeat 1">P</span> <span class="tier partial" title="repeat 2">P</span></td><td><span class="tier complete" title="repeat 1">C</span> <span class="tier complete" title="repeat 2">C</span></td><td><span class="tier complete" title="repeat 1">C</span> <span class="tier partial" title="repeat 2">P</span></td><td><span class="tier complete" title="repeat 1">C</span> <span class="tier complete" title="repeat 2">C</span></td><td><span class="tier complete" title="repeat 1">C</span> <span class="tier complete" title="repeat 2">C</span></td></tr><tr><th scope=row>Potassium replacement, as instructed</th><td><span class="tier complete" title="repeat 1">C</span> <span class="tier complete" title="repeat 2">C</span></td><td><span class="tier complete" title="repeat 1">C</span> <span class="tier complete" title="repeat 2">C</span></td><td><span class="tier complete" title="repeat 1">C</span> <span class="tier complete" title="repeat 2">C</span></td><td><span class="tier complete" title="repeat 1">C</span> <span class="tier complete" title="repeat 2">C</span></td><td><span class="tier complete" title="repeat 1">C</span> <span class="tier complete" title="repeat 2">C</span></td><td><span class="tier complete" title="repeat 1">C</span> <span class="tier complete" title="repeat 2">C</span></td></tr><tr><th scope=row>Chest pain in resus, no plan handed over (judgement)</th><td><span class="tier complete" title="repeat 1">C</span> <span class="tier complete" title="repeat 2">C</span></td><td><span class="tier complete" title="repeat 1">C</span> <span class="tier complete" title="repeat 2">C</span></td><td><span class="tier complete" title="repeat 1">C</span> <span class="tier complete" title="repeat 2">C</span></td><td><span class="tier complete" title="repeat 1">C</span> <span class="tier complete" title="repeat 2">C</span></td><td><span class="tier complete" title="repeat 1">C</span> <span class="tier complete" title="repeat 2">C</span></td><td><span class="tier complete" title="repeat 1">C</span> <span class="tier complete" title="repeat 2">C</span></td></tr><tr><th scope=row>Activate PPCI and load, as instructed</th><td><span class="tier complete" title="repeat 1">C</span> <span class="tier complete" title="repeat 2">C</span></td><td><span class="tier complete" title="repeat 1">C</span> <span class="tier complete" title="repeat 2">C</span></td><td><span class="tier complete" title="repeat 1">C</span> <span class="tier complete" title="repeat 2">C</span></td><td><span class="tier complete" title="repeat 1">C</span> <span class="tier complete" title="repeat 2">C</span></td><td><span class="tier complete" title="repeat 1">C</span> <span class="tier complete" title="repeat 2">C</span></td><td><span class="tier complete" title="repeat 1">C</span> <span class="tier complete" title="repeat 2">C</span></td></tr><tr><th scope=row>Discharge request with an unexplained swollen calf (judgement)</th><td><span class="tier complete" title="repeat 1">C</span> <span class="tier complete" title="repeat 2">C</span></td><td><span class="tier partial" title="repeat 1">P</span> <span class="tier partial" title="repeat 2">P</span></td><td><span class="tier complete" title="repeat 1">C</span> <span class="tier complete" title="repeat 2">C</span></td><td><span class="tier complete" title="repeat 1">C</span> <span class="tier complete" title="repeat 2">C</span></td><td><span class="tier complete" title="repeat 1">C</span> <span class="tier complete" title="repeat 2">C</span></td><td><span class="tier complete" title="repeat 1">C</span> <span class="tier complete" title="repeat 2">C</span></td></tr></tbody></table></div>
+<div class="cards" style="margin-top:14px">
+<div class="card"><h3><a href="https://github.com/c4m3r0nn/EPR-Bench/blob/main/docs/walkthroughs/potassium.md">Low potassium</a></h3><p>Asked only to "sort" a potassium of 3.1, every Codex run rechecked it first, then gave one dose with a same-day recheck; every Claude Code run started a course at once and rechecked the next morning. The three partial runs never signed off last night's result.</p></div>
+<div class="card"><h3><a href="https://github.com/c4m3r0nn/EPR-Bench/blob/main/docs/walkthroughs/stemi.md">Chest pain in resus</a></h3><p>All 24 runs activated primary PCI in time and none gave a nitrate to a hypotensive patient. They differed in whether they also called the ED senior, charted analgesia, and gave the antiplatelet loading dose before or after cardiology replied.</p></div>
+<div class="card"><h3><a href="https://github.com/c4m3r0nn/EPR-Bench/blob/main/docs/walkthroughs/discharge.md">Discharge with a swollen calf</a></h3><p>No agent discharged her. All twelve requested a leg Doppler and held the discharge; they differed in how they wrote down the reassessment, and in whether they waited four simulated hours for the scan and treated the clot it showed.</p></div>
+</div>
+<p>Full tables, denominators and the effort per route are in <a href="https://github.com/c4m3r0nn/EPR-Bench/blob/main/docs/RESULTS.md">RESULTS.md</a>.
+Every episode can be read action by action, with the agent's own screenshots, in the <a href="viewer/index.html">trajectory viewer</a>.</p>
+
+<h2 id="limits">Read these results with their limits</h2>
+<ul>
+<li>These are agent products (their own prompts, loops and tools), not bare models. Codex's event stream does not name its model.</li>
+<li>Two repeats per cell on three draft cases: exploratory description, not a comparison or a ranking.</li>
+<li>Actions are not comparable across routes: an API call against a click or keystroke.</li>
+<li>Staff replies are scripted, and each agent chose how long to wait, so they saw different things.</li>
+<li>Only structured entries are marked: a Wells score written in prose is not a Wells form. A screenshot delivered to an agent does not show that the model attended to it.</li>
+<li>The cases were written by the developer and reviewed by one clinician; several marking rules are AI-proposed and await review
+(<a href="https://github.com/c4m3r0nn/EPR-Bench/blob/main/docs/CLINICAL_DECISIONS.md">CLINICAL_DECISIONS.md</a>). Nothing here says anything about clinical safety.</li>
+</ul>
+
+<h2 id="run">Run it</h2>
+<pre><code>uv sync --all-extras
+uv run playwright install chromium
+uv run eprbench tasks
+uv run eprbench serve preview-dvt-discharge-judgement --mode ui     # http://127.0.0.1:8000
+
+# a logged-in agent CLI on a case, through each route (subscription, no API key)
+uv run eprbench run preview-hypok-judgement --agent claude --interface api --out-dir results/today
+uv run eprbench run preview-hypok-judgement --agent codex --interface ui --out-dir results/today
+
+# a person as a baseline, and the viewer
+uv run eprbench serve preview-stemi-judgement --mode ui --user "Dr J. Smith (FY1)" --out-dir results/human
+uv run eprbench view results/today --out today.html</code></pre>
+
+<h2>Review the cases</h2>
+<p>If you are a clinician, the most useful thing you can do is read <a href="https://github.com/c4m3r0nn/EPR-Bench/blob/main/docs/CLINICAL_DECISIONS.md">the clinical decisions log</a>
+and open an issue on any row you think is wrong, quoting its ID.</p>
+
+<footer>
+<p>By Dr Cameron Dent (<a href="https://github.com/c4m3r0nn">c4m3r0nn</a>). Code under the Apache License 2.0; cases, documentation and recorded
+evidence under CC BY 4.0; the formulary contains public sector information licensed under the Open Government Licence v3.0
+(NHS Business Services Authority, NHS Dictionary of Medicines and Devices). All patients, staff and records are fictional;
+NHS numbers are in the 999 test range. Not for clinical use. This page loads nothing from anywhere else.</p>
+</footer>
+</main>
+</body>
+</html>

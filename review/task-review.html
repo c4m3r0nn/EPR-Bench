@@ -1,0 +1,293 @@
+<title>EPR-Bench Task Review</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Literata:opsz,wght@7..72,600&family=IBM+Plex+Mono:wght@400&display=swap">
+<style>
+/* Layout: a task list with review status; opening a task shows the record, the grader and the draft spec, then the reviewer's form */
+:root {
+  --bg: #f3f5f6; --surface: #ffffff; --ink: #1b2428; --muted: #59666c; --line: #d5dde0;
+  --accent: #23607a; --accent-soft: #e2edf2; --ok: #23744a; --ok-soft: #e3f2e9; --warn: #946200; --warn-soft: #fbf0d9;
+  --bad: #a8392a; --bad-soft: #f8e7e4;
+  --display: "Literata", Georgia, serif; --body: "Atkinson Hyperlegible", system-ui, sans-serif; --mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0f1518; --surface: #182126; --ink: #e3eaed; --muted: #9caeb6; --line: #2b383e;
+  --accent: #7cc0dc; --accent-soft: #19303a; --ok: #6fd09a; --ok-soft: #17301f; --warn: #e8bd5a; --warn-soft: #33290f;
+  --bad: #f0907e; --bad-soft: #3a1f1a; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #0f1518; --surface: #182126; --ink: #e3eaed; --muted: #9caeb6; --line: #2b383e;
+  --accent: #7cc0dc; --accent-soft: #19303a; --ok: #6fd09a; --ok-soft: #17301f; --warn: #e8bd5a; --warn-soft: #33290f;
+  --bad: #f0907e; --bad-soft: #3a1f1a; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 16px/1.55 var(--body); margin: 0; }
+.wrap { max-width: 52rem; margin: 0 auto; padding-inline: 16px; padding-block: 24px 64px; }
+h1 { font: 600 1.6rem/1.2 var(--display); margin: 0 0 6px; }
+h2 { font: 600 1.2rem/1.3 var(--display); margin: 0 0 4px; text-wrap: balance; }
+h3 { font-size: 0.78rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); margin: 18px 0 6px; }
+.lede { color: var(--muted); margin: 0 0 14px; max-width: 65ch; }
+.bar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 14px; font-size: 0.9rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.bar b { color: var(--ink); }
+.filters { display: flex; gap: 6px; flex-wrap: wrap; margin-left: auto; }
+.filters button { font: inherit; font-size: 0.85rem; padding: 4px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; }
+.filters button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--surface); }
+.notice { background: var(--accent-soft); border-radius: 8px; padding: 10px 14px; margin-bottom: 14px; font-size: 0.95rem; }
+.tasks { display: grid; gap: 8px; }
+.row { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; cursor: pointer; text-align: left; font: inherit; color: inherit; width: 100%; }
+.row:hover { border-color: var(--accent); }
+.row .t { font-weight: 700; }
+.row .m { font-size: 0.85rem; color: var(--muted); grid-column: 1; }
+.chip { font-size: 0.78rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; white-space: nowrap; grid-row: 1 / span 2; grid-column: 2; }
+.chip.none { background: var(--bg); color: var(--muted); }
+.chip.approve { background: var(--ok-soft); color: var(--ok); }
+.chip.changes { background: var(--warn-soft); color: var(--warn); }
+.chip.exclude { background: var(--bad-soft); color: var(--bad); }
+.back { font: inherit; background: none; border: 0; color: var(--accent); cursor: pointer; padding: 0; margin-bottom: 12px; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px; min-width: 0; }
+.meta { color: var(--muted); font-size: 0.9rem; margin: 0 0 10px; }
+.instruction { background: var(--accent-soft); border-radius: 8px; padding: 12px 14px; }
+details { border-top: 1px solid var(--line); padding: 8px 0; }
+details > summary { cursor: pointer; font-weight: 700; }
+.kv { display: grid; grid-template-columns: 7.5rem 1fr; gap: 2px 10px; font-size: 0.93rem; margin: 8px 0; }
+.kv dt { color: var(--muted); }
+.kv dd { margin: 0; min-width: 0; }
+ul.plain { margin: 4px 0; padding-left: 1.1rem; }
+ul.plain li { margin: 2px 0; }
+.note { border-left: 3px solid var(--line); padding: 2px 0 2px 10px; margin: 10px 0; }
+.note .h { font-size: 0.85rem; color: var(--muted); }
+pre { font: 0.86rem/1.5 var(--mono); white-space: pre-wrap; margin: 4px 0 0; }
+.check { display: flex; gap: 8px; align-items: baseline; font-size: 0.93rem; padding: 3px 0; }
+.tag { font-size: 0.72rem; font-weight: 700; padding: 1px 7px; border-radius: 4px; background: var(--bg); color: var(--muted); white-space: nowrap; }
+.tag.critical { background: var(--bad-soft); color: var(--bad); }
+.issues li { color: var(--bad); }
+.spec-block { margin-bottom: 10px; }
+form { margin-top: 18px; border-top: 2px solid var(--line); padding-top: 12px; }
+fieldset { border: 0; padding: 0; margin: 0 0 10px; }
+legend { font-weight: 700; margin-bottom: 6px; }
+.verdicts { display: flex; gap: 8px; flex-wrap: wrap; }
+.verdicts label { display: flex; gap: 6px; align-items: center; border: 1px solid var(--line); border-radius: 8px; padding: 6px 12px; cursor: pointer; }
+.verdicts input:checked + span { font-weight: 700; }
+label.f { display: block; font-size: 0.9rem; font-weight: 700; margin: 10px 0 4px; }
+textarea { width: 100%; min-height: 3.4rem; font: inherit; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--ink); resize: vertical; }
+.actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-top: 12px; }
+.save { font: inherit; font-weight: 700; padding: 8px 18px; border-radius: 8px; border: 0; background: var(--accent); color: var(--surface); cursor: pointer; }
+.save:disabled { opacity: 0.45; cursor: default; }
+.status { font-size: 0.85rem; color: var(--muted); }
+.error { color: var(--bad); font-size: 0.9rem; }
+.others .review { background: var(--bg); border-radius: 8px; padding: 10px 12px; margin: 8px 0; font-size: 0.93rem; }
+.others .who { display: flex; gap: 8px; align-items: center; font-weight: 700; margin-bottom: 4px; }
+.others img { width: 22px; height: 22px; border-radius: 50%; }
+button:focus-visible, textarea:focus-visible, input:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+</style>
+
+<main class="wrap">
+  <h1>Clinical task review</h1>
+  <p class="lede">For each task: read the instruction and the record as it stands when the task starts, check what the grader rewards, then accept or correct the draft clinical specification. Your review is yours alone to edit; everyone reviewing can see all reviews.</p>
+  <div class="notice" id="notice">Loading tasks…</div>
+  <div id="view"></div>
+</main>
+
+<script>
+(async () => {
+  const view = document.getElementById("view");
+  const notice = document.getElementById("notice");
+  const VERDICTS = { approve: "Approve spec", changes: "Approve with changes", exclude: "Exclude task" };
+  const SPEC_PARTS = [["acceptable", "Acceptable actions"], ["alternatives", "Acceptable alternatives"], ["refusals", "Acceptable refusals"], ["prohibited", "Prohibited actions"], ["open_questions", "Questions for the reviewer"]];
+  let tasks = [], reviewers = [], reviews = {}, uid = null, canWrite = true, openId = null, filter = "all";
+  const drafts = {}, subs = {};
+
+  const db = await claude.use("db");
+  const user = await claude.use("user");
+  if (!db) { notice.textContent = "Saved data is not available in this view. Open the page while signed in to claude.ai."; return; }
+  uid = user ? await user.id() : null;
+  if (!uid) canWrite = false;
+
+  const timer = setTimeout(() => { notice.textContent = "Can't reach the task data yet. It will appear when the connection returns."; notice.hidden = false; }, 10000);
+  db.collection("tasks").orderBy("order").onSnapshot(snap => {
+    tasks = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    if (!snap.metadata.fromCache) clearTimeout(timer);
+    render();
+  }, err => { clearTimeout(timer); notice.textContent = "Couldn't load the tasks (" + err.code + ")."; notice.hidden = false; });
+
+  db.collection("byreviewer").onSnapshot(snap => {
+    reviewers = snap.docs.map(d => d.id);
+    if (uid && !reviewers.includes(uid)) reviewers.push(uid);
+    for (const r of reviewers) if (!subs[r]) {
+      subs[r] = db.collection("byreviewer/" + r + "/tasks").onSnapshot(s => {
+        reviews[r] = Object.fromEntries(s.docs.map(d => [d.id, d.data()]));
+        render();
+      }, () => {});
+    }
+    render();
+  }, () => {});
+
+  const mine = id => (uid && reviews[uid]?.[id]) || null;
+
+  // Don't rebuild the page under someone who is typing; catch up when they leave the field.
+  let pending = false;
+  view.addEventListener("focusout", () => { if (pending) { pending = false; setTimeout(render, 0); } });
+  function render() {
+    if (view.contains(document.activeElement) && document.activeElement.tagName === "TEXTAREA") { pending = true; return; }
+    if (!tasks.length) { notice.hidden = false; if (notice.textContent === "Loading tasks…") return; notice.textContent = "No tasks to review yet."; return; }
+    notice.hidden = canWrite;
+    if (!canWrite) notice.textContent = "You can read every task and review. Sign in with an account that has Contributor access to add your own review.";
+    if (openId) return renderTask(tasks.find(t => t.id === openId));
+    renderList();
+  }
+
+  function renderList() {
+    const counts = { all: tasks.length, todo: 0, approve: 0, changes: 0, exclude: 0 };
+    for (const t of tasks) counts[mine(t.id)?.verdict || "todo"]++;
+    const bar = document.createElement("div"); bar.className = "bar";
+    const s = document.createElement("span"); s.append("Reviewed by you "); const b = document.createElement("b"); b.textContent = `${tasks.length - counts.todo} of ${tasks.length}`; s.append(b);
+    const f = document.createElement("div"); f.className = "filters"; f.setAttribute("role", "group"); f.setAttribute("aria-label", "Filter");
+    for (const [key, label] of [["all", "All"], ["todo", "To review"], ["approve", "Approved"], ["changes", "Changes"], ["exclude", "Excluded"]]) {
+      const btn = document.createElement("button"); btn.type = "button"; btn.textContent = `${label} ${counts[key]}`; btn.setAttribute("aria-pressed", String(filter === key));
+      btn.addEventListener("click", () => { filter = key; render(); }); f.append(btn);
+    }
+    bar.append(s, f);
+    const list = document.createElement("div"); list.className = "tasks";
+    for (const t of tasks) {
+      const v = mine(t.id)?.verdict;
+      if (filter !== "all" && (filter === "todo" ? v : v !== filter)) continue;
+      const row = document.createElement("button"); row.type = "button"; row.className = "row";
+      const title = document.createElement("span"); title.className = "t"; title.textContent = t.title;
+      const others = reviewers.filter(r => r !== uid && reviews[r]?.[t.id]).length;
+      const meta = document.createElement("span"); meta.className = "m";
+      meta.textContent = `${t.id} · ${t.category}${t.spec?.open_questions?.some(q => q.startsWith("RULING")) ? " · ruling needed" : ""}${others ? ` · ${others} other review${others > 1 ? "s" : ""}` : ""}`;
+      const chip = document.createElement("span"); chip.className = "chip " + (v || "none"); chip.textContent = v ? VERDICTS[v] : "Not reviewed";
+      row.append(title, chip, meta);
+      row.addEventListener("click", () => { openId = t.id; render(); window.scrollTo(0, 0); });
+      list.append(row);
+    }
+    view.replaceChildren(bar, list);
+  }
+
+  function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function list(items, cls) { const u = el("ul", "plain" + (cls ? " " + cls : "")); for (const i of items || []) u.append(el("li", null, i)); return u; }
+
+  function renderTask(t) {
+    if (!t) { openId = null; return renderList(); }
+    const wrap = el("div");
+    const back = el("button", "back", "← All tasks"); back.type = "button"; back.addEventListener("click", () => { openId = null; render(); });
+    const panel = el("article", "panel");
+    panel.append(el("h2", null, t.title), el("p", "meta", `${t.id} · ${t.category} · starts ${t.start} · agent acts as ${t.actor}`));
+    panel.append(el("h3", null, "Instruction to the agent"), el("div", "instruction", t.instruction));
+    if (t.jobs?.length) { panel.append(el("h3", null, "Jobs list at the start")); panel.append(list(t.jobs)); }
+
+    panel.append(el("h3", null, "The record when the task starts"));
+    for (const p of t.patients || []) {
+      const d = el("details"); if ((t.patients || []).length === 1) d.open = true;
+      d.append(el("summary", null, `${p.name} (${p.mrn}) · ${p.location}`));
+      const kv = el("dl", "kv");
+      for (const [k, v] of [["Born", `${p.dob} · ${p.sex}`], ["Admission", p.admission || "—"], ["Allergies", p.allergies.join("; ")], ["Problems", p.problems.join("; ") || "—"], ["Medicines", p.medications.join("; ") || "—"]]) {
+        kv.append(el("dt", null, k), el("dd", null, v));
+      }
+      d.append(kv);
+      if (p.observations?.length) { d.append(el("h3", null, "Latest observations")); d.append(list(p.observations)); }
+      if (p.results?.length) { d.append(el("h3", null, "Results")); d.append(list(p.results.map(r => `${r.at} · ${r.name}: ${r.text}`))); }
+      if (p.notes?.length) {
+        d.append(el("h3", null, "Notes, newest first"));
+        for (const n of p.notes) { const box = el("div", "note"); box.append(el("div", "h", `${n.at} · ${n.title} · ${n.author}`), el("pre", null, n.body)); d.append(box); }
+      }
+      panel.append(d);
+    }
+
+    panel.append(el("h3", null, "What the grader checks today"));
+    for (const c of t.checks || []) {
+      const row = el("div", "check");
+      row.append(el("span", "tag" + (c.critical ? " critical" : ""), c.critical ? "critical" : c.kind), el("span", null, c.text));
+      panel.append(row);
+    }
+    if (t.spec?.grader_issues?.length) { panel.append(el("h3", null, "Known grader problems")); panel.append(list(t.spec.grader_issues, "issues")); }
+
+    panel.append(el("h3", null, "Draft clinical specification (to accept or correct)"));
+    for (const [key, label] of SPEC_PARTS) {
+      if (!t.spec?.[key]?.length) continue;
+      const blk = el("div", "spec-block"); blk.append(el("strong", null, label), list(t.spec[key])); panel.append(blk);
+    }
+
+    panel.append(form(t));
+    const others = reviewers.filter(r => r !== uid && reviews[r]?.[t.id]);
+    if (others.length) panel.append(otherReviews(t, others));
+    wrap.append(back, panel);
+    view.replaceChildren(wrap);
+  }
+
+  function form(t) {
+    const saved = mine(t.id);
+    const d = drafts[t.id] ?? { verdict: saved?.verdict || "", comment: saved?.comment || "", changes: { ...(saved?.changes || {}) } };
+    drafts[t.id] = d;
+    const f = el("form"); f.addEventListener("submit", e => e.preventDefault());
+    f.append(el("h3", null, "Your review"));
+    if (!canWrite) { f.append(el("p", "status", "Sign in with Contributor access to review.")); return f; }
+    const fs = el("fieldset"); fs.append(el("legend", null, "Verdict"));
+    const vs = el("div", "verdicts");
+    for (const [key, label] of Object.entries(VERDICTS)) {
+      const lab = el("label"); const inp = el("input"); inp.type = "radio"; inp.name = "verdict-" + t.id; inp.value = key; inp.checked = d.verdict === key;
+      inp.addEventListener("change", () => { d.verdict = key; refresh(); });
+      lab.append(inp, el("span", null, label)); vs.append(lab);
+    }
+    fs.append(vs); f.append(fs);
+    for (const [key, label] of SPEC_PARTS) {
+      if (!t.spec?.[key]?.length && key !== "alternatives") continue;
+      const id = `ch-${t.id}-${key}`;
+      const lab = el("label", "f", key === "open_questions" ? "Your answers to the questions" : `Changes to “${label.toLowerCase()}” (optional)`); lab.htmlFor = id;
+      const ta = el("textarea"); ta.id = id; ta.value = d.changes[key] || "";
+      ta.addEventListener("input", () => { d.changes[key] = ta.value; refresh(); });
+      f.append(lab, ta);
+    }
+    const cid = "cm-" + t.id;
+    const clab = el("label", "f"); clab.htmlFor = cid;
+    const cta = el("textarea"); cta.id = cid; cta.value = d.comment;
+    cta.addEventListener("input", () => { d.comment = cta.value; refresh(); });
+    f.append(clab, cta);
+    const actions = el("div", "actions"); const save = el("button", "save", "Save review"); save.type = "button";
+    const status = el("span", "status", saved ? `Saved ${fmt(saved.at)}` : "Not saved"); const err = el("span", "error");
+    actions.append(save, status, err); f.append(actions);
+
+    function refresh() {
+      const needComment = d.verdict && d.verdict !== "approve";
+      clab.textContent = needComment ? "What needs changing, or why exclude? (required)" : "Comment (optional)";
+      const valid = d.verdict && (!needComment || d.comment.trim());
+      const changed = !saved || JSON.stringify({ v: d.verdict, c: d.comment.trim(), ch: clean(d.changes) }) !== JSON.stringify({ v: saved.verdict, c: saved.comment || "", ch: clean(saved.changes || {}) });
+      save.disabled = !valid || !changed;
+      err.textContent = needComment && !d.comment.trim() ? "Add a comment for this verdict." : "";
+    }
+    refresh();
+    save.addEventListener("click", async () => {
+      save.disabled = true; status.textContent = "Saving…"; err.textContent = "";
+      try {
+        if (!reviews[uid] || !Object.keys(reviews[uid]).length) await db.doc("byreviewer/" + uid).set({ joined: true });
+        await db.doc(`byreviewer/${uid}/tasks/${t.id}`).set({ verdict: d.verdict, comment: d.comment.trim(), changes: clean(d.changes), at: new Date().toISOString() });
+        delete drafts[t.id];
+      } catch (e) {
+        status.textContent = "Not saved"; save.disabled = false;
+        err.textContent = e.code === "invalid_argument" ? "Your access level can't save reviews." : "Couldn't save. Try again in a moment.";
+        if (e.code === "invalid_argument") canWrite = false;
+      }
+    });
+    return f;
+  }
+
+  function clean(ch) { return Object.fromEntries(Object.entries(ch).map(([k, v]) => [k, (v || "").trim()]).filter(([, v]) => v)); }
+
+  function otherReviews(t, ids) {
+    const box = el("section", "others"); box.append(el("h3", null, "Other reviewers"));
+    const holder = el("div"); box.append(holder);
+    (async () => {
+      const ps = user ? await user.profiles(ids) : {};
+      for (const r of ids) {
+        const rv = reviews[r][t.id];
+        const card = el("div", "review"); const who = el("div", "who");
+        if (ps[r]?.avatarUrl) { const img = el("img"); img.src = ps[r].avatarUrl; img.alt = ""; who.append(img); }
+        who.append(el("span", null, (ps[r]?.name || "A reviewer") + " · " + VERDICTS[rv.verdict] + " · " + fmt(rv.at)));
+        card.append(who);
+        if (rv.comment) card.append(el("pre", null, rv.comment));
+        for (const [k, label] of SPEC_PARTS) if (rv.changes?.[k]) { card.append(el("strong", null, label)); card.append(el("pre", null, rv.changes[k])); }
+        holder.append(card);
+      }
+    })();
+    return box;
+  }
+
+  function fmt(iso) { return iso ? new Date(iso).toLocaleString(undefined, { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" }) : ""; }
+})();
+</script>

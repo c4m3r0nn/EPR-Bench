@@ -1,0 +1,28 @@
+# The test suite on Linux, run by hand only for now: the suite has been verified end to end on macOS, not on Linux.
+# A partial run in a Linux container found and fixed some differences (Ctrl+Up/Down in Chromium, a test that assumes
+# a non-root user, the agent sandbox tests, which skip on Linux with the reason stated), but no complete Linux run has
+# passed yet. It needs no API key and starts no real agent CLI (tests/agent_cli_guard.py).
+name: Tests
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      # uv's own Python builds carry a recent SQLite; the older SQLite of distribution Pythons (Ubuntu 24.04: 3.45)
+      # overflows its parser stack on a legacy task's deeply nested SQL (refer-ppci-001)
+      UV_PYTHON_PREFERENCE: only-managed
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: "3.12"
+      - run: uv sync --all-extras
+      - run: uv run playwright install chromium --with-deps
+      - run: uv run pytest -q -rs

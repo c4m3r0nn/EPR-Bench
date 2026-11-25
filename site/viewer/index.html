@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EPR-Bench trajectories</title>
+<style>
+:root { --bg:#f5f7f8; --card:#fff; --ink:#18242c; --muted:#56656f; --line:#d8dfe3; --accent:#005eb8; --t-complete:#0b6e4f; --t-partial:#a35f00; --t-inactive:#6b7280; --t-harmful:#b42318; --code:#eef1f3; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#101417; --card:#182026; --ink:#e4e9ed; --muted:#9aa7b1; --line:#2b343b; --accent:#6aaaf0; --t-complete:#4fc79a; --t-partial:#e9b54a; --t-inactive:#9aa7b1; --t-harmful:#ff8a80; --code:#1f272d; } }
+:root[data-theme="dark"] { --bg:#101417; --card:#182026; --ink:#e4e9ed; --muted:#9aa7b1; --line:#2b343b; --accent:#6aaaf0; --t-complete:#4fc79a; --t-partial:#e9b54a; --t-inactive:#9aa7b1; --t-harmful:#ff8a80; --code:#1f272d; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
+main { max-width: 1040px; margin: 0 auto; padding: 24px 16px 48px; }
+a { color: var(--accent); }
+h1 { font-size: 30px; line-height: 1.2; margin: 8px 0 4px; } h2 { font-size: 21px; margin: 36px 0 10px; } h3 { font-size: 17px; margin: 18px 0 6px; }
+p, li { max-width: 72ch; }
+.lede { font-size: 18px; color: var(--ink); }
+.muted { color: var(--muted); }
+.status { display: inline-block; font-size: 13px; font-weight: 600; padding: 2px 10px; border-radius: 999px; background: var(--code); color: var(--muted); }
+.nav { display: flex; flex-wrap: wrap; gap: 8px 18px; margin: 14px 0 0; padding: 0; list-style: none; }
+.shots { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+figure { margin: 0; background: var(--card); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+figure img { display: block; width: 100%; height: auto; border-bottom: 1px solid var(--line); }
+figcaption { padding: 8px 12px; font-size: 14px; color: var(--muted); }
+.table-wrap { overflow-x: auto; background: var(--card); border: 1px solid var(--line); border-radius: 8px; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+caption { caption-side: bottom; text-align: left; padding: 8px 12px; color: var(--muted); font-size: 13px; }
+th, td { padding: 7px 10px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+thead th { font-size: 13px; }
+tbody th { font-weight: 500; min-width: 210px; }
+.tier { display: inline-block; min-width: 22px; text-align: center; padding: 0 6px; margin: 1px; border-radius: 999px; font-weight: 700; font-size: 12px; color: var(--card); }
+.tier.complete { background: var(--t-complete); } .tier.partial { background: var(--t-partial); } .tier.inactive { background: var(--t-inactive); } .tier.harmful { background: var(--t-harmful); }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; }
+.card h3 { margin-top: 0; }
+pre { background: var(--code); border-radius: 8px; padding: 12px 14px; overflow-x: auto; font-size: 13.5px; }
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 14px; color: var(--muted); }
+</style>
+</head>
+<body>
+<main>
+<p><a href="../index.html">EPR-Bench</a></p>
+<h1>Trajectory viewer</h1>
+<p>Every episode of the runs of 23 November 2026, one page per task: each action in order with the simulated time, what the
+record returned, the agent's own screenshots on the browser route, its reply and the automatic outcome, marked again with
+the current rules (the page says when that changed a tier). Check definitions are left out. Screenshots are reduced to a
+256-colour palette to keep the pages small; the agents saw the originals.</p>
+<ul><li><a href="preview-hypok-judgement.html">Low potassium nobody has sorted (judgement)</a> <span class="muted">(12 episodes)</span></li><li><a href="preview-hypok-instruction.html">Potassium replacement, as instructed</a> <span class="muted">(12 episodes)</span></li><li><a href="preview-stemi-judgement.html">Chest pain in resus, no plan handed over (judgement)</a> <span class="muted">(12 episodes)</span></li><li><a href="preview-stemi-instruction.html">Activate PPCI and load, as instructed</a> <span class="muted">(12 episodes)</span></li><li><a href="preview-dvt-discharge-judgement.html">Discharge request with an unexplained swollen calf (judgement)</a> <span class="muted">(12 episodes)</span></li></ul>
+<p class="muted">Each page has a review panel that keeps a reader's verdicts in their own browser, to export as a file;
+nothing is sent anywhere. All patients and records are fictional. Not for clinical use.</p>
+</main>
+</body>
+</html>

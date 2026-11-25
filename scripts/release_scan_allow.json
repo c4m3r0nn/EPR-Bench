@@ -1,0 +1,23 @@
+{
+  "_comment": "Deliberate test fixtures the release scan finds (scripts/release_scan.py). Each entry: the file, the kind of finding and the SHA-256 of the matched text (never the text itself), with why it may stay. One entry covers every occurrence of that text in that file.",
+  "allow": [
+    {"path": "tests/test_cli_reproducibility.py", "kind": "credential-like string", "sha256": "5b43f93f8c331e322e1b2c01c708717ff0901233af60822ce5e694e0daef6be0",
+     "reason": "A planted fake key, set in the environment to test that provider keys are withheld from an agent CLI; it never was a credential."},
+    {"path": "tests/test_contract.py", "kind": "credential-like string", "sha256": "00af2e46a831ff74e5e8c5e862c978b02ec7335f7121a14ceeefbef31924509e",
+     "reason": "A planted fake key passed on the command line, to test that credential arguments are redacted; never a credential."},
+    {"path": "tests/test_contract2.py", "kind": "credential-like string", "sha256": "8ac5f1a7477823054692335de0f7bb2f6ab6cbcd6ac99eef13b9af316fdd127a",
+     "reason": "A planted fake key inside clinical text, to test that redaction by pattern never touches model or record content; never a credential."},
+    {"path": "tests/test_core.py", "kind": "NHS number outside the 999 test range", "sha256": "ee17f178e64633e0a1d7921f3f7c2096eb131630bf598d67d95c0f2847e25c09",
+     "reason": "NHS Digital's published documentation example number, used to test Modulus 11 validation; not a patient's. The owner may still prefer a test-range number (docs/RELEASE_CHECKLIST.md, section 7)."},
+    {"path": "tests/test_viewer.py", "kind": "credential-like string", "sha256": "3631b5f17840df1cb0575b3708c982cf0ad5f89a00a1b1af1dcdf21f75b9a1cf",
+     "reason": "A planted fake key in an imported review, to test that blind and public pages never carry it; never a credential."},
+    {"path": "tests/test_viewer.py", "kind": "home-directory path", "sha256": "ffe27392eb3e6ac8cca1fed5637a4c727bca806b99147ec8cf5913c3f82efc98",
+     "reason": "A planted path naming no real account, to test that blind and public pages remove local paths."},
+    {"path": "tests/test_viewer.py", "kind": "local path prefix", "sha256": "46dc943e3424a2254a109373bb5e9e7d016a71c4ad9f38d63991107e091bee56",
+     "reason": "The same planted paths (no real account), found again by the public-tree scan's plain search for the macOS home prefix."},
+    {"path": "scripts/release_scan.py", "kind": "local path prefix", "sha256": "46dc943e3424a2254a109373bb5e9e7d016a71c4ad9f38d63991107e091bee56",
+     "reason": "The scan's own pattern for home-directory paths, which has to spell the prefix; no path."},
+    {"path": "tests/test_release_scan.py", "kind": "local path prefix", "sha256": "46dc943e3424a2254a109373bb5e9e7d016a71c4ad9f38d63991107e091bee56",
+     "reason": "The scan's tests: a path built from parts, which must be found, and the macOS shared folder, which must not be."}
+  ]
+}

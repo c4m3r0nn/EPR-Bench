@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% macro patient_table(patients, id) %}
+<table id="{{ id }}">
+  <thead><tr><th>Bed</th><th>Name</th><th>Hospital no.</th><th>NHS no.</th><th>DOB</th><th>Sex</th><th>Location</th></tr></thead>
+  <tbody>
+  {% for p in patients %}
+    <tr>
+      <td>{{ p.bed or '' }}</td>
+      <td><a href="/patients/{{ p.patient_id }}">{{ p.name }}</a></td>
+      <td>{{ p.mrn }}</td><td>{{ p.nhs_number }}</td><td>{{ p.dob }}</td><td>{{ p.sex }}</td><td>{{ p.location or '' }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endmacro %}
+{% block title %}Patient lists - EPR{% endblock %}
+{% block content %}
+{% if matches is not none %}
+<section class="card" aria-label="Search results">
+  <h2>Search results for "{{ q }}"</h2>
+  {% if matches %}{{ patient_table(matches, 'search-results') }}{% else %}<p>No patients found.</p>{% endif %}
+</section>
+{% endif %}
+{% for loc in locations %}
+<section class="card" aria-label="{{ loc.name }}">
+  <h2>{{ loc.name }}</h2>
+  {% if loc.patients %}{{ patient_table(loc.patients, 'list-' ~ loc.code) }}{% else %}<p class="muted">No patients.</p>{% endif %}
+</section>
+{% endfor %}
+{% endblock %}

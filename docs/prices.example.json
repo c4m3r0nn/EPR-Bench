@@ -1,0 +1,13 @@
+{
+  "_comment": "EXAMPLE ONLY. Every number here is a FAKE PLACEHOLDER, not any provider's price, and the model id is not a real one. Copy this file outside the repository; for each exact model id you run, enter that provider's current published price per million tokens of every class (each above zero), max_image_tokens (the most input tokens one screenshot can cost on that model, from the provider's own documentation) and request_overhead_tokens (the tokens the provider adds to every request beyond what is sent, such as a tool-use or computer-use system prompt, from its documentation). Prices in pounds: currency GBP, gbp_per_unit exactly 1, no fx_safety_margin. Any other currency: a conservative gbp_per_unit (pounds per one unit, between 0.1 and 10) and fx_safety_margin (above 0, at most 1). Check every value on the day of a paid run; docs/SPEND_SAFETY.md says why each matters. eprbench refuses a model the file does not list completely.",
+  "currency": "USD",
+  "gbp_per_unit": 0.123,
+  "fx_safety_margin": 0.1,
+  "models": {
+    "REPLACE-WITH-EXACT-MODEL-ID": {
+      "per_million_tokens": {"input": 1.23, "cache_write": 4.56, "cache_read": 0.07, "output": 8.9},
+      "max_image_tokens": 9999,
+      "request_overhead_tokens": 9999
+    }
+  }
+}

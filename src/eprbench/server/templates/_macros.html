@@ -1,0 +1,2 @@
+{# Controls are deliberately in-page (radio buttons, list boxes): native dropdown popups do not appear in screenshots. #}
+{% macro radios(name, options, selected='', id='') %}<span class="radios" role="radiogroup"{% if id %} id="{{ id }}"{% endif %}>{% for value, label in options %}<label class="radio"><input type="radio" name="{{ name }}" value="{{ value }}"{% if value == selected %} checked{% endif %}> {{ label }}</label>{% endfor %}</span>{% endmacro %}

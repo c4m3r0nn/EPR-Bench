@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% macro dt(value) %}{{ (value or '')|replace('T', ' ')|replace(':00Z', '')|replace('Z', '') }}{% endmacro %}
+{% block title %}Jobs list - EPR{% endblock %}
+{% block content %}
+{% if error %}<div class="error" role="alert">{{ error }}</div>{% endif %}
+<section class="card"><h2>Jobs list</h2>
+  <table id="jobs"><thead><tr><th>Priority</th><th>Patient</th><th>Location</th><th>Job</th><th>Added</th><th>Status</th></tr></thead><tbody>
+  {% for j in jobs %}<tr{{ tag('list_jobs', {'jobs': [j]}, none) }}><td{% if j.priority == 'urgent' %} class="flag"{% endif %}>{{ j.priority }}</td>
+    <td><a href="/patients/{{ j.patient_id }}">{{ j.patient }}</a><br><span class="muted">{{ j.mrn }}</span></td>
+    <td>{{ j.location or '' }}{% if j.bed %}, bed {{ j.bed }}{% endif %}</td>
+    <td class="wrap">{{ j.description }}{% if j.task_type or j.order_name %}<br><span class="muted">{{ job_types.get(j.task_type, '') }}{% if j.task_type and j.order_name %} · {% endif %}{% if j.order_name %}request: {{ j.order_name }}{% endif %}</span>{% endif %}</td><td>{{ dt(j.created_at) }}<br><span class="muted">{{ j.created_by }}</span></td>
+    <td class="wrap">{% if j.status == 'done' %}Done by {{ j.done_by }}{% if j.outcome %}: {{ j.outcome }}{% endif %}
+      {% elif j.status == 'cancelled' %}Cancelled by {{ j.cancelled_by }}: {{ j.cancel_reason }}
+      {% else %}<form method="post" action="/patients/{{ j.patient_id }}/jobs/{{ j.job_id }}/complete"><input type="text" name="outcome" placeholder="Outcome" aria-label="Outcome of job {{ j.job_id }}" size="24"> <button type="submit" class="secondary" aria-label="Mark job {{ j.job_id }} done">Done</button></form>
+      <form method="post" action="/patients/{{ j.patient_id }}/jobs/{{ j.job_id }}/cancel"><input type="text" name="reason" placeholder="Reason" aria-label="Why job {{ j.job_id }} is cancelled" size="24" required> <button type="submit" class="secondary" aria-label="Cancel job {{ j.job_id }}">Cancel job</button></form>{% endif %}</td></tr>
+  {% else %}<tr><td colspan="6" class="muted">No jobs.</td></tr>{% endfor %}
+  </tbody></table>
+  <p><a href="/jobs?all=1">Show completed and cancelled jobs</a></p>
+</section>
+{% endblock %}
